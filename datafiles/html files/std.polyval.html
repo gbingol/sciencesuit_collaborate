@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+    
+<body>
+    
+<h1>polyval</h1>
+
+<p>
+      Evaluates a polynomial (a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> +..+ a<sub>0</sub>) at a given data or dataset. <br>
+</p>
+
+<h3>Syntax:</h3>
+<p>polyval(v=, arg=) &rarr; number / Vector </p>
+
+<p>
+      where argument <em>v</em> must be of type Vector. If <em>arg</em> is a single data point the function returns a number; <br>
+      however, if <em>arg</em> is a vector of data points then function returns a vector.
+</p>
+
+<p>&nbsp;</p>
+
+<p><b>Examples:</b></p>
+<table border="1" cellspacing="0">
+<tr>
+      <td><b>x</b></td>
+      <td><b>y</b></td>
+</tr>
+<tr>
+      <td>0</td> <td>4</td>
+</tr>
+
+<tr>
+      <td>1</td> <td>10</td>
+</tr>
+<tr>
+      <td>2</td> <td>26</td>
+</tr>
+<tr>
+      <td>3</td> <td>58</td>
+</tr>
+<tr>
+      <td>4</td> <td>112</td>
+</tr>
+<tr>
+      <td>5</td> <td>194</td>
+</tr>
+</table>
+      
+          <p>&nbsp;</p>
+      
+      
+<p>
+      &gt;&gt;coef=std.polyfit(x, y, 3) <br>
+      
+      <br>
+
+      &gt;&gt;std.polyval(coef, 3.5) <br>
+      81.875 <br>
+
+      <br>
+
+      &gt;&gt;v=std.tovector{3.5, 4.5} <br>
+      &gt;&gt;std.polyval(coef, v) <br>
+      81.875&nbsp;&nbsp;&nbsp; 149.125&nbsp;&nbsp;&nbsp; COL
+</p>
+
+
+</body>
+
+</html>

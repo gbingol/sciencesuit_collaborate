@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>find</h1>
+    
+<p>
+    Finds the location of the first occurence of an entry in an iteratable container. <br>
+    If successful returns the index of the entry, otherwise nil.
+</p>
+    
+<h3>Syntax:</h3> 
+<p>find(container=, value=, tol=1E-5)</p>
+
+<p>&nbsp;</p>
+
+<table border="1" cellspacing="3">
+    <tr>
+        <td><i>container:</i></td>  
+        <td>An iteratable container</td>
+    </tr>
+
+    <tr>
+        <td><i>value:</i></td>  
+        <td>Value being searched</td>
+    </tr>
+
+    <tr>
+        <td><i>tol:</i></td>  
+        <td>Tolerance, only used when searched for numeric entries. &larr; number</td>
+    </tr>
+    
+</table>
+
+
+
+<h3>Example:</h3>
+<p>
+    &gt;&gt;t={1, 5, 3, 8, 8, -1} <br>
+    &gt;&gt;std.find(t,8) <br>
+    4 <br>
+
+    <br>
+    &gt;&gt;m2=std.tomatrix{ {1, 2} , {4, 5} , {7, 8} } <br>
+    &gt;&gt;std.find(m2,5) <br>
+    4
+
+</p>
+
+</body>
+
+</html>
