@@ -1,5 +1,11 @@
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+
 require( "iuplua" )
 
+
+--should be replaced with std.toformattedstring
 local function GetFormattedString(num)
 	if(num>1 or num<-1.0) then
 		return string.format("%.2f",num)

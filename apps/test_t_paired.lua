@@ -1,3 +1,7 @@
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+
 require( "iuplua" )
 
 local function GetFormattedString(num)

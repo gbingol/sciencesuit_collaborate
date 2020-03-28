@@ -1,14 +1,18 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+
 
 require( "iuplua" )
 
 local function Reverse(Tbl)
+	
 	local retTbl={}
 	local key=#Tbl
 	
 	for k,v in pairs(Tbl) do
 		retTbl[key]=v
+
 		key=key-1
 	end
 	
@@ -24,8 +28,10 @@ local function CheckRange(ARange)
 	if(r*c==1) then 
 		return false
 	end
+	
 
 	local HasData=false
+
 	for i=1,r do
 		for j=1,c do
 			

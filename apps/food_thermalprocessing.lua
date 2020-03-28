@@ -1,16 +1,18 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 require( "iuplua" )
 
-local TOLERANCE=1E-5
+local TOLERANCE=std.const.tolerance
 
 
+--Finds the vector containing consecutive averages [elem(i)+elem(i-1)] / 2
 local function FindAvg(vec)
 	local retVec=Vector.new(0)
 	
 	for i=2,#vec do
 		local avg=(vec(i)+vec(i-1))/2
+		
 		retVec:push_back(avg)
 	end
 
