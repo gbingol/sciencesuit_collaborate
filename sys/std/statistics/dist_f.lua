@@ -1,3 +1,7 @@
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+
 local function DF(arg1, df1, df2)
 	
 	assert(math.type(df1)=="integer","ERROR: Degrees of freedom (key: df1)  must be an integer.")

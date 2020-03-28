@@ -1,22 +1,30 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 -- Function currently used by Sort dialog
 
 local function LetterstoColumnNumber(letters)
 	--str can be AA, BC, AAC ...
-	if(type(letters)~="string") then error("ERROR: Argument must be of type string" , ERRORLEVEL) end
-	str=letters
+	
+	assert(type(letters)=="string", "ERROR: Argument must be of type string")
+
+	local str=letters
 	string.upper(str) --convert to upper case
-	retNum=0
-	len=string.len(str)
-	n=0
+	
+	local retNum=0
+
+	local len=string.len(str)
+	local n=0
+
 	for i=len,1,-1 do
-		c=string.byte(str,i)
-		val=c-65+1;
+		local c=string.byte(str,i)
+		local val=c-65+1
+
 		retNum=retNum+26^n*val
+
 		n=n+1
 	end
+
 
 	return retNum;
 end

@@ -1,8 +1,10 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
 
 local  function GetAveragePerCol(matrix)
 	local retVec=Vector.new(0)
+	
 	for i=1,matrix:ncols() do
 		local col=matrix({},i)
 		local avg=std.mean(col)

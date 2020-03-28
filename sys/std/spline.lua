@@ -1,5 +1,7 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+--This has been updated in C++
 
 local function spline(x, y,val)  
     
@@ -93,4 +95,4 @@ local function spline(x, y,val)
 	   
 end
 
-std.spline=spline
+--std.spline=spline

@@ -1,5 +1,9 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+
+--note: March 28, 2020
+--This whole file might be deleted, requires further checks before acting upon
 
 local function IsEqual(m1,m2)
     
@@ -12,9 +16,11 @@ local function IsEqual(m1,m2)
     
 	for i=1, r1 do
 		for j=1, c1 do
-			if(std.abs(m1(i,j)-m2(i,j)) > TOLERANCE ) then 
+
+			if(std.abs(m1(i,j)-m2(i,j)) > std.const.tolerance ) then 
 				return false 
 			end
+
 		end
 	end
     
@@ -33,14 +39,18 @@ local function IsLessThan(m1,m2) --m1<m2
 
 	for i=1, r1 do
 		for j=1, c1 do
+
 			if(m1(i,j)>m2(i,j) ) then 
 				return false 
 			end
+
 		end
 	end
 	
 	return true
 end
+
+
 
 local function IsLessThanEqualTo(m1,m2) --m1<=m2
 	local r1, c1=std.size(m1)
@@ -49,6 +59,7 @@ local function IsLessThanEqualTo(m1,m2) --m1<=m2
 	if(r1~=r2 or c1~=c2) then 
 		return false 
 	end
+
 
 	for i=1, r1 do
 		for j=1, c1 do

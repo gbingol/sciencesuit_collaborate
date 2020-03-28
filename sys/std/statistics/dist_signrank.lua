@@ -1,3 +1,7 @@
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+
 local function DSIGNRANK( arg, n)
 
 	assert(type(arg)=="Vector" or type(arg)=="number","ERROR: First argument must be either a number or of type Vector!")

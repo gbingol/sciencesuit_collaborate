@@ -1,4 +1,4 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
@@ -7,9 +7,10 @@
 --Chakraborti & Gibbons at Nonparametric Statistical Inference, Fifth Edition pp 171 recommends at least 12
 --Minitab and R seems to choose a number greater than 10. R refers to Chakraborti & Gibbons publication on its documentation
 --Therefore, 12 was chosen for normal approximation of binomial distribution
+
 local NORMALAPPROXIMATIONSATISFIED=12
 
-local TOLERANCE=1E-5
+local TOLERANCE=std.const.tolerance
 
 
 local function Interpolation(x1, y1, x2, y2, val) 

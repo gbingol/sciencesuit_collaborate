@@ -1,7 +1,8 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
-local TOLERANCE=1E-5
+
+local TOLERANCE=std.const.tolerance
 
 
 local function FitZeroIntercept(yobs, factor)

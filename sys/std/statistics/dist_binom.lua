@@ -1,3 +1,7 @@
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+
 local function DBINOM(vec, size, prob)
 
 	assert(type(size)=="number","ERROR: Second argument (size) must be a number!")

@@ -1,5 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@hotmail.com)
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
 
 local function sum(Container, n)
 	--Finds the sum of a vector, matrix or range

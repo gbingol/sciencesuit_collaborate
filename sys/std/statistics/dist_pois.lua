@@ -1,3 +1,7 @@
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
+
 local function DPOIS(vec, lambda)
 	
 	assert(type(vec)=="Vector" or type(vec)=="number","ERROR: First argument (x) must be either a number or of type Vector")

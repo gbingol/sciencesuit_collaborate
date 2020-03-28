@@ -1,3 +1,6 @@
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
 
 local luatype = type --type function provided by Lua
 
@@ -9,6 +12,7 @@ function type(entry)
     return n
   end
 
+  
   return n(entry)
 
 end

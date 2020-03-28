@@ -243,36 +243,40 @@ local qdist099={{nil,14.0346,19.0189,22.2935,24.7166,26.628,28.1991,29.5282,30.6
 {nil,3.7022,4.2006,4.4978,4.7094,4.873,5.0065,5.1187,5.2155,5.3004,5.3761,5.4442,5.5061,5.5629,5.6152,5.6637,5.709,5.7514,5.7912,5.8288},
 {nil,3.7017,4.2,4.497,4.7085,4.872,5.0055,5.1176,5.2143,5.2992,5.3748,5.4429,5.5048,5.5615,5.6138,5.6623,5.7075,5.7499,5.7897,5.8272}}
 
+
+
 local function Interpolation(x1, y1,x2,y2,val)
 	-- Given 2 data points (x1,y1) and (x2,y2) we are looking for the y-value of the point x=val
-	if(x1==x2) then return y1 end
-	if(std.abs(x1-val)<TOLERANCE) then return y1 end
+	if(x1==x2) then 
+		return y1 
+	end
+
+	if(std.abs(x1-val)<std.const.tolerance) then 
+		return y1 
+	end
 	
-	local m,n
-	m = (y2 - y1) / (x2 - x1)
-	n = y2 - m * x2;
+	
+	local m = (y2 - y1) / (x2 - x1)
+	local n = y2 - m * x2;
 	
 	return m * val + n
 end
+
 
 local function getqdist(alpha, k, df)
 	--alpha: level of significance
 	--df: degrees of freedom
 	--k: number of dependent variables
-	if(alpha<0.95 or alpha>0.99) then 
-		error("ERROR: Currently, Studentized Range Distribution can only be computer [0.95-0.99] range.") 
-	end
+
+	assert(alpha>=0.95 and alpha<=0.99,"ERROR: Currently, Studentized Range Distribution can only be computer [0.95-0.99] range.") 
+	assert(df>2,"ERROR: Degrees of freedom cannot be smaller than 2") 
+	assert(k>2,"ERROR: Number of dependent variables cannot be smaller than 2") 
 	
-	if(df<2) then 
-		error("ERROR: Degrees of freedom cannot be smaller than 2") 
-	end
-	
-	if(k<2) then 
-		error("ERROR: Number of dependent variables cannot be smaller than 2") 
-	end
 	
 	local srd1, srd2=qdist095[df][k], qdist099[df][k]
+	
 	return Interpolation(0.95, srd1,0.99,srd2,alpha)
 end
+
 
 std.misc.qdist=getqdist
