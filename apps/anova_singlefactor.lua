@@ -95,7 +95,9 @@ local function ANOVASingleFactor()
 		
 		ASSERT(txtResponses.value~="","Response range cannot be empty, a selection must be made.")
 		
-		ASSERT(IsStacked and txtFactors.value=="", "ERROR","Factors range cannot be empty, a selection must be made")
+		if(IsStacked) then
+			ASSERT(txtFactors.value=="", "ERROR","Factors range cannot be empty, a selection must be made")
+		end
 			
 		
 		local Alpha=(100-tonumber(txtConfidence.value))/100
@@ -129,6 +131,7 @@ local function ANOVASingleFactor()
 			
 			pvalue, AnovaTable=std.anova(table.unpack(tbl)) 
 		end
+		
 		
 		if(IsStacked) then
 			rngFactors=Range.new(std.activeworkbook(), txtFactors.value)
