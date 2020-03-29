@@ -151,12 +151,13 @@ local function  DescriptiveStat()
 	
 	
 	function BtnOK:action()
+		
 		if(txtInput.value=="") then
 			iup.Message("ERROR","A selection has not been done yet.")
 			
 			return
 		end
-
+		
 		
 		local InputRange=Range.new(std.activeworkbook(), txtInput.value)
 		

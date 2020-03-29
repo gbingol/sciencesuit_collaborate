@@ -9,7 +9,7 @@ local function gridtext( tbl)
 	tbl=tbl or {expand="HORIZONTAL", BGCOLOR="128 255 255"}
 	
 	local txt=iup.text(tbl )
-	local OwnerDialog=nil
+	local OwnerDialog=iup.GetGlobal("PARENTDIALOG")
 	local range=nil
 	
 	local function GetVariable(txt)

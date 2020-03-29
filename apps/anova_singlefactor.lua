@@ -4,6 +4,13 @@
 require( "iuplua" ) 
 
 
+local function ASSERT(exp, msg)
+
+	if(not exp) then
+		error(msg, 0)
+	end
+
+end
 
 
 
@@ -86,18 +93,10 @@ local function ANOVASingleFactor()
 	
 	local function OnCompute()
 		
-		if(txtResponses.value=="") then
-			iup.Message("ERROR","Response range cannot be empty, a selection must be made.")
-			
-			return
-		end
-	
-		if(IsStacked and txtFactors.value=="") then
-			iup.Message("ERROR","Factors range cannot be empty, a selection must be made")
-			
-			return
-		end
+		ASSERT(txtResponses.value~="","Response range cannot be empty, a selection must be made.")
 		
+		ASSERT(IsStacked and txtFactors.value=="", "ERROR","Factors range cannot be empty, a selection must be made")
+			
 		
 		local Alpha=(100-tonumber(txtConfidence.value))/100
             
@@ -134,17 +133,12 @@ local function ANOVASingleFactor()
 		if(IsStacked) then
 			rngFactors=Range.new(std.activeworkbook(), txtFactors.value)
 			
-			if(rngFactors:ncols()>1 or rngResponses:ncols()>1) then 
-				iup.Message("ERROR","The factors or the responses must be in a single column") 
-				
-				return 
-			end
+			ASSERT(rngFactors:ncols()==1 and rngResponses:ncols()==1, "The factors or the responses must be in a single column") 
 			
 			local responses, NonNum=std.tovector(rngResponses:col(1))
-			if(responses==nil or NonNum>0) then 
-				iup.Message("ERROR","There is none-numeric data in the selected response range") 
-				return 
-			end
+			
+			ASSERT(responses~=nil and NonNum==0, "There is none-numeric data in the selected response range") 
+				
 			
 			local factors=std.tovector(rngFactors:col(1))
 			local uniquefactors=factors[{}]
@@ -239,8 +233,11 @@ local function ANOVASingleFactor()
 	end --function OnCompute
 
 
+
+
 	function btnOK:action()
 		local status, err=pcall(OnCompute)
+		
 		if(not status)  then 
 			iup.Message("ERROR",err) 
 		end
