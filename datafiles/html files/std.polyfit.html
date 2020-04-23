@@ -11,10 +11,14 @@
 </p>
 
 <h3>Syntax:</h3>
-<p>polyfit(x,y,n) &rarr; Vector</p>
+<p>
+      polyfit(x=,y=,n=, [intercept=]) &rarr; Vector <br>
+      polyfit{x=,y=,n=, [intercept=]} &rarr; Vector
+</p>
 
 <p>
       where <em>x</em> and <em>y</em> are Vectors and <em>n</em> is the degree of the polynomial. <br>
+      If intercept is provided, then the other coefficients will be calculated based on the given intercept.<br>
       The function returns a vector containing the coefficients of the fitting.
 </p>
 
