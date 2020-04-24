@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>pcall</h1>
+    
+<p>
+      If index is a number, returns all arguments after argument number index; a negative number indexes from the end (-1 is the last argument). <br>
+      Otherwise, index must be the string "#", and select returns the total number of extra arguments it received.
+</p>
+
+
+    
+<h2>Syntax:</h2> 
+<p>select (index, ...) </p>
+
+<p>&nbsp;</p>
+
+<h2>Example:</h2>
+<p>
+      &gt;&gt;t={10,20} <br>
+      &gt;&gt;a=100 <br>
+      &gt;&gt;b=200 <br>
+
+      <br>
+
+      &gt;&gt;select(1, t,a,b) <br>
+      10 &nbsp;&nbsp;	20	<br>
+      100	<br>
+      200	<br>
+
+      <br>
+
+      &gt;&gt;select(2, t,a,b) <br>
+      100	<br>
+      200	<br>
+
+
+      <br>
+      <br>
+      &gt;&gt;<font color="blue">function</font> f(...) print(select(1, ...)) <font color="blue">end</font> <br>
+      &gt;&gt;f(10,20) <br>
+      10 &nbsp;&nbsp;	20	<br>
+
+      <br>
+
+      &gt;&gt;<font color="blue">function</font> f(...) print(select(2, ...)) <font color="blue">end</font> <br>
+      &gt;&gt;f(10,20) <br>
+      20	
+
+</p>
+
+</body>
+
+</html>

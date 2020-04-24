@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>frexp</h1>
+    
+<p>
+      Returns <i>m</i> and <i>n</i> such that x = m &times; 2<sup>n</sup>. <br>
+      <i>n</i> is an integer and the absolute value of <i>m</i> is in the range [0.5, 1) (or zero when x is zero).
+</p>
+    
+<p><b>Syntax:</b></p> 
+<p>frexp(x) &rarr; number, integer</p>
+
+<p><b>Example Usage:</b></p>
+<p>
+      &gt;&gt;math.frexp(3) <br>
+      0.75 &nbsp;&nbsp;	2	<br>
+
+      <br>
+
+      &gt;&gt;math.frexp(32)  <br>
+      0.5 &nbsp;&nbsp;	6	
+</p>
+
+<p><b>Note:</b></p>
+<p>
+      As seen in the above examples, <i>n</i> is such that 2<sup>n</sup> &gt;x. 
+      
+      <br>
+      
+      i.e., x=32 &rArr; n=6, since 2<sup>6</sup>=64
+      
+      <br>
+      
+      Then m=x/2<sup>e</sup> (i.e. 0.5=32/64)
+</p>
+
+</body>
+
+</html>

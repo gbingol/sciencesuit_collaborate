@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>ipairs</h1>
+    
+<p>
+      Returns three values (an iterator function, the table t, and 0) so that the construction<br>
+
+      <br>
+
+      for i,v in ipairs(t) do body end <br>
+
+      <br>
+
+      will iterate over the key–value pairs (1,t[1]), (2,t[2]), ..., up to the first <font color="blue">nil</font> value.
+</p>
+
+
+    
+<h2>Syntax:</h2> 
+<p>ipairs(t)</p>
+
+<p>&nbsp;</p>
+
+<h2>Example:</h2>
+<p>
+      &gt;&gt;t={10, 20, 30} <br>
+
+      <br>
+
+      &gt;&gt;for k,v in ipairs(t) do print(k,v) end <br>
+      1 &nbsp;&nbsp;	10	<br>
+      2 &nbsp;&nbsp;	20	<br>
+      3 &nbsp;&nbsp;	30	<br>
+
+      <br>
+
+      &gt;&gt;t={10, 20, <font color="red">nil</font>, 30} <br>
+
+      <br>
+
+      &gt;&gt;for k,v in ipairs(t) do print(k,v) end <br>
+      1 &nbsp;&nbsp;	10	<br>
+      2 &nbsp;&nbsp;	20	
+
+</p>
+
+</body>
+
+</html>

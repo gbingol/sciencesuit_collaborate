@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>dump</h1>
+    
+<p>
+      Returns a string containing a binary representation of the given function. <br>
+      Calling <i>load</i> function on this string returns a copy of the function.<br>
+
+      <br>
+
+      If <i>strip</i> is a <font color="blue">true</font> value, the binary representation may not include all debug information about the function.
+</p>
+    
+<h2>Syntax:</h2>
+<p>dump (function [, strip]) </p>
+
+<h2>Example:</h2>
+<p>
+      &gt;&gt;<font color="blue">function</font> f(x) <font color="blue">return</font> x^2 <font color="blue">end</font> <br>
+      
+      <br>
+
+      &gt;&gt;s=string.dump(f) <br>
+      &gt;&gt;load(s)(2) <br>
+      4	
+</p>
+
+
+</body>
+
+</html>

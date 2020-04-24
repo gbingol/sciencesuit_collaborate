@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>getmetatable</h1>
+    
+<p>If <i>object</i> does not have a metatable, returns nil. Otherwise, returns the associated value. </p>
+    
+<p><b>Syntax:</b></p> 
+<p>getmetatable(object)</p>
+
+<p>&nbsp;</p>
+
+<h2>Example:</h2>
+<p>
+      &gt;&gt;t = {} <br>
+      &gt;&gt;getmetatable(t)   --> nil <br>
+
+      <br>
+
+      &gt;&gt;t1 = {} <br>
+      &gt;&gt;setmetatable(t, t1) <br>
+      &gt;&gt;assert(getmetatable(t) == t1) --> true
+</p>
+
+</body>
+
+</html>

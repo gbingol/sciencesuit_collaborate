@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>load</h1>
+    
+<p>
+      Executes a given string as a Lua chunk. <br> 
+      Returns 1 if there are no errors, nil otherwise.
+</p>
+
+
+    
+<h2>Syntax:</h2> 
+<p>load (string)</p>
+
+<p>&nbsp;</p>
+
+<h2>Example:</h2>
+<p>
+      &gt;&gt;str="a=3;b=2*a" <br>
+
+      <br>
+      
+      &gt;&gt;load(str) <br>
+      Function's memory address is: 039B6330 <br>
+
+      <br>
+
+      &gt;&gt;f=load(str) <br>
+      &gt;&gt;f() <br>
+
+      <br>
+
+      &gt;&gt;a <br>
+      3	<br>
+      &gt;&gt;b <br>
+      6	
+</p>
+
+</body>
+
+</html>

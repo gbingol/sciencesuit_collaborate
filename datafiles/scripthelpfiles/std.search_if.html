@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+    
+<body>
+    
+<h1>search_if</h1>
+
+<p>
+      Finds the entries in an iteratable container satisfying a given condition. <br>
+      Returns the entries and the number (integer) of entries satisfying the condition.
+</p>
+
+<h3>Syntax:</h3>
+<p>
+      search_if(container, function) 
+</p>
+<h4>Arguments:</h4>
+<table border="1" cellspacing="3" collapse>
+    <tr>
+        <td><i>container:</i></td>  
+        <td>An iteratable container</td>
+    </tr>
+
+    <tr>
+        <td><i>func:</i></td>  
+        <td>A Unary Predicate function</td>
+    </tr>
+</table>
+
+<p>&nbsp;</p>
+
+
+<h3>Example:</h3>
+<p>
+    &gt;&gt;t={10, 20, 30, 40} <br>
+
+    <br>
+
+    &gt;&gt;std.search_if(t, <font color="blue">function</font>(x) return x&gt;15 <font color="blue">end</font>) <br>
+    20 &nbsp;&nbsp; 30 &nbsp;&nbsp;	40	<br>
+    3	<br>
+
+    <br>
+
+    &gt;&gt;std.search_if(t, <font color="blue">function</font>(x) return x&lt;15 <font color="blue">end</font>) <br>
+    10	<br>
+    1	
+</p>
+
+</body>
+
+</html>
