@@ -9,7 +9,7 @@ local function polyfit(...)
 	
 	if(#arg==1  and type(arg[1])=="table") then
 		
-		local x, y,n, intercept=nil, nil, nil, nil, nil
+		local x, y,n, intercept=nil, nil, nil, nil
 		local NTblArgs=0
 
 		for k,v in pairs(arg[1]) do
