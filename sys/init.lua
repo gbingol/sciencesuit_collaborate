@@ -16,8 +16,6 @@ ERRORLEVEL=0
 SYSTEM={}
 SYSTEM.__name="SYSTEM"
 
-SYSTEM.Meta_Plot={} --metatable of std.plot
-
 
 
 std={}
@@ -30,12 +28,6 @@ std.app.__name="std.app"
 
 std.gui={}
 std.gui.__name="std.gui"
-
-
-std.plot={}
-std.plot.__name="std.plot"
-
-setmetatable(std.plot, SYSTEM.Meta_Plot)
 
 
 std.misc={}
