@@ -11,7 +11,7 @@ function Fluid.new(FluidName)
 	setmetatable(FLUID,Fluid) --create the object
 	
 	local m_database=Database.new()
-	m_database:open(std.const.exedir.."/databases/Fluids.db")
+	m_database:open(std.const.exedir.."/datafiles/Fluids.db")
 	
 	local AvailableTables=m_database:tables()
 	
