@@ -51,7 +51,7 @@ end
 
 local function RangeSorter()
 		
-	local rng=std.activeworkbook():cur():selection()
+	local rng=std.activeworksheet():selection()
 	
 	if(rng==nil) then 
 		iup.Message("ERROR","A selection must be made to run this command.") 

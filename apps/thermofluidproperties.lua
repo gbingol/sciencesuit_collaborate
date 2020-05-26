@@ -187,18 +187,22 @@ local function RefrigerantProperties()
 	
 		if(m_Fluid==nil) then
 			iup.Message("ERROR","The fluid type must be selected.")
+			
 			return
 			
 		elseif(m_IsP==0 and m_IsT==0) then 
 			iup.Message("ERROR","At least one selection must be made")
+			
 			return
 
 		elseif(m_IsP==1 and txtP.value=="") then
 			iup.Message("ERROR","Pressure field cannot be empty, since it is checked.")
+			
 			return
 			
 		elseif(m_IsT==1 and txtT.value=="") then
 			iup.Message("ERROR","Temperature field cannot be empty, since it is checked.")
+			
 			return 
 		end
 		
@@ -210,18 +214,24 @@ local function RefrigerantProperties()
 		
 		if(m_IsP==1 and m_IsT==0) then 
 			props=m_Fluid:get({P=P}) 
+			
 			NofSel=NofSel+1
+			
 			txtT.value=string.format("%.2f",tostring(props.T))
 			
 		elseif(m_IsP==0 and m_IsT==1) then 
 			props=m_Fluid:get({T=T}) 
+			
 			NofSel=NofSel+1 
+			
 			txtP.value=string.format("%.2f",tostring(props.P))
 		end
 		
 		if(NofSel==1) then
 			local txts={txtVf,txtVg, txtUf, txtUg, txtHf, txtHg, txtSf, txtSg}
+			
 			local keys={"vf", "vg", "uf", "ug", "hf", "hg", "sf", "sg"}
+			
 			local format={"%.4f","%.3f","%.2f","%.2f","%.2f","%.2f","%.3f","%.3f"}
 			
 			for i=1, #txts do
@@ -229,12 +239,14 @@ local function RefrigerantProperties()
 			end
 		end
 		
+		
 		if(m_IsP==1 and m_IsT==1) then 
 			props=m_Fluid:get({P=P, T=T})
 			local status=tonumber(m_Fluid.FluidState)
 			
 			if(status==1) then 
 				lblFluidState.title="Fluid State: Superheated"
+				
 			elseif(status==-1) then
 				lblFluidState.title="Fluid State: Compressed"
 			end

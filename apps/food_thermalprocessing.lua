@@ -216,8 +216,8 @@ local function FoodThermalProcessing()
 		end
 		
 		
-		local range_time=Range.new(std.activeworkbook(),txtTime.value)
-		local range_T=Range.new(std.activeworkbook(), txtTemperature.value)
+		local range_time=Range.new(txtTime.value)
+		local range_T=Range.new(txtTemperature.value)
 		
 		local vtime,vTemp=std.tovector(range_time), std.tovector(range_T)
 		
@@ -234,7 +234,7 @@ local function FoodThermalProcessing()
 		end
 		
 		
-		local WS=std.activeworkbook():add()
+		local WS=std.appendworksheet()
 		local row, col=1,1 --which row shall we print on the grid
 		
 		local Headers={"Time ", "Temperature", "Lethality Rate", "D Value","Total Log Reduction", "F-Value"}
@@ -278,12 +278,4 @@ end
 
 
 std.app.FoodThermalProcessing=FoodThermalProcessing
-
-
-
---HISTORY
-
---v1.8.3: testDBName =EXEDIR.."/databases/Microorganism.db" 
---was causing an error as the directory name is now datafiles. This bug was reported and corrected by Dr Pablo Coronel. 
---A corrected version was released on v1.8.4
 

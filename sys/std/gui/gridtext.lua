@@ -13,7 +13,7 @@ local function gridtext( tbl)
 	local range=nil
 	
 	local function GetVariable(txt)
-		local ws=std.activeworkbook():cur()
+		local ws=std.activeworksheet()
 		local range=ws:selection()
 				
 		if (range==nil)  then 
@@ -45,7 +45,7 @@ local function gridtext( tbl)
 			OwnerDialog.topmost="yes"
 		end
 		
-		local ws=std.activeworkbook():cur()
+		local ws=std.activeworksheet()
 				
 		ws:connect(GetVariable, txt)
 	end

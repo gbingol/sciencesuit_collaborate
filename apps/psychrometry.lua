@@ -323,7 +323,18 @@ local function Psychrometry()
 					W="kg / kg da", Ws="kg / kg da", V="m\xB3 /kg"}
 		
 		local date=os.date("*t")
-		local ws=std.activeworkbook():add("Psychrometry "..date.hour..date.min..date.sec)
+		local hour=date.hour
+		local min=date.min
+		if(min<=9) then 
+			min="0"..min
+		end
+
+		local sec=date.sec
+		if(sec<=9) then
+			sec="0"..sec
+		end
+
+		local ws=std.appendworksheet("Psychrometry "..hour..min..sec)
 		
 		local row=1
 		

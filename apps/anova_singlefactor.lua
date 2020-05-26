@@ -105,7 +105,7 @@ local function ANOVASingleFactor()
 		local Row, Col=0, 0
 		local WS=nil 
 		
-		local rngResponses=Range.new(std.activeworkbook(), txtResponses.value)
+		local rngResponses=Range.new(txtResponses.value)
 		
 		local outRng=OutputFrm:GetRange()
 		
@@ -114,7 +114,7 @@ local function ANOVASingleFactor()
 			Col=outRng:coords().c
 			WS=outRng:parent() 
 		else
-			WS=std.activeworkbook():add()
+			WS=std.appendworksheet()
 			Row=1
 			Col=1
 		end
@@ -134,7 +134,7 @@ local function ANOVASingleFactor()
 		
 		
 		if(IsStacked) then
-			rngFactors=Range.new(std.activeworkbook(), txtFactors.value)
+			rngFactors=Range.new(txtFactors.value)
 			
 			ASSERT(rngFactors:ncols()==1 and rngResponses:ncols()==1, "The factors or the responses must be in a single column") 
 			

@@ -97,7 +97,7 @@ local function  ttest1sample()
 		local Mu=tonumber(txtMu.value)
 		
 		 
-		local rng1=Range.new(std.activeworkbook(), txtVar1.value)
+		local rng1=Range.new(txtVar1.value)
 
 		if(rng1:ncols()>1) then 
 			iup.Message("ERROR","The selected range for Variable #1 must be a single column.") 
@@ -115,7 +115,7 @@ local function  ttest1sample()
 			col=OutputRng:coords().c
 			WS=OutputRng:parent() 
 		else
-			WS=std.activeworkbook():add()
+			WS=std.appendworksheet()
 			row=1
 			col=1
 		end

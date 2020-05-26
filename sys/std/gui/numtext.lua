@@ -14,10 +14,13 @@ local function numtext(tbl)
 	
 	local txt=iup.text(properties )
 	
+	
 	if(min~=nil and max~=nil) then
 		txt.tip="["..tostring(min)..","..tostring(max).."]"
+		
 	elseif(min~=nil) then
 		txt.tip=">="..tostring(min)
+		
 	elseif(max~=nil) then
 		txt.tip="<="..tostring(max)
 	
@@ -50,10 +53,13 @@ local function numtext(tbl)
 		
 		if(numval==nil) then
 			txt.bgcolor="255 0 0"
+			
 			return
+			
 		else
 			txt.bgcolor="255 255 255"
 		end
+
 
 		--It is not mandatory for user to specify a min value
 		if(min~=nil) then
@@ -61,6 +67,7 @@ local function numtext(tbl)
 				txt.bgcolor="255 255 0"
 			end
 		end
+		
 		
 		--It is not mandatory for user to specify a max value
 		if(max~=nil) then

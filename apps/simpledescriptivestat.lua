@@ -159,7 +159,7 @@ local function  DescriptiveStat()
 		end
 		
 		
-		local InputRange=Range.new(std.activeworkbook(), txtInput.value)
+		local InputRange=Range.new(txtInput.value)
 		
 		
 		local outRng=OutputFrame:GetRange()
@@ -173,7 +173,7 @@ local function  DescriptiveStat()
 			col=outRng:coords().c
 			WS=outRng:parent() 
 		else
-			WS=std.activeworkbook():add()
+			WS=std.appendworksheet()
 		end
 		
 		local function PrinttoWS(ARange,ARow, ACol, PrintInfo)

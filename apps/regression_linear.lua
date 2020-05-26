@@ -82,8 +82,8 @@ local function LinearRegression()
 		end
 
 
-		local rngResponse=Range.new(std.activeworkbook(), txtResponse.value)
-		local rngFactors=Range.new(std.activeworkbook(), txtFactors.value) 
+		local rngResponse=Range.new(txtResponse.value)
+		local rngFactors=Range.new(txtFactors.value) 
 		
 		if(rngResponse:ncols()>1 ) then 
 			iup.Message("ERROR","Response variable must be a single column.") 
@@ -109,7 +109,7 @@ local function LinearRegression()
 			Col=outRng:coords().c
 			WS=outRng:parent() 
 		else
-			WS=std.activeworkbook():add()
+			WS=std.appendworksheet()
 		end
 
 

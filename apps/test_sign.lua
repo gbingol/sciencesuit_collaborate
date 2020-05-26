@@ -117,7 +117,7 @@ local function  dlgSignTest()
 		end
 
 		
-		local rng1, rng2=Range.new(std.activeworkbook(), txtVar1.value), nil
+		local rng1, rng2=Range.new(txtVar1.value), nil
 		
 		if(rng1:ncols()>1 ) then 
 			iup.Message("ERROR","The selected range for Variable #1 must be a single column.") 
@@ -139,7 +139,7 @@ local function  dlgSignTest()
 			end
 
 
-			rng2=Range.new(std.activeworkbook(), txtVar2.value)
+			rng2=Range.new(txtVar2.value)
 			
 			if(rng2:ncols()>1) then 
 				iup.Message("ERROR","The selected range for Variable #2 must be a single column.") 
@@ -177,7 +177,7 @@ local function  dlgSignTest()
 			row=OutputRng:coords().r 
 			col=OutputRng:coords().c
 		else
-			WS=std.activeworkbook():add()
+			WS=std.appendworksheet()
 		end
 		
 		

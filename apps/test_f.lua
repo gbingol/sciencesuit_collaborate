@@ -82,11 +82,12 @@ local function  dlgTestF()
 		local conflevel=tonumber(txtConfLevel.value)/100
 		local Ratio=tonumber(txtRatio.value)
 		 
-		local rng1=Range.new(std.activeworkbook(), txtSample1.value)
-		local rng2=Range.new(std.activeworkbook(), txtSample2.value)
+		local rng1=Range.new(txtSample1.value)
+		local rng2=Range.new(txtSample2.value)
 
 		if(rng1:ncols()>1 or rng2:ncols()>1) then 
 			iup.Message("ERROR","The selected range for Sample #1 and Sample #2 must be a single column.") 
+			
 			return 
 		end
 			
@@ -120,7 +121,7 @@ local function  dlgTestF()
 			col=OutputRng:coords().c
 			WS=OutputRng:parent() 
 		else
-			WS=std.activeworkbook():add()
+			WS=std.appendworksheet()
 			row=1
 			col=1
 		end

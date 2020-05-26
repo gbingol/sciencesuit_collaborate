@@ -59,9 +59,9 @@ local function ANOVATwoFactor()
             
 		local Row, Col=0, 0
 		
-		local rngResponse=Range.new(std.activeworkbook(), txtResponse.value)
-		local rngFactor1=Range.new(std.activeworkbook(), txtFactor1.value) 
-		local rngFactor2=Range.new(std.activeworkbook(), txtFactor2.value) 
+		local rngResponse=Range.new(txtResponse.value)
+		local rngFactor1=Range.new(txtFactor1.value) 
+		local rngFactor2=Range.new(txtFactor2.value) 
 		
 		
 		if(rngResponse:ncols()>1 or rngFactor1:ncols()>1 or rngFactor2:ncols()>1) then 
@@ -82,7 +82,7 @@ local function ANOVATwoFactor()
 			
 		else
 		
-			WS=std.activeworkbook():add()
+			WS=std.appendworksheet()
 			Row=1
 			Col=1
 		end
@@ -91,6 +91,7 @@ local function ANOVATwoFactor()
 		local vecResponse, NonNum=std.tovector(rngResponse)
 		if(vecResponse==nil or NonNum>0) then 
 			iup.Message("ERROR","Response range contains non-numeric data.") 
+			
 			return 
 		end
 		

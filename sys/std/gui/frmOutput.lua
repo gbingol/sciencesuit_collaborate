@@ -36,7 +36,7 @@ local function frm()
 	
 	function OutputFrame:GetRange()
 		if(IsThereSelection) then
-			return Range.new(std.activeworkbook(), txtSelection.value)
+			return Range.new(txtSelection.value)
 		end
 	
 		return nil

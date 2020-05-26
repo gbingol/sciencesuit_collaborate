@@ -124,11 +124,12 @@ local function  dlgTwoSample2Test()
 			varequal=true
 		end
 		 
-		local rng1=Range.new(std.activeworkbook(), txtVar1.value)
-		local rng2=Range.new(std.activeworkbook(), txtVar2.value)
+		local rng1=Range.new(txtVar1.value)
+		local rng2=Range.new( txtVar2.value)
 
 		if(rng1:ncols()>1 or rng2:ncols()>1) then 
 			iup.Message("ERROR","The selected range for Variable #1 and Variable #2 must be a single column.") 
+			
 			return 
 		end
 			
@@ -143,7 +144,7 @@ local function  dlgTwoSample2Test()
 			col=OutputRng:coords().c
 			WS=OutputRng:parent() 
 		else
-			WS=std.activeworkbook():add()
+			WS=std.appendworksheet()
 			row=1
 			col=1
 		end
@@ -154,13 +155,16 @@ local function  dlgTwoSample2Test()
 		
 		if(SamplesInTwoCol) then
 			v1 , v2=std.tovector(rng1) , std.tovector(rng2)
+			
 			if(v1==nil or #v1<3) then 
 				iup.Message("ERROR","Either there is none or less than 3 valid numeric data in the selected range of Variable #1.") 
+				
 				return 
 			end
 				
 			if(v2==nil or #v2<3) then 
 				iup.Message("ERROR","Either there is none or less than 3 valid numeric data in the selected range of Variable #2.")  
+				
 				return 
 			end
 			
