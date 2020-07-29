@@ -49,6 +49,8 @@ local function dlgTestZ()
 
 	local OutputFrame=std.gui.frmOutput()
 	
+	
+	std.gui.PrepareAppForPreSelection({txt=txtVar1, row=1,col=1, nrows=-1, ncols=1})
 
 	--main dialog
 	

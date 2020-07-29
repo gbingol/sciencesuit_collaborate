@@ -3,21 +3,21 @@
 	<PAGE TITLE="Apps">
 		<BUTTON NAME="psychrometry" TITLE="Psychrometry">
 			<FUNCTION>std.app.Psychrometry</FUNCTION>
-			<IMAGE>images/psychrometry.bmp</IMAGE>
+			<IMAGE>apps/images/psychrometry.bmp</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="fooddatabase" TITLE="Food Database">
 			<FUNCTION>std.app.FoodDatabase</FUNCTION>
-			<IMAGE>images/fooddatabase.jpg</IMAGE>
+			<IMAGE>apps/images/fooddatabase.jpg</IMAGE>
 		</BUTTON>
 		<BUTTON NAME="foodthermalproc" TITLE="Thermal Processing">
 			<FUNCTION>std.app.FoodThermalProcessing</FUNCTION>
-			<IMAGE>images/thermalprocessing.jpg</IMAGE>
+			<IMAGE>apps/images/thermalprocessing.jpg</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="fluidthermoproperties" TITLE="Thermodynamic Properties of Fluids">
 			<FUNCTION>std.app.ThermodynamicPropFluid</FUNCTION>
-			<IMAGE>images/fluid.bmp</IMAGE>
+			<IMAGE>apps/images/fluid.bmp</IMAGE>
 		</BUTTON>
 		
 		
@@ -32,42 +32,42 @@
 	
 		<BUTTON NAME="sort" TITLE="Sort">
 			<FUNCTION>std.app.RangeSorter</FUNCTION>
-			<IMAGE>images/sort.jpg</IMAGE>
+			<IMAGE>apps/images/sort.jpg</IMAGE>
 		</BUTTON>
 
 		<BUTTON NAME="descriptivestat" TITLE="Descriptive Statistics">
 			<FUNCTION>std.app.DescriptiveStat</FUNCTION>
-			<IMAGE>images/descriptivestat.jpg</IMAGE>
+			<IMAGE>apps/images/descriptivestat.jpg</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="ttest1sample" TITLE="1 sample t-test">
 			<FUNCTION>std.app.TTest1Sample</FUNCTION>
-			<IMAGE>images/t_test1sample.png</IMAGE>
+			<IMAGE>apps/images/t_test1sample.png</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="ttest2sample" TITLE="2 sample t-test">
 			<FUNCTION>std.app.TTest2Sample</FUNCTION>
-			<IMAGE>images/t_test2sample.png</IMAGE>
+			<IMAGE>apps/images/t_test2sample.png</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="ttestpaired" TITLE="Paired t-test">
 			<FUNCTION>std.app.TTestPaired</FUNCTION>
-			<IMAGE>images/t_testpaired.png</IMAGE>
+			<IMAGE>apps/images/t_testpaired.png</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="test_z" TITLE="Z-test">
 			<FUNCTION>std.app.test_z</FUNCTION>
-			<IMAGE>images/test_z.png</IMAGE>
+			<IMAGE>apps/images/test_z.png</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="test_f" TITLE="F-test">
 			<FUNCTION>std.app.test_f</FUNCTION>
-			<IMAGE>images/test_f.png</IMAGE>
+			<IMAGE>apps/images/test_f.png</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="anova_singlefactor" TITLE="Single factor">
 			<FUNCTION>std.app.ANOVASingleFactor</FUNCTION>
-			<IMAGE>images/anovasinglefactor.png</IMAGE>
+			<IMAGE>apps/images/anovasinglefactor.png</IMAGE>
 		</BUTTON>
 		
 		<BUTTON NAME="anova_twofactor" TITLE="Two factor">
@@ -80,24 +80,24 @@
 		
 		<BUTTON NAME="test_sign" TITLE="Sign Test">
 			<FUNCTION>std.app.SignTest</FUNCTION>
-			<IMAGE>images/test_sign.png</IMAGE>
+			<IMAGE>apps/images/test_sign.png</IMAGE>
 		</BUTTON>
 		
 		<DROPBUTTON NAME="ttest" TITLE="t-test">
-			<IMAGE>images/t_test.png</IMAGE>
+			<IMAGE>apps/images/t_test.png</IMAGE>
 			<ADD>ttest1sample</ADD>
 			<ADD>ttest2sample</ADD>
 			<ADD>ttestpaired</ADD>
 		</DROPBUTTON>
 		
 		<DROPBUTTON NAME="anova" TITLE="ANOVA">
-			<IMAGE>images/anova.png</IMAGE>
+			<IMAGE>apps/images/anova.png</IMAGE>
 			<ADD>anova_singlefactor</ADD>
 			<ADD>anova_twofactor</ADD>
 		</DROPBUTTON>
 		
 		<DROPBUTTON NAME="regression" TITLE="Regression">
-			<IMAGE>images/regression.png</IMAGE>
+			<IMAGE>apps/images/regression.png</IMAGE>
 			<ADD>regression_linear</ADD>
 		</DROPBUTTON>
 		

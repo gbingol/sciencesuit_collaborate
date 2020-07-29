@@ -6,8 +6,7 @@ package.cpath = package.cpath..";./?.dll;./?.so;../lib/?.so;../lib/vc_dll/?.dll;
 
 TOLERANCE=1E-5 -- planned to be removed in the following version
 
---Interprocess Communication Port Number, recommended (1000,60000). Used by ScienceSuit to respond to clicking a lua or ssp file from filemanager of OS.
-IPCPORTNUMBER=-1 
+
 
  --Just return error message. If more diagnostic is required, such as at which line the error occured, then set it to 1.
 ERRORLEVEL=0     
@@ -24,6 +23,8 @@ std.__name="std"
 
 std.app={}
 std.app.__name="std.app"
+
+std.app.AllowPreSelection=true
 
 
 std.gui={}
@@ -50,6 +51,8 @@ std.const.color={white="255 255 255", red="255 0 0", red_dark="139 0 0", lime="0
                  salmon="250 128 114" , salmon_light="255 160 122", orange_red="255 69 0", orange_dark="255 140 0", orange="255 165 0",
                  chocolate="210 105 30", tan="210 180 140", brown_saddle="139 69 19", wheat="245 222 179", orchid="218 112 214",
                  indigo="75 0 130", blue_medium="0 0 205", blue_royal="65 105 225", blue_midnight="25 25 112" }
+
+std.const.fillstyle={solid=100, transparent=106, bdiaghatch=111, crossdiaghatch=112, fdiaghatch=113, crosshatch=114, horizhatch=115, verthatch=116}
 
 
 

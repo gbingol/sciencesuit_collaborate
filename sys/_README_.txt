@@ -1,7 +1,3 @@
-LUAC.EXE 
-(renamed from luac53.exe) can also be obtained from http://luabinaries.sourceforge.net/download.html
-
-
 
 USDANALSR28.db: 
 This database file contains information on macro-components.

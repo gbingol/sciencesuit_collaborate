@@ -63,6 +63,11 @@ local function  DescriptiveStat()
 	OutputFrame:setOwner(MainDlg)
 	
 	MainDlg:show()
+	
+	std.gui.PrepareAppForPreSelection(txtInput)
+	
+	
+	
 
 	local function SE(elem) -- Standard Error
 		return std.stdev(elem)/std.sqrt(std.size(elem))
@@ -195,7 +200,15 @@ local function  DescriptiveStat()
 					
 					if(type(OutputVal)=="number" ) then
 						WS[ARow][ACol+1]=std.toformattedstring(OutputVal)
-					else 
+					
+					elseif(type(OutputVal)=="table") then
+						local str=""
+						for i=1,#OutputVal do
+							str=str..std.toformattedstring(OutputVal[i])..","
+						end
+						WS[ARow][ACol+1]=str
+						
+					else
 						WS[ARow][ACol+1]={value=OutputVal, style="italic", fgcolor="255 0 0"} 
 					end
 					

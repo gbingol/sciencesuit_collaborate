@@ -78,6 +78,9 @@ local function  dlgTwoSample2Test()
 	MainDlg:show()
 	
 	iup.Refresh(MainDlg)
+	
+	
+	std.gui.PrepareAppForPreSelection({txt=txtVar1, row=1,col=1, nrows=-1, ncols=1}, {txt=txtVar2, row=1,col=2, nrows=-1, ncols=1})
 
 	
 	function BtnCancel:action()

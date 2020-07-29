@@ -67,6 +67,10 @@ local function  dlgPairedttest()
 	OutputFrame:setOwner(MainDlg)
 	
 	MainDlg:show()
+	
+	
+	std.gui.PrepareAppForPreSelection({txt=txtSample1, row=1,col=1, nrows=-1, ncols=1}, {txt=txtSample2, row=1,col=2, nrows=-1, ncols=1})
+	
 
 	--main dialog
 	

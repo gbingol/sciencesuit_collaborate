@@ -44,6 +44,15 @@ local function ANOVATwoFactor()
 	dlgAnova:show()
 	
 	
+
+	std.gui.PrepareAppForPreSelection(
+										{txt=txtResponse, row=1,col=1, nrows=-1, ncols=1},
+										{txt=txtFactor1, row=1,col=2, nrows=-1, ncols=1},
+										{txt=txtFactor2, row=1,col=3, nrows=-1, ncols=1})
+	
+	
+	
+	
 	local function OnCompute()
 		local pvalue, AnovaTable=0 , {}
 		

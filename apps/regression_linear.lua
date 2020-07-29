@@ -45,6 +45,10 @@ local function LinearRegression()
 	dlgMultRegres:show()
 	
 	
+
+	std.gui.PrepareAppForPreSelection({txt=txtResponse, row=1,col=1, nrows=-1, ncols=1},{txt=txtFactors, row=1,col=2, nrows=-1, ncols=-1})
+	
+	
 	
 	function btnCancel:action()
 		dlgMultRegres:hide()
