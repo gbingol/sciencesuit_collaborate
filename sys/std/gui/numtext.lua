@@ -3,6 +3,10 @@
 
 require( "iuplua" )
 
+local std <const> =std
+local iup <const> =iup
+
+
 local function numtext(tbl)
 
 	local properties=tbl or {expand="HORIZONTAL"}

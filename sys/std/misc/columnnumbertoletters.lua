@@ -3,6 +3,10 @@
 
 -- Function currently used by Sort dialog
 
+
+local std <const> =std
+
+
 local function ColumnNumbertoLetters(num)
 	-- Takes a number say 772 and finds equivalent character set, which is ACR for 772
 	-- For example Z=26, AA=27, AB=28 ...

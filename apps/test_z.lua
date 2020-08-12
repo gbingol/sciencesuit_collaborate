@@ -4,6 +4,9 @@
 
 require( "iuplua" )
 
+local std <const> =std
+local iup <const> =iup
+
 
 --should be replaced with std.toformattedstring
 local function GetFormattedString(num)

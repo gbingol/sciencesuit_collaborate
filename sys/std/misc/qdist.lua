@@ -1,6 +1,8 @@
 -- Author:	Gokhan Bingol (gbingol@hotmail.com)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
+local std <const> =std
+
 
 local qdist095={nil,
 {nil,6.0849,8.3308,9.798,10.881,11.734,12.4345,13.0266,13.5381,13.9875,14.3874,14.7473,15.0757,15.3748,15.6503,15.9054,16.1427,16.3646,16.5728,16.7688},

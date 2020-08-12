@@ -8,6 +8,10 @@
 --Minitab and R seems to choose a number greater than 10. R refers to Chakraborti & Gibbons publication on its documentation
 --Therefore, 12 was chosen for normal approximation of binomial distribution
 
+
+local std <const> =std
+
+
 local NORMALAPPROXIMATIONSATISFIED=12
 
 local TOLERANCE=std.const.tolerance

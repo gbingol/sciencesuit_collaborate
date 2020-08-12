@@ -3,6 +3,9 @@
 
 -- Function currently used by Sort dialog
 
+local std <const> =std
+
+
 local function LetterstoColumnNumber(letters)
 	--str can be AA, BC, AAC ...
 	

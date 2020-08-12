@@ -1,6 +1,10 @@
 -- Author:	Gokhan Bingol (gbingol@hotmail.com)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
+
+local std <const> =std
+
+
 Fluid={}
 Fluid.__index=Fluid
 

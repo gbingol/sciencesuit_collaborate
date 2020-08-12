@@ -4,6 +4,10 @@
 
 require( "iuplua" )
 
+local std <const> =std
+local iup <const> =iup
+
+
 local function initvaltext(tbl)
 
 	local properties=tbl or {expand="HORIZONTAL"}

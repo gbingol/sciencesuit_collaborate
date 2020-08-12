@@ -10,6 +10,11 @@
 
 require( "iuplua" )
 
+
+local std <const> =std
+local iup <const> =iup
+
+
 local function GetScientificRep(num)
 	local exp=math.floor(math.log10(math.abs(num)))
 	local base=num*math.pow(10,-1*exp)

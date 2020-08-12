@@ -2,6 +2,8 @@
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
+local std <const> =std
+
 local function find(Container, value, tolerance)
 
 	tolerance=tolerance or 1E-5

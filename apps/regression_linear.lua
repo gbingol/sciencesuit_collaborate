@@ -3,6 +3,10 @@
 
 require( "iuplua" )
 
+local std <const> =std
+local iup <const> =iup
+
+
 local function LinearRegression()
 	
 	local lblResponse=iup.label{title="Response:"}

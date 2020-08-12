@@ -2,7 +2,7 @@
 
 -- NOTE:THIS FILE WILL BE THE FIRST ONE (AFTER INTERNAL LUA LIBRARIES ARE LOADED) TO BE EXECUTED WHEN SCIENCESUIT LOADS
 
-package.cpath = package.cpath..";./?.dll;./?.so;../lib/?.so;../lib/vc_dll/?.dll;../lib/bcc_dll/?.dll;../lib/mingw_dll/?.dll;"
+package.cpath = package.cpath..";./?.dll;"
 
 TOLERANCE=1E-5 -- planned to be removed in the following version
 
@@ -53,6 +53,7 @@ std.const.color={white="255 255 255", red="255 0 0", red_dark="139 0 0", lime="0
                  indigo="75 0 130", blue_medium="0 0 205", blue_royal="65 105 225", blue_midnight="25 25 112" }
 
 std.const.fillstyle={solid=100, transparent=106, bdiaghatch=111, crossdiaghatch=112, fdiaghatch=113, crosshatch=114, horizhatch=115, verthatch=116}
+std.const.linestyle={solid=100, dot=101, longdash=102, shortdash=103, dotdash=104, transparent=106}
 
 
 

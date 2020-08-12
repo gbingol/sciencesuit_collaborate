@@ -5,6 +5,10 @@
 --note: March 28, 2020
 --This whole file might be deleted, requires further checks before acting upon
 
+
+local std <const> =std
+
+
 local function IsEqual(m1,m2)
     
 	local r1, c1=std.size(m1)

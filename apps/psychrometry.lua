@@ -5,6 +5,10 @@
 
 require( "iuplua" )
 
+local std <const> =std
+
+
+
 local function Psychrometry()
 
 	local chkP = iup.toggle{title = "P"}

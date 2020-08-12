@@ -5,6 +5,10 @@
 require( "iuplua" )
 
 
+local std <const> =std
+local iup <const> =iup
+
+
 local function  dlgTestF()
 
 	local lblSample1=iup.label{title="Sample 1:"}

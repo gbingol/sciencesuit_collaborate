@@ -5,6 +5,10 @@
 
 require( "iuplua" )
 
+local std <const> =std
+local iup <const> =iup
+
+
 local function RefrigerantProperties()
 
 	

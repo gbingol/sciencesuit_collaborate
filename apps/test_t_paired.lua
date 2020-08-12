@@ -4,6 +4,10 @@
 
 require( "iuplua" )
 
+local std <const> =std
+local iup <const> =iup
+
+
 local function GetFormattedString(num)
 	if(num>1 or num<-1.0) then
 		return string.format("%.2f",num)

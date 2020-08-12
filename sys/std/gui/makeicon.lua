@@ -4,6 +4,10 @@
 
 require( "iuplua" )
 
+local std <const> =std
+local iup <const> =iup
+
+
 local function makeicon(fullpath)
 	assert(type(fullpath)=="string", "ERROR: Argument must be of type string")
 

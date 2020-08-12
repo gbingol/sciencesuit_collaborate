@@ -1,6 +1,8 @@
 -- Author:	Gokhan Bingol (gbingol@hotmail.com)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
+local std <const> =std
+
 
 local function cov(cont1,cont2,str)
 	--Calculates the covariance between two containers of same size

@@ -4,6 +4,9 @@
 
 require( "iuplua" )
 
+local std <const> =std
+local iup <const> =iup
+
 local function gridtext( tbl)
 
 	tbl=tbl or {expand="HORIZONTAL", BGCOLOR="128 255 255"}

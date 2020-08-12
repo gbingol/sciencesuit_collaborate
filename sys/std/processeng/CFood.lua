@@ -2,6 +2,9 @@
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
+local std <const> =std
+
+
 local TOLERANCE=std.const.tolerance
 
 local function Cp(component, T) --component can be water, CHO...; T is temperature in Celcius	
