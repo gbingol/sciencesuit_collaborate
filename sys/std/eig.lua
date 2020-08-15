@@ -6,6 +6,8 @@
 --		3) eig(m, ComputeEigVec, algorithm)
 
 
+local std <const> =std
+
 local function eig(...)
 	local arg=table.pack(...)
 	local nargs=#arg

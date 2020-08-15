@@ -2,6 +2,8 @@
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
+local std <const> =std
+
 local function ApplytoTypes(Entry,func,... )
 
 	--func : a function from Lua math library taking a single argument

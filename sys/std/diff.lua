@@ -1,6 +1,7 @@
 -- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
+local std <const> =std
 
 local function diff(v1, v2)
 	--INPUT: 		1) A single vector of size n 

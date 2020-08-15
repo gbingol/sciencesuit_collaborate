@@ -2,8 +2,8 @@
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
-
 require( "iuplua" )
+
 
 local std <const> =std
 local iup <const> =iup

@@ -3,6 +3,9 @@
 
 --This has been updated in C++
 
+
+local std <const> =std
+
 local function spline(x, y,val)  
     
     --Cubic spline algorithm

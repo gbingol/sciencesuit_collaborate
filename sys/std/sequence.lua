@@ -1,6 +1,9 @@
 -- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
+local std <const> =std
+
+
 local function seq(from, to, by)
 	--Sequential increment from=from to=to by=by
 	--returns a vector

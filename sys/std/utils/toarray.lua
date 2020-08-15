@@ -2,6 +2,8 @@
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
+local std <const> =std
+
 local function toarray(Container)
 
 	--If the entry is a matrix then it returns the elements in a row-order sequence

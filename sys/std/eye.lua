@@ -2,6 +2,8 @@
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
+local std <const> =std
+
 local function eye(nrow, ncol)
 	--INPUT: 		1) An unsigned integer number (>0)
 	--				2) Two unsigned integer numbers

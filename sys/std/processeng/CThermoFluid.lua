@@ -72,6 +72,7 @@ local function SaturatedProp(fluid,val, param1, val2, param2) --P: kPa, T: C
 	end  
 	
 	set,row, col=db:sql(strQuery)
+	
 	assert(row~=0,"Selected parameter is out of range. ")
 	
 	PH, TH=set[1][1] , set[1][2]
@@ -82,9 +83,11 @@ local function SaturatedProp(fluid,val, param1, val2, param2) --P: kPa, T: C
 
 	if(param1=="p") then 
 		strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SaturationTable.." WHERE P<="..tostring(val)
+		
 	elseif(param1=="t") then
 		strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SaturationTable.." WHERE T<="..tostring(val)
 	end
+
 
 	set,row, col=db:sql(strQuery)
 	assert(set~=nil,"For saturated properties, the parameter "..string.upper(param1).." is out of range for this type of fluid. ")

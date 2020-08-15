@@ -3,6 +3,9 @@
 
 --Converts Lua Table, Array, Range and Vector to Matrix
 
+local std <const> =std
+
+
 local function Table1DToMatrix(tbl, row, col)
 
 	local N=#tbl

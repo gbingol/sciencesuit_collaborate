@@ -2,6 +2,8 @@
 -- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
+local std <const> =std
+
 --y=a*x^n, returned vector contains in the order of [a, n]
 
 local function powfit (...)
