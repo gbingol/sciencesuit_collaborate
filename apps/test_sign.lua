@@ -243,7 +243,7 @@ local function  dlgSignTest()
 				local entry=tbl[j]
 				
 				if(type(entry)=="number") then
-					WS[row+i][col+j-1]=std.toformattedstring(entry)
+					WS[row+i][col+j-1]=std.misc.tostring(entry)
 				else
 					WS[row+i][col+j-1]={value=entry, style="italic"}
 				end

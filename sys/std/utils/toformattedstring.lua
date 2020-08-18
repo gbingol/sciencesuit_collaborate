@@ -42,4 +42,4 @@ local function ToFormattedString(Entry)
 end
 
 
-std.toformattedstring=ToFormattedString
+std.misc.tostring=ToFormattedString

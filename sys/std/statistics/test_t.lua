@@ -200,6 +200,7 @@ end
 local function ttest_paired(xvec,yvec, alternative, mu, conflevel)
 
 	assert(type(xvec)=="Vector" and type(yvec)=="Vector", "ERROR: Keys x and y must be of type Vector")
+	assert(#xvec==#yvec,"x and y vectors must have the same length")
 	
 	mu=mu or 0
 	assert(type(mu)=="number","ERROR: Key mu must be of type number")

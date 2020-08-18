@@ -199,7 +199,7 @@ local function ANOVASingleFactor()
 			local Entry=OutputTbl[i]
 			
 			for j=1,#Entry do
-				WS[Row][Col+j]=std.toformattedstring(Entry[j])
+				WS[Row][Col+j]=std.misc.tostring(Entry[j])
 			end
 			
 			Row=Row+1
@@ -223,10 +223,10 @@ local function ANOVASingleFactor()
 
 			for i=1,#TukeyTable do
 				WS[Row+i][Col]=tostring(TukeyTable[i].a).."-"..tostring(TukeyTable[i].b)
-				WS[Row+i][Col+1]=std.toformattedstring(TukeyTable[i].MeanValueDiff)
+				WS[Row+i][Col+1]=std.misc.tostring(TukeyTable[i].MeanValueDiff)
 				
-				local CILow=std.toformattedstring(TukeyTable[i].CILow)
-				local CIHigh=std.toformattedstring(TukeyTable[i].CIHigh)
+				local CILow=std.misc.tostring(TukeyTable[i].CILow)
+				local CIHigh=std.misc.tostring(TukeyTable[i].CIHigh)
 				
 				WS[Row+i][Col+2]=CILow.." , "..CIHigh
 				

@@ -132,6 +132,7 @@ local function LinearRegression()
 		local yobs=std.tovector(rngResponse)
 		
 		
+		
 		local Alpha=1-tonumber(txtConfidence.value)/100
 		if(Alpha<=0 or Alpha>=1) then 
 			iup.Message("Error", "Confidence Level must be in the range of (0, 100)")
@@ -140,9 +141,8 @@ local function LinearRegression()
 		end
 		
 		
-		
-		
 		local RegresResult=std.lm(yobs, factors, IsThereIntercept, Alpha)
+		
 		
 		--Just print the regression equation and return
 		if(ShouldIncludeStats==0) then
@@ -195,7 +195,7 @@ local function LinearRegression()
 			local tbl=Vals[i]
 
 			for j=1,#tbl do
-				WS[Row][Col+j]=std.toformattedstring(tbl[j])
+				WS[Row][Col+j]=std.misc.tostring(tbl[j])
 			end
 
 			Row=Row+1
@@ -239,12 +239,12 @@ local function LinearRegression()
 				}
 
 			for j=1,#Vals do
-				WS[Row][Col+j]=std.toformattedstring(Vals[j])
+				WS[Row][Col+j]=std.misc.tostring(Vals[j])
 			end
 			
 
 			local ColPos=Col+#Vals+1
-			WS[Row][ColPos]=std.toformattedstring(CoefStats[i].CILow).." , "..std.toformattedstring(CoefStats[i].CIHigh)
+			WS[Row][ColPos]=std.misc.tostring(CoefStats[i].CILow).." , "..std.misc.tostring(CoefStats[i].CIHigh)
 			
 			Row=Row+1
 		end

@@ -8,18 +8,6 @@ local std <const> =std
 local iup <const> =iup
 
 
-local function GetFormattedString(num)
-	if(num>1 or num<-1.0) then
-		return string.format("%.2f",num)
-		
-	elseif((num<1.0 and num>0.1) or (num>-1.0 and num<-0.1))  then
-		return string.format("%.3f", num)
-		
-	elseif((num<0.1 and num>0) or (num>-0.1 and num<0)) then
-		return string.format("%.5f", num)
-	end
-end
-
 
 local function  dlgPairedttest()
 
@@ -141,8 +129,14 @@ local function  dlgPairedttest()
 			return 
 		end
 
+		--note that if status==false then pval is the error message	
+		status, pval,ttable=pcall(std.test_t,{x=sample1, y=sample2,alternative=alternative, mu=Mu, conflevel=conflevel, paired=true})
+		
+		if(not status)  then 
+			iup.Message("ERROR",pval) 
 			
-		pval,ttable=std.test_t{x=sample1, y=sample2,alternative=alternative, mu=Mu, conflevel=conflevel, paired=true}
+			return
+		end
 		
 		local Rows={"Sample 1","Sample 2","Difference"}
 		for i=1,#Rows do
@@ -156,12 +150,12 @@ local function  dlgPairedttest()
 		end
 
 		
-		local SE1, SE2=GetFormattedString(ttable.s1/math.sqrt(ttable.n1)), GetFormattedString(ttable.s2/math.sqrt(ttable.n2))
+		local SE1, SE2=std.misc.tostring(ttable.s1/math.sqrt(ttable.n1)), std.misc.tostring(ttable.s2/math.sqrt(ttable.n2))
 		
 		local Values={
-						{ttable.n1,GetFormattedString(ttable.xaver), GetFormattedString(ttable.s1), SE1},
-						{ttable.n2, GetFormattedString(ttable.yaver), GetFormattedString(ttable.s2),SE2},
-						{ttable.N, GetFormattedString(ttable.mean), GetFormattedString(ttable.stdev), GetFormattedString(ttable.SE)}
+						{ttable.n1,std.misc.tostring(ttable.xaver), std.misc.tostring(ttable.s1), SE1},
+						{ttable.n2, std.misc.tostring(ttable.yaver), std.misc.tostring(ttable.s2),SE2},
+						{ttable.N, std.misc.tostring(ttable.mean), std.misc.tostring(ttable.stdev), std.misc.tostring(ttable.SE)}
 					}
 		
 		for i=1,#Values do
@@ -175,26 +169,24 @@ local function  dlgPairedttest()
 		row=row+#Values+2
 
 		WS[row][col]="t critical" 
-		WS[row][col+1]=GetFormattedString(ttable.tcritical)
+		WS[row][col+1]=std.misc.tostring(ttable.tcritical)
 		row=row+1
 		
 		WS[row][col]="p-value" 
-		WS[row][col+1]=GetFormattedString(pval); 
+		WS[row][col+1]=std.misc.tostring(pval); 
 		row=row+2
 		
 		WS[row][col]=tostring(conflevel*100).." Confidence Interval for "..alternative
 		
 		if(alternative=="less") then
-			WS[row+1][col]="(-inf, "..GetFormattedString(ttable.CI_upper)..")"
+			WS[row+1][col]="(-inf, "..std.misc.tostring(ttable.CI_upper)..")"
 		elseif(alternative=="greater") then
-			WS[row+1][col]="("..GetFormattedString(ttable.CI_lower)..", inf)"
+			WS[row+1][col]="("..std.misc.tostring(ttable.CI_lower)..", inf)"
 		else
-			WS[row+1][col]="("..GetFormattedString(ttable.CI_lower).." , "..GetFormattedString(ttable.CI_upper)..")"
+			WS[row+1][col]="("..std.misc.tostring(ttable.CI_lower).." , "..std.misc.tostring(ttable.CI_upper)..")"
 		end
 
 	end 
-	
-	
 
 end --MainDialog
 

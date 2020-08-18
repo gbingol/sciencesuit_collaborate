@@ -373,7 +373,7 @@ local function Psychrometry()
 				row=row+1
 				
 				ws[row][1]={value=key, style="italic"}
-				ws[row][2]=std.toformattedstring(value)
+				ws[row][2]=std.misc.tostring(value)
 				ws[row][3]=Units[key]
 			end
 		end

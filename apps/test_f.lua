@@ -148,7 +148,7 @@ local function  dlgTestF()
 
 		
 		
-		local Values={{Ftable.df1,std.toformattedstring(Ftable.var1)},	{Ftable.df2,std.toformattedstring(Ftable.var2)}}
+		local Values={{Ftable.df1,std.misc.tostring(Ftable.var1)},	{Ftable.df2,std.misc.tostring(Ftable.var2)}}
 		
 		for i=1,#Values do
 			local vals=Values[i]
@@ -161,25 +161,25 @@ local function  dlgTestF()
 		row=row+#Values+2
 
 		WS[row][col]="F critical" 
-		WS[row][col+1]=std.toformattedstring(Ftable.Fcritical)
+		WS[row][col+1]=std.misc.tostring(Ftable.Fcritical)
 		
 		row=row+1
 		
 		WS[row][col]="p-value" 
-		WS[row][col+1]=std.toformattedstring(pval); 
+		WS[row][col+1]=std.misc.tostring(pval); 
 		
 		row=row+2
 		
 		WS[row][col]=tostring(conflevel*100).." Confidence Interval for "..alternative
 		
 		if(alternative=="less") then
-			WS[row+1][col]="(0.00, "..std.toformattedstring(Ftable.CI_upper)..")"
+			WS[row+1][col]="(0.00, "..std.misc.tostring(Ftable.CI_upper)..")"
 			
 		elseif(alternative=="greater") then
-			WS[row+1][col]="("..std.toformattedstring(Ftable.CI_lower)..", inf)"
+			WS[row+1][col]="("..std.misc.tostring(Ftable.CI_lower)..", inf)"
 			
 		else
-			WS[row+1][col]="("..std.toformattedstring(Ftable.CI_lower).." , "..std.toformattedstring(Ftable.CI_upper)..")"
+			WS[row+1][col]="("..std.misc.tostring(Ftable.CI_lower).." , "..std.misc.tostring(Ftable.CI_upper)..")"
 		end
 
 	end 

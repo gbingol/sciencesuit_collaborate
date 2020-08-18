@@ -8,20 +8,6 @@ local std <const> =std
 local iup <const> =iup
 
 
---should be replaced with std.toformattedstring
-local function GetFormattedString(num)
-	if(num>1 or num<-1.0) then
-		return string.format("%.2f",num)
-		
-	elseif((num<1.0 and num>0.1) or (num>-1.0 and num<-0.1))  then
-		return string.format("%.3f", num)
-		
-	elseif((num<0.1 and num>0) or (num>-0.1 and num<0)) then
-		return string.format("%.5f", num)
-	end
-end
-
-
 
 local function dlgTestZ()
 
@@ -166,7 +152,7 @@ local function dlgTestZ()
 			WS[row][col+i-1]=vals [i][1]
 			
 			if(vals [i][3]) then
-				WS[row+1][col+i-1]=GetFormattedString(vals [i][2])
+				WS[row+1][col+i-1]=std.misc.tostring(vals [i][2])
 			else
 				WS[row+1][col+i-1]=vals [i][2]
 			end
@@ -178,13 +164,13 @@ local function dlgTestZ()
 		WS[row][col]=tostring(conflevel*100).." Confidence Interval for "..alternative
 		
 		if(alternative=="less") then
-			WS[row+1][col]="(-inf, "..GetFormattedString(ztable.CI_upper)..")"
+			WS[row+1][col]="(-inf, "..std.misc.tostring(ztable.CI_upper)..")"
 			
 		elseif(alternative=="greater") then
-			WS[row+1][col]="("..GetFormattedString(ztable.CI_lower)..", inf)"
+			WS[row+1][col]="("..std.misc.tostring(ztable.CI_lower)..", inf)"
 			
 		else
-			WS[row+1][col]="("..GetFormattedString(ztable.CI_lower).." , "..GetFormattedString(ztable.CI_upper)..")"
+			WS[row+1][col]="("..std.misc.tostring(ztable.CI_lower).." , "..std.misc.tostring(ztable.CI_upper)..")"
 		end
 
 	end 

@@ -148,10 +148,10 @@ local function tukey(AnovaTable, Alpha)
 		for i=1,#TukeyTable do
 			local Entry=TukeyTable[i]
 			
-			local CILow=std.toformattedstring(Entry.CILow)
-			local CIHigh=std.toformattedstring(Entry.CIHigh)
+			local CILow=std.misc.tostring(Entry.CILow)
+			local CIHigh=std.misc.tostring(Entry.CIHigh)
 			
-			str=str..std.toformattedstring(Entry.a).."-"..std.toformattedstring(Entry.b).."\t \t"..std.toformattedstring(Entry.MeanValueDiff).."\t \t"..CILow..","..CIHigh	
+			str=str..std.misc.tostring(Entry.a).."-"..std.misc.tostring(Entry.b).."\t \t"..std.misc.tostring(Entry.MeanValueDiff).."\t \t"..CILow..","..CIHigh	
 			str=str.."\n"
 		end
 

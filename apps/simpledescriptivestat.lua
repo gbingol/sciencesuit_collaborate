@@ -201,12 +201,12 @@ local function  DescriptiveStat()
 					
 					
 					if(type(OutputVal)=="number" ) then
-						WS[ARow][ACol+1]=std.toformattedstring(OutputVal)
+						WS[ARow][ACol+1]=std.misc.tostring(OutputVal)
 					
 					elseif(type(OutputVal)=="table") then
 						local str=""
 						for i=1,#OutputVal do
-							str=str..std.toformattedstring(OutputVal[i])..","
+							str=str..std.misc.tostring(OutputVal[i])..","
 						end
 						WS[ARow][ACol+1]=str
 						

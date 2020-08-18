@@ -84,6 +84,7 @@ local function solve(A, b, IsTridiagonal)
 		--Solve Ax=b --> QRx=b --> trans(Q)*Q*R*x=trans(Q)*b --> R*x=trans(Q)*b --> R*x=b2
 		local q,r=std.qr(matrix)
 		local b2=std.trans(q)*vec
+		
 		return SYSTEM.forwardsubs(r,b2) --forward substitution
 	end
 	
@@ -94,5 +95,7 @@ local function solve(A, b, IsTridiagonal)
 	
 	assert(row>column,"Impossible to reach a solution with givens as there are fewer equations than unknowns") 
 end
+
+
 
 std.solve=solve

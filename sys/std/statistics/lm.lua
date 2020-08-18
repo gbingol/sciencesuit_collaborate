@@ -277,17 +277,20 @@ local function MLR(yobs,factmat, IsIntercept, Alpha)
 	
 
 	local mat=factmat:clone()
-      
-
+	
+	
+	
 	-- if constant is not zero then we have to add 1s
 	if(IsIntercept) then 
-		local v=Vector.new(factmat:nrows(),1)
-		mat:insert(v,1,"col")
+		local ones=Vector.new(factmat:nrows(),1)
+		mat:insert(ones, 1, "col")
 	end
+
+
      
 	local coeffs=std.solve(mat, yobs)
 	
-	
+		
 	local mt={}
 	local retTable={}
 	
