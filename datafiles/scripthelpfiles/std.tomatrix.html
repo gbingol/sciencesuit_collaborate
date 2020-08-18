@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>tomatrix</h1>
+<p>
+    Converts a given suitable iteratable container to Matrix.
+</p>
+
+
+<ol>
+    <li>tomatrix(vector=, nrows=, ncols=)</li>
+    <li>tomatrix(table=, nrows=, ncols=)</li>
+    <li>tomatrix(table=)</li>
+    <li>tomatrix(range=, nrows=, ncols=)</li>
+</ol>
+
+<p>
+    Please note that Matrix can only contain numeric values. 
+</p>
+    
+<p>&nbsp;</p>
+
+<h3>From Vector</h3>
+<p>
+    &gt;&gt;v=std.tovector{1, 2, 3, 4, 5, 6} <br>
+    
+    <br>
+    
+    &gt;&gt;m=std.tomatrix(v, 2, 3) <br>
+    &gt;&gt;m <br>
+    1 &nbsp;&nbsp;&nbsp;  2 &nbsp;&nbsp;&nbsp;  3 <br>
+    4  &nbsp;&nbsp;&nbsp; 5  &nbsp;&nbsp;&nbsp; 6
+</p>
+
+
+<p>&nbsp;</p>
+
+
+
+
+<h3>From 1-D Lua table</h3> 
+<p>Please note that table must contain only numeric entries.</p>
+<p>
+    &gt;&gt;t={1, 2, 3, 4, 5, 6} <br>
+    
+    <br>
+    
+    &gt;&gt;m=std.tomatrix(t, 2, 3) <br>
+    &gt;&gt;m <br>
+    1 &nbsp;&nbsp;&nbsp; 2 &nbsp;&nbsp;&nbsp; 3 <br>
+    4 &nbsp;&nbsp;&nbsp; 5  &nbsp;&nbsp;&nbsp; 6
+</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<h3>From 2-D Lua table</h3> 
+<p>Please note that table must contain only numeric entries.</p>
+<p>
+    &gt;&gt;t={ {1, 2}, {3, 4}, {5, 6} } <br>
+    
+    <br>
+    
+    &gt;&gt;m=std.tomatrix(t) <br>
+    &gt;&gt;m <br>
+    1 &nbsp;&nbsp;&nbsp;  2 <br>
+    3 &nbsp;&nbsp;&nbsp;  4 <br>
+    5 &nbsp;&nbsp;&nbsp;  6
+</p>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+<h1>tovector</h1>
+<p>Converts a given iteratable container to Vector.</p>
+
+
+<h3>Syntax:</h3>
+<p>tovector(container=) </p>
+
+<p>returns either nil or a Vector and an integer.</p>
+
+
+<h3>Examples:</h3>
+
+<p>
+    --3 numeric and 2 non-numeric<br />
+    &gt;&gt;t={1, 2, "a", 3, "b"} <br />
+
+    <br />
+
+    &gt;&gt;std.tovector(t) <br />
+    1&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp; COL <br />
+    2	
+</p>
+
+
+
+<p>&nbsp;</p>
+<p>For example, for a matrix data type:</p>
+<p >
+    &gt;&gt;m=std.tomatrix{ {1, 2} , {3, 4} } <br />
+    &gt;&gt;m <br />
+        1&nbsp;&nbsp;&nbsp; 2 <br />
+        3&nbsp;&nbsp;&nbsp; 4 <br />
+
+    <br />
+
+    &gt;&gt;std.tovector(m) <br />
+    1&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp; COL <br />
+    0	
+</p>
+      
+
+
+</body>
+
+</html>
