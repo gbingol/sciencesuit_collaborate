@@ -71,7 +71,7 @@ local function  dlgSignTest()
 	
 	
 	
-	std.gui.PrepareAppForPreSelection({txt=txtVar1, row=1,col=1, nrows=-1, ncols=-1})
+	std.gui.PrepareAppForPreSelection({txt=txtVar1, row=1,col=1, nrows=-1, ncols=1})
 
 	
 	function BtnCancel:action()
