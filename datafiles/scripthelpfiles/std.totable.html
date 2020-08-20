@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+
+    <h1>totable</h1>
+    <p>
+        Converts a given iteratable container to Lua Table.
+    </p>
+    
+    <p>&nbsp;</p>
+    <h3>Syntax:</h3>
+    <p>
+        totable(container=, Force1D=false) 
+    </p>
+    
+    
+    <p>&nbsp;</p>
+    
+    
+    <h3>From Vector</h3>
+    <p>
+        &gt;&gt;v=std.rand(3) <br>
+        &gt;&gt;v <br>
+        0.0238247 &nbsp;&nbsp;&nbsp;  0.656005 &nbsp;&nbsp;&nbsp;  0.879824  &nbsp;&nbsp;&nbsp;  COL <br>
+        
+        <br>
+        
+        &gt;&gt;std.totable(v) <br>
+        0.0238247 &nbsp;&nbsp;&nbsp; 0.656005 &nbsp;&nbsp;&nbsp; 0.879824
+    </p>
+    
+    
+    
+    <p>&nbsp;</p>
+    <h3>From Array</h3>
+    <p>
+        &gt;&gt;type(arr) <br>
+        Array <br>
+        &gt;&gt;arr <br>
+        "Treatment" &nbsp;&nbsp;&nbsp; 24 &nbsp;&nbsp;&nbsp; 43 &nbsp;&nbsp;&nbsp; 58	<br>
+        
+        <br>
+    
+        &gt;&gt;std.totable(arr) <br>
+        Treatment &nbsp;&nbsp;&nbsp; 24 &nbsp;&nbsp;&nbsp; 43 &nbsp;&nbsp;&nbsp; 58
+    </p>
+    
+    
+    
+    <p>&nbsp;</p>
+    <h3>From Matrix</h3>
+    
+    <p>
+        &gt;&gt;m=std.rand(2, 2) <br>
+        &gt;&gt;m <br>
+        0.77254  &nbsp;&nbsp;&nbsp;  0.39515 <br>
+        0.77577  &nbsp;&nbsp;&nbsp;  0.24375 <br>
+        
+        <br>
+    
+        &gt;&gt;std.totable(m, true) <br>
+        0.77254 &nbsp;&nbsp;&nbsp; 0.395152 &nbsp;&nbsp;&nbsp; 0.775774 &nbsp;&nbsp;&nbsp; 0.243749	
+    </p>
+
+    <p>&nbsp;</p>
+
+<p>
+    &gt;&gt;t=std.totable(m) <br>
+    &gt;&gt;t <br>
+    table &nbsp;&nbsp;&nbsp; table	<br>
+    <br>
+    &gt;&gt;t[1][1] <br>
+    0.77254
+</p>
+
+</body>
+
+</html>
