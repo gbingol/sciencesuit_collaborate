@@ -4,17 +4,26 @@
 local std <const> =std
 
 
-local function totable(elem) 
+local function totable(container, Force1DTable) 
 
 	--Converts a matrix, vector, array or a Range to a 1D or 2D Lua Table
+	
+	
+	if(Force1DTable==nil) then
+		Force1DTable=false
+	end
 
-	if(type(elem)=="Matrix" or type(elem)=="Range") then
-		local r,c=std.size(elem)
+	assert(type(Force1DTable)=="boolean", "Second argument must be of type boolean")
+
+	if(Force1DTable==false and (type(container)=="Matrix" or type(container)=="Range")) then
+		local r,c=std.size(container)
 		local baset={}
+		
 		for i=1,r do
 			baset[i]={}
+			
 			for j=1,c do
-				baset[i][j]=elem(i,j)
+				baset[i][j]=container(i,j)
 			end
 		end
 		
@@ -22,16 +31,18 @@ local function totable(elem)
 	end
 
     
-	if(type(elem)=="Vector" or type(elem)=="Array") then
-		local dim=std.size(elem)
-		local t={}
-		for i=1,dim do
-			t[i]=elem(i)
-		end
+	local i=1
+	local retTable={}
+	for key, value in pairs(container) do
+		retTable[i]=value
 		
-		return t
+		i=i+1
 	end
 
+	return retTable
+
 end
+
+
 
 std.totable=totable
