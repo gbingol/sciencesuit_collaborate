@@ -38,7 +38,7 @@ local function ANOVATwoFactor()
 	
 	local vbox=iup.vbox{Input,OutputFrm,btns}
 	
-	local dlgAnova=iup.dialog{vbox; margin="10x10",title="Two-factor ANOVA"}
+	local dlgAnova=iup.dialog{vbox; size="220x160", margin="10x10",title="Two-factor ANOVA"}
 	
 	OutputFrm:setOwner(dlgAnova)
 	txtResponse:setOwner(dlgAnova)
