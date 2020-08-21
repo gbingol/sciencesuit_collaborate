@@ -40,7 +40,10 @@ local function LinearRegression()
 	
 	local vbox=iup.vbox{Input,OutputFrm,btns}
 	
-	local dlgMultRegres=iup.dialog{vbox; margin="10x10",title="Linear Regression", size="220x170"}
+	
+	local icon=std.gui.makeicon(std.const.exedir.."apps/images/regression.png")
+	
+	local dlgMultRegres=iup.dialog{vbox; margin="10x10",title="Linear Regression", size="220x170", icon=icon}
 	
 	OutputFrm:setOwner(dlgMultRegres)
 	txtResponse:setOwner(dlgMultRegres)
@@ -81,34 +84,47 @@ local function LinearRegression()
 
 
 
-	function btnOK:action()
-
-		if(txtResponse.value=="" or txtFactors.value=="") then
-			iup.Message("ERROR","Response or factors range cannot be empty, a selection must be made")
+	local function PerformRegression()
+		
+		assert(txtResponse.value~="" and txtFactors.value~="","Response or factors range cannot be empty, a selection must be made")
 			
-			return
-		end
-
 
 		local rngResponse=Range.new(txtResponse.value)
 		local rngFactors=Range.new(txtFactors.value) 
 		
-		if(rngResponse:ncols()>1 ) then 
-			iup.Message("ERROR","Response variable must be a single column.") 
-			
-			return 
-		end
+		assert(rngResponse:ncols()==1, "Response variable must be a single column.") 
 		
-		if(rngResponse:nrows()~=rngFactors:nrows()) then 
-			iup.Message("ERROR","Factors and response variable must have same number of rows.") 
-			
-			return 
-		end
+		assert(rngResponse:nrows()==rngFactors:nrows(), "Factors and response variable must have same number of rows.") 
+		
 
+		--do we have headers (is first row a string?)
+		if(tonumber(rngResponse:get(1,1))==nil and tonumber(rngFactors:get(1,1))==nil) then
+			rngResponse=rngResponse:subrange({row=2, col=1}, -1, -1)
+			rngFactors=rngFactors:subrange({row=2, col=1}, -1, -1)
+		end
 
 
 		local outRng=OutputFrm:GetRange()
 
+					
+		local factors=nil
+		if(rngFactors:ncols()>1) then
+			factors=std.tomatrix(rngFactors, rngFactors:nrows(), rngFactors:ncols())
+		else
+			factors=std.tovector(rngFactors)
+		end
+		
+		local yobs, NString=std.tovector(rngResponse)
+		
+		assert(NString==0, "There are non-numeric entries in the response")
+		
+		
+		local Alpha=1-tonumber(txtConfidence.value)/100
+		assert(Alpha>0 and Alpha<1,  "Confidence Level must be in the range of (0, 100)")
+		
+		local RegresResult=std.lm( yobs, factors, IsThereIntercept, Alpha)
+		
+		
 		local Row, Col=1, 1
 		local WS=nil
 		
@@ -119,30 +135,6 @@ local function LinearRegression()
 		else
 			WS=std.appendworksheet()
 		end
-
-
-			
-		local factors=nil
-		if(rngFactors:ncols()>1) then
-			factors=std.tomatrix(rngFactors, rngFactors:nrows(), rngFactors:ncols())
-		else
-			factors=std.tovector(rngFactors)
-		end
-		
-		local yobs=std.tovector(rngResponse)
-		
-		
-		
-		local Alpha=1-tonumber(txtConfidence.value)/100
-		if(Alpha<=0 or Alpha>=1) then 
-			iup.Message("Error", "Confidence Level must be in the range of (0, 100)")
-			
-			return
-		end
-		
-		
-		local RegresResult=std.lm(yobs, factors, IsThereIntercept, Alpha)
-		
 		
 		--Just print the regression equation and return
 		if(ShouldIncludeStats==0) then
@@ -249,8 +241,21 @@ local function LinearRegression()
 			Row=Row+1
 		end
 		
-		
 	end 
+
+
+
+	function btnOK:action()
+
+		local status, err=pcall(PerformRegression)
+		
+		if(status==false) then
+			iup.Message("ERROR", err)
+			
+			return
+		end
+		
+	end
 
 end
 

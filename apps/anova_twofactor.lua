@@ -38,7 +38,10 @@ local function ANOVATwoFactor()
 	
 	local vbox=iup.vbox{Input,OutputFrm,btns}
 	
-	local dlgAnova=iup.dialog{vbox; size="220x160", margin="10x10",title="Two-factor ANOVA"}
+	
+	local icon=std.gui.makeicon(std.const.exedir.."apps/images/anova2factor.png")
+	
+	local dlgAnova=iup.dialog{vbox; size="220x160", margin="10x10",title="Two-factor ANOVA", icon=icon}
 	
 	OutputFrm:setOwner(dlgAnova)
 	txtResponse:setOwner(dlgAnova)

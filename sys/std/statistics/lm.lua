@@ -270,7 +270,7 @@ local function MLR(yobs,factmat, IsIntercept, Alpha)
 	assert(type(factmat)=="Matrix" ,"ERROR: Second argument(independent variables) must be of type Matrix") 
 	assert(type(IsIntercept)=="boolean", "ERROR: Third argument must be of type boolean")
 	      
-	assert(#yobs==factmat:nrows(),"Number of rows in the matrix must be equal to the dimension of the Vector")
+	assert(#yobs==factmat:nrows(),"Number of rows of matrix must be equal to the dimension of the Vector.")
 	
 	assert(std.rank(factmat)==factmat:ncols(), "There are linearly dependent columns, please remove and then continue")  
 	
