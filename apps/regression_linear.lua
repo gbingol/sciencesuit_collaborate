@@ -114,7 +114,7 @@ local function LinearRegression()
 			factors=std.tovector(rngFactors)
 		end
 		
-		local yobs, NString=std.tovector(rngResponse)
+		local yobs <close>, NString=std.tovector(rngResponse)
 		
 		assert(NString==0, "There are non-numeric entries in the response")
 		

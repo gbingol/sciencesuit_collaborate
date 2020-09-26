@@ -282,7 +282,8 @@ local function MLR(yobs,factmat, IsIntercept, Alpha)
 	
 	-- if constant is not zero then we have to add 1s
 	if(IsIntercept) then 
-		local ones=Vector.new(factmat:nrows(),1)
+		local ones <close> = Vector.new(factmat:nrows(),1)
+		
 		mat:insert(ones, 1, "col")
 	end
 

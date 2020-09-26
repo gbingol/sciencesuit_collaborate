@@ -85,6 +85,14 @@
 			<IMAGE>apps/images/test_sign.png</IMAGE>
 		</BUTTON>
 		
+		
+		
+		
+		<DROPBUTTON NAME="exploration" TITLE="Exploration">
+			<IMAGE>apps/images/exploration.jpg</IMAGE>
+			<ADD>descriptivestat</ADD>
+		</DROPBUTTON>
+		
 		<DROPBUTTON NAME="ttest" TITLE="t-test">
 			<IMAGE>apps/images/t_test.png</IMAGE>
 			<ADD>ttest1sample</ADD>
@@ -105,7 +113,7 @@
 		
 		<PANEL TITLE="Statistics">
 			<ADD>sort</ADD>
-			<ADD>descriptivestat</ADD>
+			<ADD>exploration</ADD>
 			<ADD>ttest</ADD>
 			<ADD>test_f</ADD>
 			<ADD>test_z</ADD>

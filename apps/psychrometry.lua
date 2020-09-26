@@ -323,8 +323,8 @@ local function Psychrometry()
 
 	function item_exportresults:action()
 		
-		local Units={Tdb="\xB0 C", Twb="\xB0 C", Tdp="\xB0 C", P="kPa", Pws="kPa", Pw="kPa", RH="%", H="kJ/ kg da", 
-					W="kg / kg da", Ws="kg / kg da", V="m\xB3 /kg"}
+		local Units={Tdb=" C", Twb=" C", Tdp=" C", P="kPa", Pws="kPa", Pw="kPa", RH="%", H="kJ/ kg da", 
+					W="kg / kg da", Ws="kg / kg da", V="m3 /kg"}
 		
 		local date=os.date("*t")
 		local hour=date.hour

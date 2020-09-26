@@ -8,19 +8,6 @@ local std <const> =std
 local iup <const> =iup
 
 
-local function GetFormattedString(num)
-	if(num>1 or num<-1.0) then
-		return string.format("%.2f",num)
-		
-	elseif((num<1.0 and num>0.1) or (num>-1.0 and num<-0.1))  then
-		return string.format("%.3f", num)
-		
-	elseif((num<0.1 and num>0) or (num>-0.1 and num<0)) then
-		return string.format("%.5f", num)
-	end
-end
-
-
 
 local function  dlgTwoSample2Test()
 
@@ -115,13 +102,12 @@ local function  dlgTwoSample2Test()
 	end 
 
 
-	function BtnOK:action()
 
-		if(txtVar1.value=="" or txtVar2.value=="") then
-			iup.Message("ERROR","A range must be selected for both variable 1 and 2.")
-			return
-		end
 
+	local function PerformTTest2Sample()
+
+		assert(txtVar1.value~="" and txtVar2.value~="","A range must be selected for both variable 1 and 2.")
+			
 		
 		local conflevel=tonumber(txtConfLevel.value)/100
 		local Mu=tonumber(txtDiff.value)
@@ -134,12 +120,9 @@ local function  dlgTwoSample2Test()
 		local rng1=Range.new(txtVar1.value)
 		local rng2=Range.new( txtVar2.value)
 
-		if(rng1:ncols()>1 or rng2:ncols()>1) then 
-			iup.Message("ERROR","The selected range for Variable #1 and Variable #2 must be a single column.") 
-			
-			return 
-		end
-			
+		
+		assert(rng1:ncols()==1 and rng2:ncols()==1,"The selected range for Variable #1 and Variable #2 must be a single column.") 
+		
 		
 		local OutputRng=OutputFrame:GetRange()
 		
@@ -160,36 +143,26 @@ local function  dlgTwoSample2Test()
 		local pval,ttable=nil, nil
 		local v1, v2=nil, nil
 		
+		
 		if(SamplesInTwoCol) then
 			v1 , v2=std.tovector(rng1) , std.tovector(rng2)
 			
-			if(v1==nil or #v1<3) then 
-				iup.Message("ERROR","Either there is none or less than 3 valid numeric data in the selected range of Variable #1.") 
-				
-				return 
-			end
-				
-			if(v2==nil or #v2<3) then 
-				iup.Message("ERROR","Either there is none or less than 3 valid numeric data in the selected range of Variable #2.")  
-				
-				return 
-			end
-			
+			assert(v1~=nil and #v1>=3, "Either there is none or less than 3 valid numeric data in the selected range of Variable #1.") 
+			assert(v2~=nil and #v2>=3, "Either there is none or less than 3 valid numeric data in the selected range of Variable #2.") 	
 			
 		end
 		
 		
+		
+		local uniquesubscripts=nil
 		if (not SamplesInTwoCol) then
 		
 			local samples , subscripts=std.tovector(rng1) , std.toarray(rng2)
 			
-			local uniquesubscripts=subscripts:clone()
+			uniquesubscripts=subscripts:clone()
 			uniquesubscripts:unique()
 			
-			if(#uniquesubscripts~=2) then
-				iup.Message("ERROR","Number of codes pertaining to factors in the subscripts range must be exactly 2")  
-				return
-			end
+			assert(#uniquesubscripts==2, "Number of codes pertaining to factors in the subscripts range must be exactly 2")  
 			
 			
 			v1, v2=Vector.new(0), Vector.new(0)
@@ -205,48 +178,78 @@ local function  dlgTwoSample2Test()
 	
 		end 
 			
+			
+			
+			
 		pval,ttable=std.test_t{x=v1,y=v2,alternative=alternative, varequal=varequal, mu=Mu, conflevel=conflevel, paired=false}
 		
+		
+		
+		--Outputting the results
+		
+		local header1, header2="Variable 1", "Variable 2"
+		
+		if(SamplesInTwoCol) then
+			if(tonumber(rng1(1,1))==nil and tonumber(rng2(1,1))==nil) then
+				header1=rng1(1,1)
+				header2=rng2(1,1)
+			end
+		
+		elseif(not SamplesInTwoCol) then
+			header1=uniquesubscripts[1]
+			header2=uniquesubscripts[2]
+		end
+		
 
-		WS[row][col+1]="Variable 1";   WS[row][col+2]="Variable 2" ; 
+		WS[row][col+1]=header1;   WS[row][col+2]=header2 ; 
 		row=row+1
 		
 		WS[row][col]="Observation"; WS[row][col+1]=ttable.n1;WS[row][col+2]=ttable.n2; 
 		row=row+1
 		
-		WS[row][col]="Mean"; WS[row][col+1]=GetFormattedString(ttable.xaver); WS[row][col+2]=GetFormattedString(ttable.yaver);
+		WS[row][col]="Mean"; WS[row][col+1]=std.misc.tostring(ttable.xaver); WS[row][col+2]=std.misc.tostring(ttable.yaver);
 		row=row+1
 		
-		WS[row][col]="Standard Deviation"; WS[row][col+1]=GetFormattedString(ttable.s1);WS[row][col+2]=GetFormattedString(ttable.s2); 
+		WS[row][col]="Standard Deviation"; WS[row][col+1]=std.misc.tostring(ttable.s1);WS[row][col+2]=std.misc.tostring(ttable.s2); 
 		row=row+1
 
 		row=row+1--Leave one space so that following analysis does not seem to belong variable 1
 		if(varequal) then 
 			WS[row][col]="Pooled variance" 
-			WS[row][col+1]=GetFormattedString(ttable.sp)
+			WS[row][col+1]=std.misc.tostring(ttable.sp)
 			row=row+1
 		end
 
 		WS[row][col]="t critical" 
-		WS[row][col+1]=GetFormattedString(ttable.tcritical)
+		WS[row][col+1]=std.misc.tostring(ttable.tcritical)
 		row=row+1
 		
 		WS[row][col]="p-value" 
-		WS[row][col+1]=GetFormattedString(pval); 
+		WS[row][col+1]=std.misc.tostring(pval); 
 		row=row+2
 		
 		WS[row][col]=tostring(conflevel*100).." Confidence Interval for "..alternative
 		
 		if(alternative=="less") then
-			WS[row+1][col]="(-inf, "..GetFormattedString(ttable.CI_upper)..")"
+			WS[row+1][col]="(-inf, "..std.misc.tostring(ttable.CI_upper)..")"
 		elseif(alternative=="greater") then
-			WS[row+1][col]="("..GetFormattedString(ttable.CI_lower)..", inf)"
+			WS[row+1][col]="("..std.misc.tostring(ttable.CI_lower)..", inf)"
 		else
-			WS[row+1][col]="("..GetFormattedString(ttable.CI_lower).." , "..GetFormattedString(ttable.CI_upper)..")"
+			WS[row+1][col]="("..std.misc.tostring(ttable.CI_lower).." , "..std.misc.tostring(ttable.CI_upper)..")"
 		end
 
 	end 
 	
+	
+	function BtnOK:action()
+		local status, err=pcall(PerformTTest2Sample)
+		
+		if(status==false) then
+			iup.Message("ERROR", err)
+			
+			return
+		end
+	end
 	
 
 end --MainDialog

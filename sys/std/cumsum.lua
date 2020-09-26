@@ -3,20 +3,42 @@
 
 local std <const> =std
 
-local function cumsum(vec)
+local function cumsum(Container, axes)
+	
+	local retElem=nil
 
-	-- Finds the cumulative sum
-	-- Returns a Vector containing cumulative sums
-	assert(type(vec)=="Vector", "ERROR: Argument must be of type Vector.")
-
-	local sum=0
-	local retVec=Vector.new(#vec)
-	for i=1,#vec do
-		sum=sum+vec(i)
-		retVec[i]=sum
+	if(type(Container)=="Vector") then
+		local retElem=Container:clone()
+		
+		retElem:cumsum()
+		
+		return retElem
+		
+	elseif(type(Container)=="Matrix") then
+		local retElem=Container:clone()
+		
+		retElem:cumsum(axes)
+		
+		return retElem
 	end
 		
-	return retVec
+
+	local sum=0
+	retElem={}
+	
+	local i=1
+	for key, value in pairs(Container) do
+		if(math.type(key)=="integer" and type(value)=="number") then
+			sum=sum + value
+			
+			retElem[i]=sum
+			
+			i=i+1
+		end
+	end
+		
+		
+	return retElem
 
 end
 

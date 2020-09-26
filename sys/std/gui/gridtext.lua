@@ -15,6 +15,8 @@ local function gridtext( tbl)
 	local OwnerDialog=iup.GetGlobal("PARENTDIALOG")
 	local range=nil
 	
+	
+	
 	local function GetVariable(txt)
 		local ws=std.activeworksheet()
 		local range=ws:selection()
@@ -49,9 +51,12 @@ local function gridtext( tbl)
 		end
 		
 		local ws=std.activeworksheet()
-				
+		
+		
 		ws:connect(GetVariable, txt)
+		
 	end
+	
 	
 	return txt
 end

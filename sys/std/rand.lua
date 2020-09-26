@@ -19,6 +19,7 @@ local function rand(m,n)
 	local row,col=m , n
 
 	local v=std.runif(row*col)
+	
 	local retMat=Matrix.new(row,col)
 	
 	local k=1
@@ -26,6 +27,7 @@ local function rand(m,n)
 	for i=1,row do
 		for j=1,col do
 			retMat[i][j]=v[k]
+			
 			k=k+1
 		end
 	end

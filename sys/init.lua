@@ -12,32 +12,25 @@ TOLERANCE=1E-5 -- planned to be removed in the following version
 ERRORLEVEL=0     
 
 
+--Contains functions that are written in C++ but later on wrapped in Lua
 SYSTEM={}
-SYSTEM.__name="SYSTEM"
-
 
 
 std={}
-std.__name="std"
 
 
 std.app={}
-std.app.__name="std.app"
-
 std.app.AllowPreSelection=true
 
 
 std.gui={}
-std.gui.__name="std.gui"
 
 
 std.misc={}
-std.misc.__name="std.misc"
 
 
 --CONSTANTS
 std.const={tolerance=1E-5} 
-std.const.__name="std.const"
 
 std.const.font={style_italic="italic",style_normal="normal",
 				weight_bold="bold", weight_normal="normal",
@@ -52,12 +45,7 @@ std.const.color={white="255 255 255", red="255 0 0", red_dark="139 0 0", lime="0
                  chocolate="210 105 30", tan="210 180 140", brown_saddle="139 69 19", wheat="245 222 179", orchid="218 112 214",
                  indigo="75 0 130", blue_medium="0 0 205", blue_royal="65 105 225", blue_midnight="25 25 112" }
 
+
 std.const.fillstyle={solid=100, transparent=106, bdiaghatch=111, crossdiaghatch=112, fdiaghatch=113, crosshatch=114, horizhatch=115, verthatch=116}
+
 std.const.linestyle={solid=100, dot=101, longdash=102, shortdash=103, dotdash=104, transparent=106}
-
-
-
---Computer Vision Library Constants and Some Functions
-std.const.cv={CV_8U=0, CV_8S=1, CV_16U=2, CV_16S=3,CV_32S=4, CV_32U=5,IMREAD_COLOR=1, IMREAD_GRAYSCALE=0, IMREAD_UNCHANGED=-1} 
-std.const.cv.__name="std.const.cv"
-

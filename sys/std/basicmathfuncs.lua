@@ -40,54 +40,301 @@ end
 
 
 
+
+
+
 --Lua Math library
 
-std.abs=function(entry) return  ApplytoTypes(entry, math.abs) end
 
-std.acos=function(entry) return  ApplytoTypes(entry, math.acos) end
+std.abs=function(entry) 
 
-std.asin=function(entry) return  ApplytoTypes(entry, math.asin) end
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
 
-std.atan=function(entry) return  ApplytoTypes(entry, math.atan) end
+		retEntry:abs()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry, math.abs) 
+end
 
-std.ceil=function(entry) return  ApplytoTypes(entry, math.ceil) end
 
-std.cos=function(entry) return  ApplytoTypes(entry,math.cos) end
 
-std.cosh=function(entry) return  ApplytoTypes(entry,math.cosh) end
+std.acos=function(entry) 
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
 
-std.exp=function(entry) return  ApplytoTypes(entry,math.exp) end
+		retEntry:acos()
+		
+		return retEntry
+	end
+	
+	
+	return  ApplytoTypes(entry, math.acos) 
+end
 
-std.floor=function(entry) return  ApplytoTypes(entry,math.floor) end
+
+
+std.asin=function(entry) 
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:asin()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry, math.asin) 
+end
+
+
+
+std.atan=function(entry) 
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:atan()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry, math.atan) 
+end
+
+
+
+
+std.ceil=function(entry) 
+		
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:ceil()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry, math.ceil) 
+end
+
+
+
+std.cos=function(entry) 
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:cos()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry,math.cos) end
+
+
+
+std.cosh=function(entry) 
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:cosh()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry,math.cosh) 
+end
+
+
+
+std.exp=function(entry)  
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:exp()
+		
+		return retEntry
+	end
+
+	return  ApplytoTypes(entry,math.exp)  
+end
+
+
+
+
+std.floor=function(entry) 
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:floor()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry,math.floor) 
+end
+
+
+
+
 
 std.log=function(entry, base) 
+	
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+		
+		if(base==nil) then
+			retEntry:log()
+		else
+			retEntry:log(base)
+		end
+
+		return retEntry
+	end
+	
+
 	base=base or math.exp(1)	
 	
 	return  ApplytoTypes(entry,math.log, base) 
 end
 
-std.ln=function(entry) return  ApplytoTypes(entry,math.log) end
 
-std.log10=function(entry) return  ApplytoTypes(entry,math.log10) end
 
-std.sqrt=function(entry) return  ApplytoTypes(entry,math.sqrt) end
+std.ln=function(entry) 
+	return  std.log(entry,math.exp(1)) 
+end
 
-std.sin=function(entry) return  ApplytoTypes(entry,math.sin) end
 
-std.sinh=function(entry) return  ApplytoTypes(entry,math.sinh) end
 
-std.tan=function(entry) return  ApplytoTypes(entry,math.tan) end
+std.log10=function(entry) 
+	return  std.log(entry,10.0)
+end
 
-std.tanh=function(entry) return  ApplytoTypes(entry,math.tanh) end
 
-std.pow=function(entry,power) return ApplytoTypes(entry, math.pow,power) end
+
+
+
+std.pow=function(entry, power)  
+
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:pow(power)
+		
+		return retEntry
+	end
+	
+	return ApplytoTypes(entry, math.pow, power) 
+end
+
+
+
+
+
+
+std.sqrt=function(entry) 
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:sqrt()
+		
+		return retEntry
+	end
+
+	return  ApplytoTypes(entry,math.sqrt)   
+end
+
+
+
+
+
+std.sin=function(entry) 
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:sin()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry,math.sin) 
+end
+
+
+
+std.sinh=function(entry) 
+		
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:sinh()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry,math.sinh) 
+end
+
+
+std.tan=function(entry) 
+	
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:tan()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry,math.tan) 
+end
+
+
+
+std.tanh=function(entry) 
+
+	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+		local retEntry=entry:clone()
+
+		retEntry:tanh()
+		
+		return retEntry
+	end
+	
+	return  ApplytoTypes(entry,math.tanh) 
+end
+
+
+
+
 
 
 
 --SYSTEM functions
 
-std.beta=function(entry, y) return  ApplytoTypes(entry, SYSTEM.beta, y) end
-std.gamma=function(entry) return  ApplytoTypes(entry, SYSTEM.gamma) end
-std.gammaln=function(entry) return  ApplytoTypes(entry, SYSTEM.gammaln) end
+std.beta=function(entry, y) 
+	return  ApplytoTypes(entry, SYSTEM.beta, y) 
+end
+
+
+std.gamma=function(entry) return  
+	ApplytoTypes(entry, SYSTEM.gamma) 
+end
+
+
+std.gammaln=function(entry) 
+	return  ApplytoTypes(entry, SYSTEM.gammaln) 
+end
 	
-std.besselj=function(entry, order) return ApplytoTypes(entry, SYSTEM.besselj, order) end
+	
+std.besselj=function(entry, order) 
+	return ApplytoTypes(entry, SYSTEM.besselj, order) 
+end

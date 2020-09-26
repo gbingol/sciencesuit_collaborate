@@ -13,20 +13,20 @@ local function RefrigerantProperties()
 
 	
 	local m_DB=nil --Database
-	local m_FluidName=nil
-	local m_Fluid=nil
-	
+	local m_FluidNames=nil
+
+	local m_CurFluidName=""
 	
 	m_DB=Database.new()
 	m_DB:open(std.const.exedir.."/datafiles/ThermoFluids.db")
 		
 	local row, col=0, 0
-	m_FluidName, row, col=m_DB:sql("SELECT ASHRAE, IUPAC FROM MainTable")
+	m_FluidNames, row, col=m_DB:sql("SELECT ASHRAE, IUPAC FROM MainTable")
 	
 	local AvailableFluids={}
 		
 	for i=1,row do
-		AvailableFluids[i]=m_FluidName[i][1].."     ".. m_FluidName[i][2]
+		AvailableFluids[i]=m_FluidNames[i][1].."     ".. m_FluidNames[i][2]
 	end	
 	
 	local FluidType= iup.list {value=0, dropdown="YES", expand="HORIZONTAL", table.unpack(AvailableFluids)}
@@ -62,7 +62,7 @@ local function RefrigerantProperties()
 	local lblSf = iup.label{title="Sf (kJ/kg\xB7K)"}
 	local txtSf=iup.text{readonly="yes"}
 	
-	local lblSg = iup.label{title="Sf (kJ/kg\xB7K)"}
+	local lblSg = iup.label{title="Sg (kJ/kg\xB7K)"}
 	local txtSg=iup.text{readonly="yes"}
 	
 	--Superheated or Compressed
@@ -168,9 +168,11 @@ local function RefrigerantProperties()
 	
 	
 	function FluidType:action(text, item, state)
-		if(state==0) then return end --we are not interested in notifications of deselections
+		if(state==0) then 
+			return 
+		end --we are not interested in notifications of deselections
 		
-		m_Fluid=ThermoFluid.new(m_FluidName[item][1])
+		m_CurFluidName=m_FluidNames[item][1]
 	end 
 	
 	local m_IsP=0
@@ -189,17 +191,12 @@ local function RefrigerantProperties()
 
 	local function OnCalculate()
 	
-		if(m_Fluid==nil) then
-			iup.Message("ERROR","The fluid type must be selected.")
+		assert(m_CurFluidName~="", "The fluid type must be selected.")
 			
-			return
+		assert(m_IsP~=0 or m_IsT~=0, "At least one selection must be made")
 			
-		elseif(m_IsP==0 and m_IsT==0) then 
-			iup.Message("ERROR","At least one selection must be made")
-			
-			return
-
-		elseif(m_IsP==1 and txtP.value=="") then
+		
+		if(m_IsP==1 and txtP.value=="") then
 			iup.Message("ERROR","Pressure field cannot be empty, since it is checked.")
 			
 			return
@@ -217,14 +214,14 @@ local function RefrigerantProperties()
 		local props={}
 		
 		if(m_IsP==1 and m_IsT==0) then 
-			props=m_Fluid:get({P=P}) 
+			props=std.thermofluid(m_CurFluidName, {P=P}) 
 			
 			NofSel=NofSel+1
 			
 			txtT.value=string.format("%.2f",tostring(props.T))
 			
 		elseif(m_IsP==0 and m_IsT==1) then 
-			props=m_Fluid:get({T=T}) 
+			props=std.thermofluid(m_CurFluidName, {T=T}) 
 			
 			NofSel=NofSel+1 
 			
@@ -245,8 +242,8 @@ local function RefrigerantProperties()
 		
 		
 		if(m_IsP==1 and m_IsT==1) then 
-			props=m_Fluid:get({P=P, T=T})
-			local status=tonumber(m_Fluid.FluidState)
+			props=std.thermofluid(m_CurFluidName,{P=P, T=T})
+			local status=tonumber(props.state)
 			
 			if(status==1) then 
 				lblFluidState.title="Fluid State: Superheated"

@@ -3,12 +3,32 @@
 
 local std <const> =std
 
-local function minmax(Container )
+local function minmax(Container, Axes )
 
 	--Container: Lua Table or an iteratable container
 
+	assert(Container~=nil, "Container cannot be nil value")
 	assert(type(Container)~="number" and type(Container)~="string", "ERROR: An iteratable container is required")
       
+	if(type(Container)=="Vector") then
+		return Container:minmax()
+		
+	elseif(type(Container)=="Matrix") then
+		
+		if(Axes==nil) then
+			return Container:minmax()
+			
+		else
+			assert(math.type(Axes)=="integer" and(Axes==0 or Axes==1), "Axes must be an integer with a value of 0 or 1")
+			
+			return Container:minmax(Axes)
+		end
+	end
+
+	
+	
+	
+	--Generalized version
 
 	local m = getmetatable(Container)
 	local n = (m and m["__pairs"] and m["next"])
@@ -32,5 +52,7 @@ local function minmax(Container )
 	return min, max
 
 end
+
+
 
 std.minmax=minmax
