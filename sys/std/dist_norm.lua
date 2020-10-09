@@ -16,7 +16,7 @@ local function DNORM(vec, mean, sd)
 	if(type(vec)=="Vector") then
 
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.dnorm(vec(i),mean, sd)
 		end
@@ -47,7 +47,7 @@ local function dnorm(...)
 			elseif(k=="mean") then mean=v
 			elseif(k=="sd") then sd=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, mean and sd.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: x, mean and sd.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
@@ -84,7 +84,7 @@ local function PNORM(vec, mean, sd)
 	if(type(vec)=="Vector") then
 	
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.pnorm(vec(i),mean, sd)
 		end
@@ -113,7 +113,7 @@ local function pnorm(...)
 			elseif(k=="mean") then mean=v
 			elseif(k=="sd") then sd=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: q, mean and sd.", ERRORLEVEL) end
+				error("ERROR: Unrecognized key in the table, valid keys: q, mean and sd.", std.const.ERRORLEVEL) end
 		end
 		
 		return PNORM(qval,mean, sd)
@@ -144,7 +144,7 @@ local function QNORM(vec, mean, sd)
 	if(type(vec)=="Vector") then
 
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.qnorm(vec(i),mean, sd)
@@ -176,7 +176,7 @@ local function qnorm(...)
 			elseif(k=="mean") then mean=v
 			elseif(k=="sd") then sd=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: p, mean and sd.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: p, mean and sd.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -224,7 +224,7 @@ local function rnorm(...)
 			elseif(k=="mean") then mean=v
 			elseif(k=="sd") then sd=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: n, mean and sd.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: n, mean and sd.", std.const.ERRORLEVEL) 
 			end
 		
 			NTblArgs=NTblArgs+1

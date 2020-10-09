@@ -15,7 +15,7 @@ local function eye(nrow, ncol)
 	assert(math.type(nrow)=="integer" and nrow>0 ,"ERROR: First argument must be a positive integer")
 	
 	if(ncol==nil) then
-		local m=Matrix.new(nrow,nrow)
+		local m=std.Matrix.new(nrow,nrow)
 		for i=1,nrow do 
 			m[i][i]=1.0
 		end
@@ -32,7 +32,7 @@ local function eye(nrow, ncol)
 			n=ncol 
 		end
 		
-		local m=Matrix.new(nrow,ncol)
+		local m=std.Matrix.new(nrow,ncol)
 		
 		for i=1,n do 
 			m[i][i]=1.0 

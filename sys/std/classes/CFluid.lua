@@ -78,7 +78,7 @@ local function FindProperties(fluid, key, value)
 	local Upper, Lower={}, {}
 	
 	local set,row, col=db:sql(strQuery..">="..tostring(value))
-	if(row==0) then error("Selected parameter is out of range. ",ERRORLEVEL) end
+	if(row==0) then error("Selected parameter is out of range. ",std.const.ERRORLEVEL) end
 	for j=1,col do
 		table.insert(Upper,set[1][j])
 	end
@@ -153,8 +153,8 @@ function Fluid:get(t)
 		key=k
 		value=v
 	end
-	if(NEntries>1) then error("ERROR: You cannot query more than one property at a time.", ERRORLEVEL) end
-	if(key==nil or type(value)~="number") then error("ERROR: You should provide an valid key (call get() to query) and a valid number value.", ERRORLEVEL) end
+	if(NEntries>1) then error("ERROR: You cannot query more than one property at a time.", std.const.ERRORLEVEL) end
+	if(key==nil or type(value)~="number") then error("ERROR: You should provide an valid key (call get() to query) and a valid number value.", std.const.ERRORLEVEL) end
 	
 	local KeyIsValid=false
 	for i=1,#AvailableProperties do
@@ -164,11 +164,11 @@ function Fluid:get(t)
 		end
 	end
 	
-	if(KeyIsValid==false) then error("ERROR: "..tostring(key).." is not a valid key (call get() to query valid keys).", ERRORLEVEL) end
+	if(KeyIsValid==false) then error("ERROR: "..tostring(key).." is not a valid key (call get() to query valid keys).", std.const.ERRORLEVEL) end
 	
 	local minval, maxval=GetMinMax(self, key)
-	if(value<minval) then error("ERROR: Minimum value for "..tostring(key).." is "..tostring(minval), ERRORLEVEL) end
-	if(value>maxval) then error("ERROR: Maximum value for "..tostring(key).." is "..tostring(maxval), ERRORLEVEL) end
+	if(value<minval) then error("ERROR: Minimum value for "..tostring(key).." is "..tostring(minval), std.const.ERRORLEVEL) end
+	if(value>maxval) then error("ERROR: Maximum value for "..tostring(key).." is "..tostring(maxval), std.const.ERRORLEVEL) end
 	
 	return FindProperties(self, key, value)
 	

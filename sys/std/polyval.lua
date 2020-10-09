@@ -32,7 +32,7 @@ local function Compute(v, Entry)
 	
 	elseif(type(Entry)=="Vector") then
 		local dim=#Entry
-		local retVec=Vector.new(dim)
+		local retVec=std.Vector.new(dim)
 		for i=1,dim do
 			retVec[i]=EVAL(v,Entry(i))
 		end
@@ -58,7 +58,7 @@ local function polyval(...)
 			if(key==1) then v1=value
 			elseif(key==2) then v2=value
 			else 
-				error("ERROR: Signature: {v1, arg}", ERRORLEVEL)
+				error("ERROR: Signature: {v1, arg}", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1

@@ -64,7 +64,7 @@ local function cumtrapz(...)
 			elseif(key=="b") then b=value
 			elseif(key=="inter") then N=value
 			else 
-				error("ERROR: Unexpected key found, Usage: {f=, a=, b=, inter=10}", ERRORLEVEL) 
+				error("ERROR: Unexpected key found, Usage: {f=, a=, b=, inter=10}", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -91,12 +91,12 @@ local function cumtrapz(...)
 		
 		else
 			
-			error("(f=, vec_x=) or (vec_x,= vec_y=)" , ERRORLEVEL) 
+			error("(f=, vec_x=) or (vec_x,= vec_y=)" , std.const.ERRORLEVEL) 
 		end
 	
 
 	else 
-		error("Usage: {f=, a=, b=, inter=10} or (f=, vec_x=) or (vec_x,= vec_y=)" , ERRORLEVEL) 
+		error("Usage: {f=, a=, b=, inter=10} or (f=, vec_x=) or (vec_x,= vec_y=)" , std.const.ERRORLEVEL) 
 	end
 end
 

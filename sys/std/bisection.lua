@@ -25,7 +25,7 @@ local function bisect(...)
 			elseif(key=="method") then method=v
 			elseif(key=="modified") then modified=v
 			else 
-				error("ERROR: Signature: {f, a, b, tol=1E-5, maxiter=100, method=\"bf\", modified=false}", ERRORLEVEL)
+				error("ERROR: Signature: {f, a, b, tol=1E-5, maxiter=100, method=\"bf\", modified=false}", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1
@@ -62,7 +62,7 @@ local function bisect(...)
 
 		
 	else
-		error("ERROR: Usage: {f=, a=, b=, tol=1E-5, maxiter=100, method=\"bf\",modified=false} or (f=, a=, b=)", ERRORLEVEL)
+		error("ERROR: Usage: {f=, a=, b=, tol=1E-5, maxiter=100, method=\"bf\",modified=false} or (f=, a=, b=)", std.const.ERRORLEVEL)
 	
 	end
 	

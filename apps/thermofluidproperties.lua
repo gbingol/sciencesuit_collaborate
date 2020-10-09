@@ -17,7 +17,7 @@ local function RefrigerantProperties()
 
 	local m_CurFluidName=""
 	
-	m_DB=Database.new()
+	m_DB=std.Database.new()
 	m_DB:open(std.const.exedir.."/datafiles/ThermoFluids.db")
 		
 	local row, col=0, 0

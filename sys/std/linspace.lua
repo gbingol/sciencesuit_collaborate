@@ -14,7 +14,7 @@ local function LINSPACE(a,b,n)
 	local dx=(b-a)/(n-1) 
 
 
-	local retVec=Vector.new(n)
+	local retVec=std.Vector.new(n)
 	local A=a
 
 	for i=1,n do
@@ -41,7 +41,7 @@ local function linspace(...)
 			elseif(k=="b") then b=v
 			elseif(k=="n") then n=v
 			else 
-				error("Usage: {a=, b=, n=}", ERRORLEVEL) 
+				error("Usage: {a=, b=, n=}", std.const.ERRORLEVEL) 
 			end
 			
 			NTblArgs=NTblArgs+1 
@@ -57,7 +57,7 @@ local function linspace(...)
 		return LINSPACE(args[1], args[2], args[3])
 	
 	else
-		error("Usage: {a=, b=, n=} or (a=, b=, n=)", ERRORLEVEL)
+		error("Usage: {a=, b=, n=} or (a=, b=, n=)", std.const.ERRORLEVEL)
 	end
 
 end

@@ -113,7 +113,7 @@ local function ANOVASingleFactor()
 		local Row, Col=0, 0
 		local WS=nil 
 		
-		local rngResponses=Range.new(txtResponses.value)
+		local rngResponses=std.Range.new(txtResponses.value)
 		
 		local outRng=OutputFrm:GetRange()
 		
@@ -137,12 +137,12 @@ local function ANOVASingleFactor()
 				tbl[i]=std.tovector(rngResponses:col(i))
 			end
 			
-			pvalue, AnovaTable=std.anova(table.unpack(tbl)) 
+			pvalue, AnovaTable= std.anova(table.unpack(tbl)) 
 		end
 		
 		
 		if(IsStacked) then
-			rngFactors=Range.new(txtFactors.value)
+			rngFactors=std.Range.new(txtFactors.value)
 			
 			ASSERT(rngFactors:ncols()==1 and rngResponses:ncols()==1, "The factors or the responses must be in a single column") 
 			
@@ -158,7 +158,7 @@ local function ANOVASingleFactor()
 			
 			local tblVecFactors={}
 			for i=1, #uniquefactors do 
-				tblVecFactors[i]=Vector.new(0) 
+				tblVecFactors[i]=std.Vector.new(0) 
 			end
 			
 			for i=1,  #factors do

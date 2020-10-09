@@ -14,7 +14,7 @@ local function DT(x, df)
 	if(type(x)=="Vector") then
 
 		local vecSize=#x
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.dt(x(i),df)
 		end
@@ -41,7 +41,7 @@ local function dt(...)
 			if(k=="x") then xval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x and df.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: x and df.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
@@ -70,7 +70,7 @@ local function PT(qval, df)
 	if(type(qval)=="Vector") then
 
 		local vecSize=#qval
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.pt(qval(i),df)
 		end
@@ -97,7 +97,7 @@ local function pt(...)
 			if(k=="q") then qval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: q and df.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: q and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -126,7 +126,7 @@ local function QT(prob, df)
 	if(type(prob)=="Vector") then
 
 		local vecSize=#prob
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.qt(prob(i),df)
 		end
@@ -153,7 +153,7 @@ local function qt(...)
 			if(k=="p") then pval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: p and df.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: p and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -201,7 +201,7 @@ local function rt(...)
 			if(k=="n") then arg1=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: n and df.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: n and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1

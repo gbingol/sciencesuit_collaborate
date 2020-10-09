@@ -9,7 +9,7 @@ local function toarray(Container)
 	--If the entry is a matrix then it returns the elements in a row-order sequence
 	--If the entry is a 1D table then it is converted to vector
 	
-	local retArr=Array.new(0)
+	local retArr=std.Array.new(0)
 	local Num, NonNum=0, 0
 
 	for k, v in pairs(Container) do

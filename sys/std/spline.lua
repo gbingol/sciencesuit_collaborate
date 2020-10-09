@@ -23,16 +23,16 @@ local function spline(x, y,val)
    
 	local function spline_coeff()
 		
-	        local h=Vector.new(len-1) --x(i)-x(i-1)
-	        local b=Vector.new(len-1)
+	        local h=std.Vector.new(len-1) --x(i)-x(i-1)
+	        local b=std.Vector.new(len-1)
 
 	        for i=1,len-1 do
 		        h[i]=x(i+1)-x(i)
 			b[i]=1/h(i) * (y(i+1)-y(i))
 	        end
 
-	        local u=Vector.new(len-2)
-	        local v=Vector.new(len-2)
+	        local u=std.Vector.new(len-2)
+	        local v=std.Vector.new(len-2)
 
 	        u[1]=2*(h(1)+h(2))
 	        v[1]=6*(b(2)-b(1))
@@ -42,7 +42,7 @@ local function spline(x, y,val)
 			v[i]=6*(b(i)-b(i-1))-(h(i-1)*v(i-1)/u(i-1))
 	        end
 	       
-	        local z=Vector.new(len)
+	        local z=std.Vector.new(len)
 	        z[1]=0
 	        z[len]=0
 	        
@@ -87,7 +87,7 @@ local function spline(x, y,val)
 		   
 	if(type(val)=="Vector") then
 		dim=std.size(val)
-		retVec=Vector.new(dim)
+		retVec=std.Vector.new(dim)
 	        
 	        for i=1,dim do
 		   retVec[i]=spline_eval(val(i))

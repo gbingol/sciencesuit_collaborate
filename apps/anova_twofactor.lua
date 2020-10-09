@@ -75,9 +75,9 @@ local function ANOVATwoFactor()
             
 		local Row, Col=0, 0
 		
-		local rngResponse=Range.new(txtResponse.value)
-		local rngFactor1=Range.new(txtFactor1.value) 
-		local rngFactor2=Range.new(txtFactor2.value) 
+		local rngResponse=std.Range.new(txtResponse.value)
+		local rngFactor1=std.Range.new(txtFactor1.value) 
+		local rngFactor2=std.Range.new(txtFactor2.value) 
 		
 		
 		if(rngResponse:ncols()>1 or rngFactor1:ncols()>1 or rngFactor2:ncols()>1) then 

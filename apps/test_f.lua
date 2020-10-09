@@ -89,8 +89,8 @@ local function  dlgTestF()
 		local conflevel=tonumber(txtConfLevel.value)/100
 		local Ratio=tonumber(txtRatio.value)
 		 
-		local rng1=Range.new(txtSample1.value)
-		local rng2=Range.new(txtSample2.value)
+		local rng1=std.Range.new(txtSample1.value)
+		local rng2=std.Range.new(txtSample2.value)
 
 		if(rng1:ncols()>1 or rng2:ncols()>1) then 
 			iup.Message("ERROR","The selected range for Sample #1 and Sample #2 must be a single column.") 

@@ -57,7 +57,7 @@ local function ttest1(xvec, alternative, mu, conflevel)
 		retTable.CI_upper=xaver-std.qt{df=df, p=alpha}*SE
 		
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", ERRORLEVEL)
+		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 
@@ -148,7 +148,7 @@ local function ttest2(xvec,yvec, varequal, alternative, mu, conflevel )
 		pvalue=std.pt{q=tcritical, df=df} --area on the left
 		
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", ERRORLEVEL)
+		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 	
@@ -262,7 +262,7 @@ local function ttest(...)
 			elseif(k=="conflevel") then conflevel=v
 			elseif(k=="paired") then paired=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, y, varequal, alternative, mu, conflevel, paired.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: x, y, varequal, alternative, mu, conflevel, paired.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1

@@ -34,7 +34,7 @@ local function null(A)
 		return nil 
 	end 
 
-	retMat=Matrix.new(n,NCols)
+	retMat=std.Matrix.new(n,NCols)
 	local k=1
 	for i=1,n do
 		for j=rank+1,n do

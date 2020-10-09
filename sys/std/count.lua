@@ -26,7 +26,7 @@ local function count(...)
 				elseif(key == "left") then left = val
 				elseif(key == "right") then right = val
 				else 
-					error("ERROR: Unrecognized key="..key.. ". Keys can be: breaks, left and right.", ERRORLEVEL) 
+					error("ERROR: Unrecognized key="..key.. ". Keys can be: breaks, left and right.", std.const.ERRORLEVEL) 
 				end
 			
 			end
@@ -35,7 +35,8 @@ local function count(...)
 		end
 
 		return SYSTEM.count(container, breaks, left, right)
-	end
+
+	end
 
 
 	

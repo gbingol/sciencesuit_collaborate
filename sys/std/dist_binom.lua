@@ -11,7 +11,7 @@ local function DBINOM(vec, size, prob)
 
 	if(type(vec)=="Vector") then
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.dbinom(vec(i),size, prob)
 		end
@@ -22,7 +22,7 @@ local function DBINOM(vec, size, prob)
 		return SYSTEM.dbinom(vec,size, prob)
 
 	else
-		error("ERROR: First argument must be either a number or of type Vector!", ERRORLEVEL)
+		error("ERROR: First argument must be either a number or of type Vector!", std.const.ERRORLEVEL)
 	
 	end
 
@@ -46,7 +46,7 @@ local function dbinom(...)
 			elseif(k=="size") then size=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x, size and prob.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: x, size and prob.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -77,7 +77,7 @@ local function PBINOM(vec, size, prob)
 	if(type(vec)=="Vector") then
 
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.pbinom(vec(i),size, prob)
 		end
@@ -88,7 +88,7 @@ local function PBINOM(vec, size, prob)
 		return SYSTEM.pbinom(vec,size, prob)
 
 	else
-		error("ERROR: First argument must be either a number or of type Vector!", ERRORLEVEL)
+		error("ERROR: First argument must be either a number or of type Vector!", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -112,7 +112,7 @@ local function pbinom(...)
 			elseif(k=="size") then size=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: q, size and prob.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: q, size and prob.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -140,7 +140,7 @@ local function QBINOM(vec, size, prob)
 	if(type(vec)=="Vector") then
 
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.qbinom(vec(i),size, prob)
 		end
@@ -151,7 +151,7 @@ local function QBINOM(vec, size, prob)
 		return SYSTEM.qbinom(vec,size, prob)
 
 	else
-		error("ERROR: First argument (p) must be either a number or of type Vector.", ERRORLEVEL)
+		error("ERROR: First argument (p) must be either a number or of type Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -173,7 +173,7 @@ local function qbinom(...)
 			elseif(k=="size") then size=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: p, size and prob.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: p, size and prob.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -222,7 +222,7 @@ local function rbinom(...)
 			elseif(k=="size") then size=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: n, size and prob.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: n, size and prob.", std.const.ERRORLEVEL) 
 			end
 		
 			NTblArgs=NTblArgs+1

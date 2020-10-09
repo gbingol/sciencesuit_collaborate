@@ -15,7 +15,7 @@ local function DF(arg1, df1, df2)
 	if(type(arg1)=="Vector") then
 
 		local vecSize=#arg1
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.df(arg1(i),df1, df2)
 		end
@@ -26,7 +26,7 @@ local function DF(arg1, df1, df2)
 		return SYSTEM.df(arg1,df1, df2)
 
 	else
-		error("ERROR: First argument (key: x) must be either a number or of type Vector!", ERRORLEVEL)
+		error("ERROR: First argument (key: x) must be either a number or of type Vector!", std.const.ERRORLEVEL)
 	
 	end
 
@@ -49,7 +49,7 @@ local function df(...)
 			elseif(k=="df1") then df1=v
 			elseif(k=="df2") then df2=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, df1 and df2.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: x, df1 and df2.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
@@ -81,7 +81,7 @@ local function PF(qval, df1, df2)
 	if(type(qval)=="Vector") then
 
 		local vecSize=#qval
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.pf(qval(i),df1, df2)
 		end
@@ -92,7 +92,7 @@ local function PF(qval, df1, df2)
 		return SYSTEM.pf(qval, df1, df2)
 
 	else
-		error("ERROR: First argument (q) must be either a number or of type Vector.", ERRORLEVEL)
+		error("ERROR: First argument (q) must be either a number or of type Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -113,7 +113,7 @@ local function pf(...)
 			elseif(k=="df1") then df1=v
 			elseif(k=="df2") then df2=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: q, df1 and df2.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: q, df1 and df2.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -144,7 +144,7 @@ local function QF(prob, df1, df2)
 	if(type(prob)=="Vector") then
 
 		local vecSize=#prob
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.qf(prob(i),df1, df2)
 		end
@@ -155,7 +155,7 @@ local function QF(prob, df1, df2)
 		return SYSTEM.qf(prob, df1, df2)
 
 	else
-		error("ERROR: First argument (p) must be either a number or of type Vector.", ERRORLEVEL)
+		error("ERROR: First argument (p) must be either a number or of type Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -176,7 +176,7 @@ local function qf(...)
 			elseif(k=="df1") then df1=v
 			elseif(k=="df2") then df2=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: p, df1 and df2.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: p, df1 and df2.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -230,7 +230,7 @@ local function rf(...)
 			elseif(k=="df1") then df1=v
 			elseif(k=="df2") then df2=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: n, df1 and df2.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: n, df1 and df2.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1

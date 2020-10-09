@@ -58,7 +58,7 @@ local function newton_secant(...)
 			elseif(key=="tol") then tol=tonumber(v)
 			elseif(key=="maxiter") then maxiter=tonumber(v)
 			else 
-				error("Usage: {f=, x0=, fprime=, x1=nil, tol=1E-5, maxiter=100}", ERRORLEVEL)
+				error("Usage: {f=, x0=, fprime=, x1=nil, tol=1E-5, maxiter=100}", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1
@@ -82,7 +82,7 @@ local function newton_secant(...)
 			return Secant(func, x0, x1, tol, maxiter)
 		
 		else
-			error("Usage: {f=, x0=, fprime=, tol=1E-5, maxiter=100} OR {f=, x0=, x1=, tol=1E-5, maxiter=100}", ERRORLEVEL)
+			error("Usage: {f=, x0=, fprime=, tol=1E-5, maxiter=100} OR {f=, x0=, x1=, tol=1E-5, maxiter=100}", std.const.ERRORLEVEL)
 		end
 			
 			
@@ -98,7 +98,7 @@ local function newton_secant(...)
 			return Secant(arg[1], arg[2], arg[3])
 		
 		else
-			error("Usage: (f=, x0=, fprime=) OR (f=, x0=, x1=)", ERRORLEVEL)
+			error("Usage: (f=, x0=, fprime=) OR (f=, x0=, x1=)", std.const.ERRORLEVEL)
 		end
 	
 	end
@@ -113,8 +113,8 @@ local function Newton_SystemNonlinearEqs(tblfuncs,v_initial)
 
 	local v=v_initial({})
 	local dim=#v
-	local F=Vector.new(dim)
-	local Jacobi=Matrix.new(dim,dim) -- Jacobian
+	local F=std.Vector.new(dim)
+	local Jacobi=std.Matrix.new(dim,dim) -- Jacobian
 	
 	for k=1,MAXITERATIONS do
 	
@@ -155,7 +155,7 @@ local function Newton_SystemNonlinearEqs(tblfuncs,v_initial)
 		v=v-H
 	end
 	
-        error("ERROR: Maximum iterations have been reached without convergence" , ERRORLEVEL)
+        error("ERROR: Maximum iterations have been reached without convergence" , std.const.ERRORLEVEL)
         
     end -- function
     
@@ -169,7 +169,7 @@ local function newton_funcs(...)
 		end
 	
 	else
-		error("ERROR: Unexpected argument types", ERRORLEVEL)
+		error("ERROR: Unexpected argument types", std.const.ERRORLEVEL)
 		
 	end
 

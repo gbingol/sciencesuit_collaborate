@@ -12,7 +12,7 @@ local function DPOIS(vec, lambda)
 
 	if(type(vec)=="Vector") then
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.dpois(vec(i),lambda)
 		end
@@ -38,7 +38,7 @@ local function dpois(...)
 			if(k=="x") then xval=v
 			elseif(k=="lambda") then lambda=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys: x and lambda.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys: x and lambda.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -68,7 +68,7 @@ local function PPOIS(vec, lambda)
 	if(type(vec)=="Vector") then
 
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.ppois(vec(i),lambda)
 		end
@@ -94,7 +94,7 @@ local function ppois(...)
 			if(k=="q") then qval=v
 			elseif(k=="lambda") then lambda=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: q and lambda.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: q and lambda.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -121,7 +121,7 @@ local function QPOIS(vec, lambda)
 	if(type(vec)=="Vector") then
 
 		local vecSize=#vec
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.qpois(vec(i),lambda)
 		end
@@ -146,7 +146,7 @@ local function qpois(...)
 			if(k=="p") then pval=v
 			elseif(k=="lambda") then lambda=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: p and lambda.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: p and lambda.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -189,7 +189,7 @@ local function rpois(...)
 			if(k=="n") then arg1=v
 			elseif(k=="lambda") then lambda=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: n and lambda.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: n and lambda.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1

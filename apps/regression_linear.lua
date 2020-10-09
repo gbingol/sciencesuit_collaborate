@@ -89,8 +89,8 @@ local function LinearRegression()
 		assert(txtResponse.value~="" and txtFactors.value~="","Response or factors range cannot be empty, a selection must be made")
 			
 
-		local rngResponse=Range.new(txtResponse.value)
-		local rngFactors=Range.new(txtFactors.value) 
+		local rngResponse=std.Range.new(txtResponse.value)
+		local rngFactors=std.Range.new(txtFactors.value) 
 		
 		assert(rngResponse:ncols()==1, "Response variable must be a single column.") 
 		

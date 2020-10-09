@@ -9,7 +9,7 @@ local function trapezoidal(...)
 	local nargs=#arg
 	
 	if(nargs==0) then
-		error("Usage: {f=, a=, b=, inter=} or (f=, a=, b=)", ERRORLEVEL)
+		error("Usage: {f=, a=, b=, inter=} or (f=, a=, b=)", std.const.ERRORLEVEL)
     
     
 	-- input: Lua table
@@ -26,7 +26,7 @@ local function trapezoidal(...)
 			elseif(key=="b") then b=value
 			elseif(key=="inter") then N=value
 			else 
-				error("ERROR: Unexpected key found.", ERRORLEVEL) 
+				error("ERROR: Unexpected key found.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -58,7 +58,7 @@ local function trapezoidal(...)
         
 	--no match
 	else 
-		error("ERROR: The combination of the type of arguments could not be found." , ERRORLEVEL) 
+		error("ERROR: The combination of the type of arguments could not be found." , std.const.ERRORLEVEL) 
 	end
 	
 	

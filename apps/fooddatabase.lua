@@ -131,7 +131,7 @@ local function FoodDatabase()
 	local dlgFoodDatabase = iup.dialog{m_tabs, title="Search Food Database File - SR 28 (Offline)", size="250x150", icon=icon}
 	
 	
-	local db=Database.new()
+	local db=std.Database.new()
 	db:open(std.const.exedir.."/datafiles/USDANALSR28.db") 
 
 	dlgFoodDatabase:show()
@@ -188,7 +188,7 @@ local function FoodDatabase()
 		txtAsh.value=t[1][7]
 
 		m_Food=nil
-		m_Food=Food.new({Water=tonumber(t[1][3]), Protein=tonumber(t[1][4]), Lipid=tonumber(t[1][5]), CHO=tonumber(t[1][6]), Ash=tonumber(t[1][7])})
+		m_Food=std.Food.new({Water=tonumber(t[1][3]), Protein=tonumber(t[1][4]), Lipid=tonumber(t[1][5]), CHO=tonumber(t[1][6]), Ash=tonumber(t[1][7])})
 		txtT.value=20
 		
 		if(m_Food==nil) then 

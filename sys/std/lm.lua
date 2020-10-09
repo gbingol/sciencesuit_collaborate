@@ -54,7 +54,7 @@ local function SLM(yobs, factor, IsIntercept, Alpha)
 	if(IsIntercept) then
 		coeffs=std.polyfit(factor, yobs,1)  -- an*x^n+...+a0
 	else
-		coeffs=Vector.new(2,0)
+		coeffs=std.Vector.new(2,0)
 		coeffs[1]=FitZeroIntercept(yobs, factor)
 	end
 	
@@ -282,7 +282,7 @@ local function MLR(yobs,factmat, IsIntercept, Alpha)
 	
 	-- if constant is not zero then we have to add 1s
 	if(IsIntercept) then 
-		local ones <close> = Vector.new(factmat:nrows(),1)
+		local ones <close> = std.Vector.new(factmat:nrows(),1)
 		
 		mat:insert(ones, 1, "col")
 	end
@@ -354,7 +354,7 @@ local function MLR_Summary(retTable)
 	
 	local MeanYObs=std.mean(yobs)
 	
-	local ypredicted=Vector.new(mat:nrows())
+	local ypredicted=std.Vector.new(mat:nrows())
 	local SS_Total, SS_Residual=0,0
 	
 	local sum_y2=0

@@ -69,7 +69,6 @@ local function  DescriptiveStat()
 	std.gui.PrepareAppForPreSelection(txtInput)
 	
 	
-	
 
 	local function SE(elem) -- Standard Error
 		return std.stdev(elem)/std.sqrt(std.size(elem))
@@ -166,7 +165,7 @@ local function  DescriptiveStat()
 		end
 		
 		
-		local InputRange=Range.new(txtInput.value)
+		local InputRange=std.Range.new(txtInput.value)
 		
 		
 		local outRng=OutputFrame:GetRange()

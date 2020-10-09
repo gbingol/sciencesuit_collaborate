@@ -16,7 +16,7 @@ local function diag(m)
 		k=col 
 	end
 
-	local retVec=Vector.new(k)
+	local retVec=std.Vector.new(k)
 	for i=1,k do
 		retVec[i]=m[i][i]
 	end

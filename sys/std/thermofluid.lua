@@ -64,7 +64,7 @@ local function Initialize(str, ConnectionInfo)
 	
 	
 	local testDBName =std.const.exedir.."/datafiles/ThermoFluids.db"
-	local m_database=Database.new()
+	local m_database=std.Database.new()
 	m_database:open(testDBName)
 	
 	
@@ -485,7 +485,8 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 				
 			end
 		end
-	end
+
+	end
 
 	
 	retTable.state=ThermFluid.FluidState

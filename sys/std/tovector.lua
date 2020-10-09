@@ -10,7 +10,7 @@ local function tovector(Container, retVec)
 	--If the entry is a matrix then it returns the elements in a row-order sequence
 	--If the entry is a 1D table then it is converted to vector
 	if(retVec==nil) then
-		retVec=Vector.new(0)
+		retVec=std.Vector.new(0)
 		retVec:reserve(1000)
 	end
 	

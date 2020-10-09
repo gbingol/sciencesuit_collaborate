@@ -19,9 +19,9 @@ local function tdma(A, b)
 	
 	assert(row==#d,"ERROR: matrix row number and vector dimensions do not match in tdma") 
 		
-	local vecA=Vector.new(row)
-	local vecB=Vector.new(row)
-	local vecC=Vector.new(row-1)
+	local vecA=std.Vector.new(row)
+	local vecB=std.Vector.new(row)
+	local vecC=std.Vector.new(row-1)
 		
 	for i=1,row do
 		if(i>=2) then 
@@ -41,7 +41,7 @@ local function tdma(A, b)
 		d[k]=d(k)-m*d(k-1)
 	end
 
-	local retVec=Vector.new(row)
+	local retVec=std.Vector.new(row)
 
 	-- Backward substitution
 

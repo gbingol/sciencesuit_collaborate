@@ -16,7 +16,7 @@ local function SAMPLE(SampleSpace, n, replacement)
 	assert(type(replacement)=="boolean","Third argument (replace), must be type boolean") 
 
 
-	local retVec=Vector.new(n)
+	local retVec=std.Vector.new(n)
 
 	if(replacement==true) then
 		
@@ -72,7 +72,7 @@ local function sample(...)
 			elseif(key=="replace") then replace=value
 			
 			else 
-				error("ERROR: Signature: {x=, size=, replace=false}", ERRORLEVEL)
+				error("ERROR: Signature: {x=, size=, replace=false}", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1
@@ -90,7 +90,7 @@ local function sample(...)
 	
 
 	else
-		error("ERROR: Signature: {x=, size=, replace=false} OR (x=, size=, replace=false)", ERRORLEVEL)
+		error("ERROR: Signature: {x=, size=, replace=false} OR (x=, size=, replace=false)", std.const.ERRORLEVEL)
 	end
 
 

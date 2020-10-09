@@ -20,7 +20,7 @@ local function rand(m,n)
 
 	local v=std.runif(row*col)
 	
-	local retMat=Matrix.new(row,col)
+	local retMat=std.Matrix.new(row,col)
 	
 	local k=1
 	

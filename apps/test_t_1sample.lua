@@ -104,7 +104,7 @@ local function  ttest1sample()
 		local Mu=tonumber(txtMu.value)
 		
 		 
-		local rng1=Range.new(txtVar1.value)
+		local rng1=std.Range.new(txtVar1.value)
 
 		if(rng1:ncols()>1) then 
 			iup.Message("ERROR","The selected range for Variable #1 must be a single column.") 

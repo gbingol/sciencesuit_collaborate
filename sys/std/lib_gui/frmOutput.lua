@@ -38,7 +38,7 @@ local function frm()
 	
 	function OutputFrame:GetRange()
 		if(IsThereSelection) then
-			return Range.new(txtSelection.value)
+			return std.Range.new(txtSelection.value)
 		end
 	
 		return nil

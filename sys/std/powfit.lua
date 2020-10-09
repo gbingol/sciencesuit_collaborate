@@ -23,7 +23,7 @@ local function powfit (...)
 			elseif(key=="y") then y=v
 			
 			else 
-				error("Usage: {x=, y= }", ERRORLEVEL)
+				error("Usage: {x=, y= }", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1
@@ -44,7 +44,7 @@ local function powfit (...)
 
 
 	else
-		error("Usage: (x=, y= )", ERRORLEVEL)
+		error("Usage: (x=, y= )", std.const.ERRORLEVEL)
 	end
 
 end

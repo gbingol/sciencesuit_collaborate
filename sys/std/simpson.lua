@@ -25,7 +25,7 @@ local function simpson(...)
 			elseif(key=="b") then b=value
 			elseif(key=="inter") then inter=value
 			else 
-				error("Usage: {f=, a=, b=, inter=100}", ERRORLEVEL) 
+				error("Usage: {f=, a=, b=, inter=100}", std.const.ERRORLEVEL) 
 			end
 
 			NTableArgs=NTableArgs+1
@@ -51,7 +51,7 @@ local function simpson(...)
         
 	--no match
 	else 
-		error("Usage: {f=, a=, b=, inter=100} or (f=, a=, b=)" , ERRORLEVEL) 
+		error("Usage: {f=, a=, b=, inter=100} or (f=, a=, b=)" , std.const.ERRORLEVEL) 
 	end
 end
 

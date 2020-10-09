@@ -5,7 +5,7 @@ local std <const> =std
 
 
 local  function GetAveragePerCol(matrix)
-	local retVec=Vector.new(0)
+	local retVec=std.Vector.new(0)
 	
 	for i=1,matrix:ncols() do
 		local col=matrix({},i)
@@ -58,7 +58,7 @@ local function anova2(yobs, x1, x2)
 	end
 	
 
-	local MatAverage=Matrix.new(#v2, #v1)
+	local MatAverage=std.Matrix.new(#v2, #v1)
 	for i=1, #v2 do
 		local m=std.trans(std.tomatrix(tbl[i]))
 		local vec=std.trans(GetAveragePerCol(m))
@@ -67,7 +67,7 @@ local function anova2(yobs, x1, x2)
 		end
 	end
 
-	local RowPerEntryMatrix=Matrix.new(#v2, #v1) --to check whether balanced or not
+	local RowPerEntryMatrix=std.Matrix.new(#v2, #v1) --to check whether balanced or not
 	local GrandMean=std.mean(MatAverage)
 	local SSerror=0
 	
@@ -86,7 +86,7 @@ local function anova2(yobs, x1, x2)
 	
 	local rcmp, ccmp=std.size(cmpMat)
 	if(std.sum(cmpMat)<rcmp*ccmp) then
-		error( "ERROR: This function correctly works for balanced data",ERRORLEVEL)
+		error( "ERROR: This function correctly works for balanced data",std.const.ERRORLEVEL)
 	end
 
 	local Nreplicate=#tbl[1][1] -- assuming balanced
@@ -142,7 +142,7 @@ local function anova2(yobs, x1, x2)
 	AnovaTable.DFError=DFerror
 	AnovaTable.MSError=MSerror
 	
-	local retVec=Vector.new(3)
+	local retVec=std.Vector.new(3)
 	retVec[1]=pvalFact1
 	retVec[2]=pvalFact2
 	retVec[3]=pvalinteract
@@ -150,5 +150,7 @@ local function anova2(yobs, x1, x2)
 	return retVec, AnovaTable
 
 end
+
+
 
 std.anova2=anova2

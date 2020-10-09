@@ -10,9 +10,9 @@ local function Table1DToMatrix(tbl, row, col)
 
 	local N=#tbl
 	
-	assert(N==row*col,"ERROR: Requested matrix has a larger/smaller size than the table.", ERRORLEVEL) 
+	assert(N==row*col,"ERROR: Requested matrix has a larger/smaller size than the table.", std.const.ERRORLEVEL) 
 	
-	local retMat=Matrix.new(row,col)
+	local retMat=std.Matrix.new(row,col)
 	local r,c=1,1
 	
 	for i=1,N do
@@ -36,7 +36,7 @@ end--function
 local function Table2DtoMatrix(tbl)
 	local row=#tbl
 	local col=#tbl[1]
-	local mat=Matrix.new(row,col)
+	local mat=std.Matrix.new(row,col)
 	for i=1,row do
 		assert(type(tbl[i])=="table","ERROR: Table is not a 2D table")
 	
@@ -61,7 +61,7 @@ local function VectorToMatrix(elem, row, col)
 	
 	assert(#elem==row*col,"ERROR: Requested matrix has a larger size than the vector" ) 
 	
-	retMat=Matrix.new(row,col)
+	retMat=std.Matrix.new(row,col)
 	k=0
 	for i=1,row do
 		for j=1,col do
@@ -80,7 +80,7 @@ local function RangeToMatrix(rng, row, col)
 	
 	assert(r==row and c==col,"ERROR: Dimensions of the requested Matrix is larger than Range." ) 
 	
-	local retMat=Matrix.new(row,col)
+	local retMat=std.Matrix.new(row,col)
 	
 	for i=1,r do
 		for j=1,c do
@@ -124,7 +124,7 @@ local function tomatrix(elem, row, col)
 		end
 		
 	else
-		error("ERROR: First argument can be of type Vector, Array, Range or Lua Table.", ERRORLEVEL)
+		error("ERROR: First argument can be of type Vector, Array, Range or Lua Table.", std.const.ERRORLEVEL)
 	end
 
 

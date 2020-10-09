@@ -60,7 +60,7 @@ local function ztest1(xvec, sd, mu, alternative, conflevel)
 		retTable.CI_upper=xaver-std.qnorm{p=alpha}*SE
 		
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", ERRORLEVEL)
+		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 
@@ -98,7 +98,7 @@ local function ztest(...)
 			elseif(k=="sd") then sd=v
 			elseif(k=="conflevel") then conflevel=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, alternative, mu, sd, conflevel.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: x, alternative, mu, sd, conflevel.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1

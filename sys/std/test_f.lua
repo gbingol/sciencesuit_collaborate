@@ -53,7 +53,7 @@ local function FTEST(xvec,yvec, alternative, ratio, conflevel )
 		pvalue=std.pf{q=Fcritical, df1=df1, df2=df2} --area on the left
 		
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", ERRORLEVEL)
+		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 	
@@ -103,7 +103,7 @@ local function test_f (...)
 			elseif(k=="ratio") then ratio=v
 			elseif(k=="conflevel") then conflevel=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, y, ratio, alternative, conflevel.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: x, y, ratio, alternative, conflevel.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
@@ -120,7 +120,7 @@ local function test_f (...)
 		
 		
 	else
-		error("Usage: {x=, y=, ratio=1, alternative=\"two.sided\", conflevel=0.95} OR (x=, y=)", ERRORLEVEL) 
+		error("Usage: {x=, y=, ratio=1, alternative=\"two.sided\", conflevel=0.95} OR (x=, y=)", std.const.ERRORLEVEL) 
 	
 	end
 	

@@ -10,7 +10,7 @@ local function DCHISQ(arg1, df)
 
 	if(type(arg1)=="Vector") then
 		local vecSize=#arg1
-		local retVec=Vector.new(vecSize)
+		local retVec=std.Vector.new(vecSize)
 		for i=1,vecSize do
 			retVec[i]=SYSTEM.dchisq(arg1(i),df)
 		end
@@ -21,7 +21,7 @@ local function DCHISQ(arg1, df)
 		return SYSTEM.dchisq(arg1,df)
 
 	else
-		error("ERROR: First argument (key: x) must be either a number or of type Vector!", ERRORLEVEL)
+		error("ERROR: First argument (key: x) must be either a number or of type Vector!", std.const.ERRORLEVEL)
 	
 	end
 
@@ -43,7 +43,7 @@ local function dchisq(...)
 			if(k=="x") then xval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x and df.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: x and df.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
@@ -70,7 +70,7 @@ local function PCHISQ(qval, df)
 	assert(math.type(df)=="integer" and df>0,"ERROR: Degrees of freedom (key: df) must be an integer greater than zero.")
 
 	if(type(qval)=="Vector") then
-		local retVec=Vector.new(#qval)
+		local retVec=std.Vector.new(#qval)
 		for i=1,#qval do
 			retVec[i]=SYSTEM.pchisq(qval(i),df)
 		end
@@ -81,7 +81,7 @@ local function PCHISQ(qval, df)
 		return SYSTEM.pchisq(qval,df)
 
 	else
-		error("ERROR: First argument (q) must be either a number or of type Vector.", ERRORLEVEL)
+		error("ERROR: First argument (q) must be either a number or of type Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -101,7 +101,7 @@ local function pchisq(...)
 			if(k=="q") then qval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: q and df.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: q and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -127,7 +127,7 @@ local function QCHISQ(prob, df)
 	assert(math.type(df)=="integer" and df>0,"ERROR: Degrees of freedom (key: df) must be an integer greater than zero.")
 
 	if(type(prob)=="Vector") then
-		local retVec=Vector.new(#prob)
+		local retVec=std.Vector.new(#prob)
 		for i=1,#prob do
 			retVec[i]=SYSTEM.qchisq(prob(i),df)
 		end
@@ -138,7 +138,7 @@ local function QCHISQ(prob, df)
 		return SYSTEM.qchisq(prob,df)
 
 	else
-		error("ERROR: First argument (p) must be either a number or of type Vector.", ERRORLEVEL)
+		error("ERROR: First argument (p) must be either a number or of type Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -158,7 +158,7 @@ local function qchisq(...)
 			if(k=="p") then pval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: p and df.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: p and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -203,7 +203,7 @@ local function rchisq(...)
 			if(k=="n") then arg1=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table. Valid keys: n and df.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table. Valid keys: n and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1

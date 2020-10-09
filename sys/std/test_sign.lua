@@ -230,7 +230,7 @@ local function sign_test1(x_vector,md, alternative, conflevel)
 		retTable.interpolated.CILow="-inf"
 		retTable.interpolated.CIHigh=Interpolation(retTable.lower.prob, retTable.lower.CIHigh, retTable.upper.prob, retTable.upper.CIHigh, conflevel) 
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", ERRORLEVEL)
+		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 
@@ -262,7 +262,7 @@ local function sign_test(...)
 			elseif(k=="md") then md=v
 			elseif(k=="conflevel") then conflevel=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, y, alternative, md, conflevel.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: x, y, alternative, md, conflevel.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1

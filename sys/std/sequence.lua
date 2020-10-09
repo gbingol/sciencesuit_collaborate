@@ -29,7 +29,7 @@ local function seq(from, to, by)
 	
 	
 	local NElem=std.floor(std.abs(to-from)/std.abs(by))+1
-	local retVec=Vector.new(NElem)
+	local retVec=std.Vector.new(NElem)
 		
 	for i=1,NElem do
 		retVec[i]=from+(i-1)*by
@@ -54,7 +54,7 @@ local function sequence(...)
 			elseif(k=="to") then to=v
 			elseif(k=="by") then by=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: from, to and by.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: from, to and by.", std.const.ERRORLEVEL) 
 			end
 			NTblArgs=NTblArgs+1
 		end
@@ -71,7 +71,7 @@ local function sequence(...)
 		return seq(args[1], args[2], args[3])
 	
 	else
-		error("ERROR: Unrecognized type or number of arguments. Usage: sequence(from, to, by) OR sequence{from=, to=, by=}", ERRORLEVEL) 
+		error("ERROR: Unrecognized type or number of arguments. Usage: sequence(from, to, by) OR sequence{from=, to=, by=}", std.const.ERRORLEVEL) 
 	end
 
 end

@@ -41,7 +41,7 @@ local function dsignrank(...)
 			if(k=="x") then xval=v
 			elseif(k=="n") then n=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x, n.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: x, n.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -101,7 +101,7 @@ local function psignrank(...)
 			if(k=="q") then qval=v
 			elseif(k=="n") then n=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: q, n.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: q, n.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -162,7 +162,7 @@ local function qsignrank(...)
 			if(k=="p") then pval=v
 			elseif(k=="n") then n=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: p, n.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: p, n.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1

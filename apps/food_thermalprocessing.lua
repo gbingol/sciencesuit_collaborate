@@ -11,7 +11,7 @@ local TOLERANCE=std.const.tolerance
 
 --Finds the vector containing consecutive averages [elem(i)+elem(i-1)] / 2
 local function FindAvg(vec)
-	local retVec=Vector.new(0)
+	local retVec=std.Vector.new(0)
 	
 	for i=2,#vec do
 		local avg=(vec(i)+vec(i-1))/2
@@ -135,8 +135,8 @@ local function FoodThermalProcessing()
 		local f=load("return  "..tostring(FoodName))
 		m_Food=f()
 		
-		if(m_Food==nil) then 
-			iup.Message("ERROR","ERROR: Cannot access the variable "..FoodName.." Have you forgotten to create the variable?")
+		if(type(m_Food)~="Food") then 
+			iup.Message("ERROR","Cannot access the 'Food' variable "..FoodName.." Have you forgotten to create the variable?")
 			
 			return
 		end
@@ -158,7 +158,7 @@ local function FoodThermalProcessing()
 		
 		 
 		local testDBName =std.const.exedir.."/datafiles/Microorganism.db" 
-		m_database=Database.new()
+		m_database=std.Database.new()
 		m_database:open(testDBName)
 		
 		local row, col=0,0
@@ -219,8 +219,8 @@ local function FoodThermalProcessing()
 		end
 		
 		
-		local range_time=Range.new(txtTime.value)
-		local range_T=Range.new(txtTemperature.value)
+		local range_time=std.Range.new(txtTime.value)
+		local range_T=std.Range.new(txtTemperature.value)
 		
 		local vtime,vTemp=std.tovector(range_time), std.tovector(range_T)
 		

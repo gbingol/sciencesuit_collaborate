@@ -76,7 +76,7 @@ local function quantile(...)
 			if(k=="x") then xval=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x and prob.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, keys can be: x and prob.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1

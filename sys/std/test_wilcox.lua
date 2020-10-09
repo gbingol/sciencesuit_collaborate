@@ -37,7 +37,7 @@ local function testwilcox1(xvec, mu, alternative, conflevel)
 		
 		
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", ERRORLEVEL)
+		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 
@@ -77,7 +77,7 @@ local function testwilcox(...)
 			elseif(k=="conflevel") then conflevel=v
 			
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, y, mu, alternative, conflevel.", ERRORLEVEL) 
+				error("ERROR: Unrecognized key in the table, valid keys: x, y, mu, alternative, conflevel.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1

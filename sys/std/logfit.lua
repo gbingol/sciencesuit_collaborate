@@ -21,7 +21,7 @@ local function logfit(...)
 			elseif(key=="y") then y=v
 			
 			else 
-				error("Usage: {x=, y= }", ERRORLEVEL)
+				error("Usage: {x=, y= }", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1
@@ -40,7 +40,7 @@ local function logfit(...)
 		return SYSTEM.logfit(arg[1],arg[2])
 
 	else
-		error("Usage: (x=, y= )", ERRORLEVEL)
+		error("Usage: (x=, y= )", std.const.ERRORLEVEL)
 	end
 
 end

@@ -117,8 +117,8 @@ local function  dlgTwoSample2Test()
 			varequal=true
 		end
 		 
-		local rng1=Range.new(txtVar1.value)
-		local rng2=Range.new( txtVar2.value)
+		local rng1=std.Range.new(txtVar1.value)
+		local rng2=std.Range.new( txtVar2.value)
 
 		
 		assert(rng1:ncols()==1 and rng2:ncols()==1,"The selected range for Variable #1 and Variable #2 must be a single column.") 
@@ -165,7 +165,7 @@ local function  dlgTwoSample2Test()
 			assert(#uniquesubscripts==2, "Number of codes pertaining to factors in the subscripts range must be exactly 2")  
 			
 			
-			v1, v2=Vector.new(0), Vector.new(0)
+			v1, v2=std.Vector.new(0), std.Vector.new(0)
 			
 			for i=1,  #subscripts do
 				if(subscripts[i]==uniquesubscripts[1]) then

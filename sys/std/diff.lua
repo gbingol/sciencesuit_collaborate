@@ -14,7 +14,7 @@ local function diff(v1, v2)
 	
 	if(v2==nil) then
 		local dim=#v1
-		local retVec=Vector.new(dim-1)
+		local retVec=std.Vector.new(dim-1)
 		for i=1,dim-1 do
 			retVec[i]=v1(i+1)-v1(i)
 		end
@@ -30,7 +30,7 @@ local function diff(v1, v2)
 	
 	assert(dimx==dimy,"ERROR: Vector lengths must be same") 
 	
-	local retVec=Vector.new(dimx)
+	local retVec=std.Vector.new(dimx)
 	for i=1,dimx do
 		local val;
 		if(i==1) then 

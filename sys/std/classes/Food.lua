@@ -5,14 +5,13 @@
 local std <const> =std
 
 
-local TOLERANCE=std.const.tolerance
 
-local function Cp(component, T) --component can be water, CHO...; T is temperature in Celcius	
-	if(component=="water" ) then 
+local function Cp(component, T) --component can be water, CHO...; T is temperature in Celcius 
+	if(component=="water" ) then
 		return 4.1289-9.0864E-05*T+5.4731*10^-6.0*T^2 
 
 	elseif(component=="protein") then 
-		return 2.0082 + 1.2089*10^-3.0*T-1.3129*10.0^-6.0*T^2.0
+		return 2.0082 + 1.2089*10^-3.0*T-1.3129*10.0^-6.0*T^2.0 
 
 	elseif(component=="lipid")  then 
 		return 1.9842+1.4733*10.0^-3.0*T-4.8008*10.0^-6.0*T^2.0 
@@ -87,12 +86,19 @@ end
 
 local function Norrish(food)
 	--Norrish equation
-	local NCHO=food.CHO/180.16 --CHO is considered as fructose
-	local NLipid=food.lipid/ 92.0944 --lipid is considered as glycerol
-	local NProtein=food.protein/89.09 -- protein is considered as alanine
+	
+	--CHO is considered as fructose
+	local NCHO=food.CHO/180.16 
+	
+	--lipid is considered as glycerol
+	local NLipid=food.lipid/ 92.0944 
+	
+	-- protein is considered as alanine
+	local NProtein=food.protein/89.09 
+	
 	local NWater=food.water/18.02
 
-	local Nsolute=NCHO+NLipid+NProtein
+	local Nsolute=NCHO + NLipid + NProtein
 
 	-- Norrish equation K values using Ferro-Chirife-Boquet equation
 	local K=NCHO/Nsolute*(-2.15)+NLipid/Nsolute*(-1.16)+NProtein/Nsolute*(-2.52) 
@@ -135,7 +141,7 @@ local function ComputeAw(food)
 	local salt=food.salt --%
 	local Msolute=CHO+lipid+protein+ash+salt
 
-	if(water<TOLERANCE) then
+	if(water<std.const.tolerance) then
 		return 0.01 --There is virtually (<1E-5 %) no water
 	end
 
@@ -147,7 +153,7 @@ local function ComputeAw(food)
 	
 	
 	--Non-electrolytes solutions
-	if(math.abs(salt)<TOLERANCE) then
+	if(math.abs(salt)<std.const.tolerance) then
 		if(water>99.0) then
 			return 0.98
 		
@@ -187,14 +193,14 @@ end --computeAw
 
 
 --Food class
-Food={}
-Food.__index=Food
-function Food.new(tbl)
+std.Food={}
+std.Food.__index=std.Food
+function std.Food.new(tbl)
 
 	assert(type(tbl)=="table","ERROR: Cannot create a Food item without a valid Lua table")
 
 	local FOOD={}--create the object
-	setmetatable(FOOD,Food) 
+	setmetatable(FOOD,std.Food) 
 	
 	local m_Water, m_CHO, m_Protein, m_Lipid, m_Ash, m_Salt =0 , 0, 0, 0, 0,0 -- Percentages
 	
@@ -254,7 +260,7 @@ end
 
 
 
-function Food:cp(arg)
+function std.Food:cp(arg)
 
 	if(arg==nil) then
 	
@@ -296,7 +302,7 @@ end
 
 
 
-function Food:k(arg)
+function std.Food:k(arg)
 	
 	if(arg==nil) then
 	
@@ -336,7 +342,7 @@ end
 
 
 
-function Food:rho(arg)
+function std.Food:rho(arg)
 	
 	if(arg==nil) then
 	
@@ -376,7 +382,7 @@ end
 
 
 
-function Food:T(num)
+function std.Food:T(num)
 	
 	if(num==nil) then 
 		return self.temperature 
@@ -389,7 +395,7 @@ end
 
 
 
-function Food:aw(arg)
+function std.Food:aw(arg)
 
 	if(arg==nil) then
 	
@@ -426,7 +432,7 @@ end
 
 
 
-function Food:ph(arg)
+function std.Food:ph(arg)
 	
 	if(arg==nil) then
 		return self.m_ph
@@ -454,25 +460,25 @@ end
 
 
 ----For many cases, NOT Recommended to set the weight externally
-function Food:SetWeight(num) 
+function std.Food:SetWeight(num) 
 	assert(type(num)=="number","ERROR: Argument must be of type number.")
 	
 	self.weight=num  
 end
 
 
-function Food:GetWeight() 
+function std.Food:GetWeight() 
 	
 	return self.weight
 end
 
 
-function Food:normalize()
+function std.Food:normalize()
 	self.weight=1.0
 end
 
 
-function Food:get()
+function std.Food:get()
 	--Only return macromolecules
 	local tbl={}
 	
@@ -487,7 +493,7 @@ function Food:get()
 end
 
 
-function Food:__name()
+function std.Food:__name()
 	return "Food"
 end
 
@@ -516,10 +522,10 @@ local function Addition(foodA, foodB)
 	tbl.ash=ash/sum*100
 	tbl.salt=salt/sum*100
 
-	local retFood=Food.new(tbl)
+	local retFood=std.Food.new(tbl)
 	retFood:SetWeight(ma+mb)
 	
-	if(math.abs(Ta-Tb)<=TOLERANCE) then
+	if(math.abs(Ta-Tb)<=std.const.tolerance) then
 		retFood:T(Ta)
 	
 	else
@@ -545,7 +551,7 @@ local function Subtraction (foodA, foodB)
 	local mdiff=ma-mb;
 
 	assert(mdiff>=0,"ERROR: Weight can not be smaller than or equal to zero")   
-	assert(math.abs(Ta-Tb)<TOLERANCE,"ERROR: In subtraction Food's cannot have different temperatures.") 
+	assert(math.abs(Ta-Tb)<std.const.tolerance,"ERROR: In subtraction Food's cannot have different temperatures.") 
 
 	local fA, fB=foodA:get(), foodB:get()
 	local diff_tbl={}
@@ -555,7 +561,7 @@ local function Subtraction (foodA, foodB)
 			local diff_val=ma*v-mb*fB[k]
 			assert(diff_val>=0, "ERROR:Weight of "..k.." can not be smaller than zero")
 			
-			if(diff_val<TOLERANCE) then diff_val=0	end
+			if(diff_val<std.const.tolerance) then diff_val=0	end
 			
 			diff_tbl[k]=diff_val
 		end
@@ -569,7 +575,7 @@ local function Subtraction (foodA, foodB)
 		tbl[k]=v/sum*100
 	end
 	
-	local retFood=Food.new(tbl)
+	local retFood=std.Food.new(tbl)
 	retFood:SetWeight(ma-mb)
 
 	return retFood
@@ -606,7 +612,7 @@ local function Multiplication(elemA,elemB)
 		tbl[k]=v
 	end
 
-	local retFood=Food.new(tbl)
+	local retFood=std.Food.new(tbl)
 	retFood:SetWeight(food:GetWeight()*num)
 
 	return retFood
@@ -624,7 +630,7 @@ local function Equal(foodA, foodB)
 			return false
 		end
 
-		if(math.abs(v-fB[k])>TOLERANCE) then
+		if(math.abs(v-fB[k])>std.const.tolerance) then
 			return false
 		end
 	end
@@ -632,13 +638,13 @@ local function Equal(foodA, foodB)
 	return true
 end
 
-Food.__add=Addition
-Food.__sub=Subtraction
-Food.__mul=Multiplication
-Food.__eq=Equal
+std.Food.__add=Addition
+std.Food.__sub=Subtraction
+std.Food.__mul=Multiplication
+std.Food.__eq=Equal
 
 
-function Food:__tostring()
+function std.Food:__tostring()
 	
 	local str=""
 	
@@ -687,3 +693,6 @@ function Food:__tostring()
 
 	return str
 end
+
+
+

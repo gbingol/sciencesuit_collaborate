@@ -23,7 +23,7 @@ local function DUNIF(x, min, max)
 		end
 	
 	elseif(type(x)=="Vector") then
-		local retVec=Vector.new(#x)
+		local retVec=std.Vector.new(#x)
 		for i=1, #x do
 			retVec[i]=DUNIF(x(i),min, max)
 		end
@@ -48,7 +48,7 @@ local function dunif(...)
 			elseif(k=="min") then min=v
 			elseif(k=="max") then max=v
 			else 
-				error("Usage: {x=, min=0, max=1}", ERRORLEVEL) 
+				error("Usage: {x=, min=0, max=1}", std.const.ERRORLEVEL) 
 			end
 		end
 		
@@ -61,7 +61,7 @@ local function dunif(...)
 		return DUNIF(args[1], args[2], args[3])
 	
 	else
-		error("Usage: dunif(x=, min=0, max=1) OR dunif{x=, min=0 , max=1}", ERRORLEVEL) 
+		error("Usage: dunif(x=, min=0, max=1) OR dunif{x=, min=0 , max=1}", std.const.ERRORLEVEL) 
 	end
 
 end
@@ -93,7 +93,7 @@ local function PUNIF(q, min, max)
 		end
 	
 	elseif(type(q)=="Vector") then
-		local retVec=Vector.new(#q)
+		local retVec=std.Vector.new(#q)
 		for i=1, #q do
 			retVec[i]=PUNIF(q(i),min, max)
 		end
@@ -118,7 +118,7 @@ local function punif(...)
 			elseif(k=="min") then min=v
 			elseif(k=="max") then max=v
 			else 
-				error("Usage: {q=, min=0, max=1}", ERRORLEVEL) 
+				error("Usage: {q=, min=0, max=1}", std.const.ERRORLEVEL) 
 			end
 		end
 		
@@ -131,7 +131,7 @@ local function punif(...)
 		return PUNIF(args[1], args[2], args[3])
 	
 	else
-		error("Usage: punif(q, min=0, max=1) OR punif{q=, min=0 , max=1}", ERRORLEVEL) 
+		error("Usage: punif(q, min=0, max=1) OR punif{q=, min=0 , max=1}", std.const.ERRORLEVEL) 
 	end
 
 end
@@ -158,7 +158,7 @@ local function QUNIF(p, min, max)
 		return p*(max-min)+min
 		
 	elseif(type(p)=="Vector") then
-		local retVec=Vector.new(#p)
+		local retVec=std.Vector.new(#p)
 		for i=1, #p do
 			retVec[i]=QUNIF(p(i),min, max)
 		end
@@ -185,7 +185,7 @@ local function qunif(...)
 			elseif(k=="min") then min=v
 			elseif(k=="max") then max=v
 			else 
-				error("Keys: {p=, min=0, max=1}", ERRORLEVEL) 
+				error("Keys: {p=, min=0, max=1}", std.const.ERRORLEVEL) 
 			end
 		end
 		
@@ -199,7 +199,7 @@ local function qunif(...)
 		return QUNIF(args[1], args[2], args[3])
 	
 	else
-		error("Usage: qunif(p, min=0, max=1) OR qunif{p=, min=0 , max=1}", ERRORLEVEL) 
+		error("Usage: qunif(p, min=0, max=1) OR qunif{p=, min=0 , max=1}", std.const.ERRORLEVEL) 
 	end
 
 end
@@ -240,7 +240,7 @@ local function runif(...)
 			elseif(k=="min") then min=v
 			elseif(k=="max") then max=v
 			else 
-				error("Usage: {n=, min=0, max=1}", ERRORLEVEL) 
+				error("Usage: {n=, min=0, max=1}", std.const.ERRORLEVEL) 
 			end
 		end
 		
@@ -253,7 +253,7 @@ local function runif(...)
 		return RUNIF(args[1], args[2], args[3])
 	
 	else
-		error("Usage: runif(n, min=0, max=1) OR runif{n=, min=0 , max=1}", ERRORLEVEL) 
+		error("Usage: runif(n, min=0, max=1) OR runif{n=, min=0 , max=1}", std.const.ERRORLEVEL) 
 	end
 
 end

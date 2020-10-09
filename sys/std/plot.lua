@@ -20,7 +20,7 @@ local function plot(...)
 		return std.scatter{x=arg[1],y=arg[2], name=arg[3]}
 
 	else
-		error("Please see std.scatter for keys of Lua table or simply use as std.plot(x=, y=, [name=])", ERRORLEVEL)
+		error("Please see std.scatter for keys of Lua table or simply use as std.plot(x=, y=, [name=])", std.const.ERRORLEVEL)
 	end
 
 end

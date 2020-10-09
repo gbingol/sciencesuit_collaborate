@@ -24,7 +24,7 @@ local function polyfit(...)
 			elseif(key=="intercept") then intercept=v
 			
 			else 
-				error("Usage: {x=, y=, n=, [intercept=]}", ERRORLEVEL)
+				error("Usage: {x=, y=, n=, [intercept=]}", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1

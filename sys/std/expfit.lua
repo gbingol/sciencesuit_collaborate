@@ -24,7 +24,7 @@ local function expfit (...)
 			elseif(key=="intercept") then intercept=v
 			
 			else 
-				error("Usage: {x=, y=, [intercept=] }", ERRORLEVEL)
+				error("Usage: {x=, y=, [intercept=] }", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1
@@ -53,7 +53,7 @@ local function expfit (...)
 
 
 	else
-		error("Usage: (x=, y=, [intercept=] )", ERRORLEVEL)
+		error("Usage: (x=, y=, [intercept=] )", std.const.ERRORLEVEL)
 	end
 
 end

@@ -24,8 +24,8 @@ local function AndersonDarling(vec)
 	local f_x_1=1-f_x
 	f_x_1:sort("A")
 	
-	local S=Vector.new(N)
-	local probability=Vector.new(N)
+	local S=std.Vector.new(N)
+	local probability=std.Vector.new(N)
 	
 	for i=1, #vec do
 		S[i]=(2*i-1)*(std.ln(f_x[i])+std.ln(f_x_1[i]))
