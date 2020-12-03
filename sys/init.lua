@@ -20,6 +20,7 @@ std.misc={}
 
 std.Array=Array
 std.Database=Database
+std.DataFrame=DataFrame
 std.Matrix=Matrix
 std.Range=Range
 std.Vector=Vector
@@ -28,6 +29,7 @@ std.Worksheet=Worksheet
 
 Array=nil
 Database=nil
+DataFrame=nil
 Matrix=nil
 Range=nil
 Vector=nil

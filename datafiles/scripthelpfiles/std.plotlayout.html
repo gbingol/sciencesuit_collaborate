@@ -16,7 +16,7 @@ Generates a 2D Lua table of window handles which point to the different blocks o
 
 <h3>Syntax:</h3>
 
-<p>plotlayout(row=, column=) &rarr; 2D Lua table of window handles</p>
+<p>plotlayout(row=, column=, [Show = false]) &rarr; 2D Lua table of window handles</p>
 
 
 
@@ -27,12 +27,12 @@ Generates a 2D Lua table of window handles which point to the different blocks o
 
 <p>
       --generate 2x2 matrix of window handles  <br />
-      &gt;&gt;t=std.plotlayout(2,2)  <br />
+      &gt;&gt;t=std.plotlayout(2, 2)  <br />
 
       <br />
 
       --vector of x values  <br />
-      &gt;&gt;x=std.sequence(-4,4,0.1);  <br />
+      &gt;&gt;x=std.sequence(-4, 4, 0.1);  <br />
 
       <br />
 

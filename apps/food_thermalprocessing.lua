@@ -6,7 +6,6 @@ require( "iuplua" )
 local std <const> =std
 local iup <const> =iup
 
-local TOLERANCE=std.const.tolerance
 
 
 --Finds the vector containing consecutive averages [elem(i)+elem(i-1)] / 2
@@ -87,7 +86,7 @@ local function FoodThermalProcessing()
 	local lblTime=iup.label{title="Time:"}
 	local txtTime=std.gui.gridtext()
 	
-	local lblTemperature=iup.label{title="Temperature:"}
+	local lblTemperature=iup.label{title="Temperature(s):"}
 	local txtTemperature=std.gui.gridtext()
 	
 	local lblRefTemp=iup.label{title="Reference Temperature:"}
@@ -153,6 +152,7 @@ local function FoodThermalProcessing()
           
 		if(pH<=0 or pH>14) then
 			iup.Message("ERROR","pH value of the food material is not in the range of (0-14]")
+			
 			return
 		end
 		
@@ -217,24 +217,50 @@ local function FoodThermalProcessing()
 			
 			return 
 		end
+
+
+		local function Compute(Time, Temperature)
+			
+			assert(#Time == #Temperature, "The length of time and temperature data are not equal.")
+			
+			assert(math.abs(vtime(1))<std.const.tolerance, "Time sequence does not start from 0") 
+			
+			
+			
+			local RefTemp=tonumber(txtRefTemp.value)
+			local DValue=Dvalue_Time*10.0^((Dvalue_Temp-Temperature)/zvalue) --vector
+			
+			local LethalRate=10.0^((Temperature-RefTemp)/zvalue) --vector
+			local FValue=std.cumtrapz(Time, LethalRate) --returns a vector
+			
+			local dt=std.diff(Time)
+			local avg_T=FindAvg(Temperature)
+			local DVal_avg=Dvalue_Time*10.0^((Dvalue_Temp-avg_T)/zvalue)
+			local LogRed=dt/DVal_avg
+			
+			local TotalLogRed=std.cumsum(LogRed)
+			TotalLogRed:insert(1,0) -- at time=0 TotalLogRed(1)=0
+			
+			
+			
+			for i=1,#Time do
+				WS[row+i][col]=Time(i)
+				WS[row+i][col+1]=Temperature(i)
+				WS[row+i][col+2]=string.format("%.3f",tostring(LethalRate(i)))
+				WS[row+i][col+3]=string.format("%.3f",tostring(DValue(i)))
+				WS[row+i][col+4]=string.format("%.2f",tostring(TotalLogRed(i)))
+				WS[row+i][col+5]=string.format("%.2f",tostring(FValue(i)))
+			end
+
+		end
+		
+		
 		
 		
 		local range_time=std.Range.new(txtTime.value)
 		local range_T=std.Range.new(txtTemperature.value)
 		
-		local vtime,vTemp=std.tovector(range_time), std.tovector(range_T)
-		
-		if(#vtime ~=#vTemp) then 
-			iup.Message("ERROR"," The length of time and temperature data are not equal.")
-			
-			return 
-		end 
-		
-		if(math.abs(vtime(1))>TOLERANCE) then 
-			iup.Message("ERROR","Time sequence does not start from 0") 
-			
-			return 
-		end
+		local NLocs=range_T:ncols()
 		
 		
 		local WS=std.appendworksheet()
@@ -246,32 +272,22 @@ local function FoodThermalProcessing()
 			col=col+1
 		end
 		
-		row=row+1; col=1
+		row = row + 1; col = 1
 		
-		local RefTemp=tonumber(txtRefTemp.value)
-		local DValue=Dvalue_Time*10.0^((Dvalue_Temp-vTemp)/zvalue) --vector
-		
-		local LethalRate=10.0^((vTemp-RefTemp)/zvalue) --vector
-		local FValue=std.cumtrapz(vtime, LethalRate) --returns a vector
-		
-		local dt=std.diff(vtime)
-		local avg_T=FindAvg(vTemp)
-		local DVal_avg=Dvalue_Time*10.0^((Dvalue_Temp-avg_T)/zvalue)
-		local LogRed=dt/DVal_avg
-		
-		local TotalLogRed=std.cumsum(LogRed)
-		TotalLogRed:insert(1,0) -- at time=0 TotalLogRed(1)=0
-		
-		
-		
-		for i=1,#vtime do
-			WS[row+i][col]=vtime(i)
-			WS[row+i][col+1]=vTemp(i)
-			WS[row+i][col+2]=string.format("%.3f",tostring(LethalRate(i)))
-			WS[row+i][col+3]=string.format("%.3f",tostring(DValue(i)))
-			WS[row+i][col+4]=string.format("%.2f",tostring(TotalLogRed(i)))
-			WS[row+i][col+5]=string.format("%.2f",tostring(FValue(i)))
+		for i=1,NLocs do
+			local status, err=pcall(Compute,std.tovector(range_time), std.tovector(range_T:col(i)))
+			
+			if(not status) then
+				iup.Message("Error", err)
+				
+				return
+			end
+			
+			row = row + 2
+			
+			col = 1
 		end
+		
 		
 	end
 	
