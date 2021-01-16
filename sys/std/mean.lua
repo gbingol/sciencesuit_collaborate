@@ -67,6 +67,19 @@ local function mean(...)
 				return vec/Container:ncols()
 			end
 		end
+
+
+	elseif(type(Container)=="Array") then
+	
+		--elemconsid is the count of numbers in the array
+		local total, elemconsid=std.sum(Container)
+		
+		if(elemconsid ~= 0) then
+			return total/elemconsid
+		end
+		
+		return nil
+
 	end
 
 	
