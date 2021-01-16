@@ -6,8 +6,8 @@ local std <const> =std
 
 local function DSIGNRANK( arg, n)
 
-	assert(type(arg)=="Vector" or type(arg)=="number","ERROR: First argument must be either a number or of type Vector!")
-	assert(math.type(n)=="integer" and n>0,"ERROR: Second argument (n) must be an integer greater than zero!")
+	assert(type(arg)=="Vector" or type(arg)=="number","First arg must be either a number or of type Vector!")
+	assert(math.type(n)=="integer" and n>0,"Second arg (n) must be an integer >0")
 
 	if(type(arg)=="Vector") then
 		local retVec=arg[{}] --clone
@@ -41,16 +41,16 @@ local function dsignrank(...)
 			if(k=="x") then xval=v
 			elseif(k=="n") then n=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x, n.", std.const.ERRORLEVEL) 
+				error("Keys can be: x, n.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: x, n.")
+		assert(NTblArgs>0,"Keys: x, n.")
 
-		assert(xval~=nil and n~=nil , "ERROR: A value must be assigned to all of the table keys (x, n ).")
+		assert(xval~=nil and n~=nil , "A value must be assigned to all of the table keys (x, n ).")
 		
 		return DSIGNRANK(xval,n)
 		
@@ -66,8 +66,8 @@ end
 
 local function PSIGNRANK( arg, n)
 
-	assert(type(arg)=="Vector" or type(arg)=="number","ERROR: First argument must be either a number or of type Vector!")
-	assert(math.type(n)=="integer" and n>0,"ERROR: Second argument (n) must be an integer greater than zero!")
+	assert(type(arg)=="Vector" or type(arg)=="number","First arg: number or Vector!")
+	assert(math.type(n)=="integer" and n>0,"Second arg (n) must be an integer >0")
 
 	if(type(arg)=="Vector") then
 		local retVec=arg[{}] --clone
@@ -101,16 +101,16 @@ local function psignrank(...)
 			if(k=="q") then qval=v
 			elseif(k=="n") then n=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: q, n.", std.const.ERRORLEVEL) 
+				error("Keys can be: q, n.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: q, n.")
+		assert(NTblArgs>0,"Keys: q, n.")
 
-		assert(qval~=nil and n~=nil , "ERROR: A value must be assigned to all of the table keys (q, n ).")
+		assert(qval~=nil and n~=nil , "A value must be assigned to all of the table keys (q, n ).")
 		
 		return PSIGNRANK(qval,n)
 		
@@ -127,8 +127,8 @@ end
 
 local function QSIGNRANK( arg, n)
 
-	assert(type(arg)=="Vector" or type(arg)=="number","ERROR: First argument must be either a number or of type Vector!")
-	assert(math.type(n)=="integer" and n>0,"ERROR: Second argument (n) must be an integer greater than zero!")
+	assert(type(arg)=="Vector" or type(arg)=="number","First arg: number or Vector!")
+	assert(math.type(n)=="integer" and n>0,"Second arg (n) must be an integer >0")
 
 	if(type(arg)=="Vector") then
 		local retVec=arg[{}] --clone
@@ -162,16 +162,16 @@ local function qsignrank(...)
 			if(k=="p") then pval=v
 			elseif(k=="n") then n=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: p, n.", std.const.ERRORLEVEL) 
+				error("Kkeys can be: p, n.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: q, n.")
+		assert(NTblArgs>0,"Keys: q, n.")
 
-		assert(pval~=nil and n~=nil , "ERROR: A value must be assigned to all of the table keys (p, n ).")
+		assert(pval~=nil and n~=nil , "A value must be assigned to all of the table keys (p, n ).")
 		
 		return QSIGNRANK(pval,n)
 		

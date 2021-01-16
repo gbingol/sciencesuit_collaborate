@@ -31,7 +31,7 @@ local function toarray(Container)
 				NonNum=NonNum+1
 			end
 		else
-			error("ERROR: Unknown type, supported types are string and number")
+			error("Expected types are string or number")
 		end
 		
 	end

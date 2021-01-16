@@ -9,7 +9,7 @@ local function kurt(v) --kurtosis
 	local total, n=std.accumulate( v,0)
 	local avg=total/n
 
-	assert(n>=4,"ERROR: Container must have at least 4 elements")
+	assert(n>=4,"Container must have at least 4 elements")
 
 	local stdev=std.stdev(v)
 	

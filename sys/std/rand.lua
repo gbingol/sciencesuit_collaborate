@@ -14,7 +14,7 @@ local function rand(m,n)
 		return std.runif(m) 
 	end 
 
-	assert(math.type(m)=="integer" and math.type(n)=="integer" and m>0 and n>0,"First and second arguments must be an integer greater than zero.")
+	assert(math.type(m)=="integer" and math.type(n)=="integer" and m>0 and n>0,"First and second args must be integers >0.")
 
 	local row,col=m , n
 

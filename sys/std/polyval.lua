@@ -21,8 +21,8 @@ local function Compute(v, Entry)
 	--Using Horner's algorithm for polynomial evaluation
 	--the Polynom is in the form of:  a*x^n+b*x^(n-1)....+x0
 
-	assert(type(v)=="Vector","ERROR: First argument must be a vector containing coefficients") 
-	assert(type(Entry)=="number" or type(Entry)=="Vector","ERROR: Second argument must be either a number or a Vector") 
+	assert(type(v)=="Vector","First arg must be Vector containing coefficients") 
+	assert(type(Entry)=="number" or type(Entry)=="Vector","Second arg: number or Vector") 
 
 	
 
@@ -46,7 +46,7 @@ local function polyval(...)
 	
 	local arg=table.pack(...)
 
-	assert(#arg==2 or type(arg[1])=="table", "ERROR: At least 2 arguments or a single argument of type table must be supplied")
+	assert(#arg==2 or type(arg[1])=="table", "At least 2 args or a single argument of type table expected.")
 	
 	
 	if(#arg==1 and type(arg[1])=="table") then

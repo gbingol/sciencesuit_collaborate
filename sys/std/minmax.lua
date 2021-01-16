@@ -8,7 +8,9 @@ local function minmax(Container, Axes )
 	--Container: Lua Table or an iteratable container
 
 	assert(Container~=nil, "Container cannot be nil value")
-	assert(type(Container)~="number" and type(Container)~="string", "ERROR: An iteratable container is required")
+	
+	assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
+      
       
 	if(type(Container)=="Vector") then
 		return Container:minmax()
@@ -33,7 +35,7 @@ local function minmax(Container, Axes )
 	local m = getmetatable(Container)
 	local n = (m and m["__pairs"] and m["next"])
       
-	if(not n) then assert(type(Container)=="table","ERROR: Userdata must support __pairs metamethod") end
+	if(not n) then assert(type(Container)=="table","Userdata must support __pairs metamethod") end
       
 	local min, max=nil, nil
 	  

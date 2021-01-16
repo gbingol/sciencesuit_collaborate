@@ -8,12 +8,12 @@ local function DUNIF(x, min, max)
 	min=min or 0
 	max=max or 1
 	
-	assert(type(min)=="number", "Key min must be a number")
-	assert(type(max)=="number", "Key max must be a number")
+	assert(type(min)=="number", "Key min must be number")
+	assert(type(max)=="number", "Key max must be number")
 	
-	assert(min<max, "The value of min must be smaller than the value of max")
+	assert(min<max, "min must be < max")
 	
-	assert(type(x)=="number" or type(x)=="Vector", "Key x must be a number or a Vector")
+	assert(type(x)=="number" or type(x)=="Vector", "Key x: number or Vector")
 	
 	if(type(x)=="number") then
 		if(x<min or x>max) then
@@ -75,12 +75,12 @@ local function PUNIF(q, min, max)
 	min=min or 0
 	max=max or 1
 	
-	assert(type(min)=="number", "Key min must be a number")
-	assert(type(max)=="number", "Key max must be a number")
+	assert(type(min)=="number", "Key min must be number")
+	assert(type(max)=="number", "Key max must be number")
 	
-	assert(min<max, "The value of min must be smaller than the value of max")
+	assert(min<max, "min must be < max")
 	
-	assert(type(q)=="number" or type(q)=="Vector", "Key q must be a number or a Vector")
+	assert(type(q)=="number" or type(q)=="Vector", "Key q: number or Vector")
 	
 	
 	if(type(q)=="number") then
@@ -144,16 +144,16 @@ local function QUNIF(p, min, max)
 	min=min or 0
 	max=max or 1
 	
-	assert(type(min)=="number", "Key min must be a number")
-	assert(type(max)=="number", "Key max must be a number")
+	assert(type(min)=="number", "Key min must be number")
+	assert(type(max)=="number", "Key max must be number")
 	
-	assert(min<max, "The value of min must be smaller than the value of max")
+	assert(min<max, "min must be < max")
 	
-	assert(type(p)=="number" or type(p)=="Vector", "Key p (probability) must be a number or a Vector.")
+	assert(type(p)=="number" or type(p)=="Vector", "Key p (probability): number or Vector.")
 	
 	
 	if(type(p)=="number") then
-		assert(p>=0 and p<=1, "Key p (probability) must be a number in the range of [0,1]")
+		assert(p>=0 and p<=1, "Key p (probability) must be in [0,1]")
 		
 		return p*(max-min)+min
 		
@@ -214,12 +214,12 @@ local function RUNIF(n, min, max)
 	min=min or 0
 	max=max or 1
 	
-	assert(math.type(n)=="integer" and n>=1,"Key n must be an integer >=1")
+	assert(math.type(n)=="integer" and n>=1,"Key n must be integer >=1")
 	
-	assert(type(min)=="number", "Key min must be a number")
-	assert(type(max)=="number", "Key max must be a number")
+	assert(type(min)=="number", "Key min must be number")
+	assert(type(max)=="number", "Key max must be number")
 	
-	assert(min<max, "The value of min must be smaller than the value of max")
+	assert(min<max, "min must be < max")
 	
 	return SYSTEM.runif(n, min, max)
 end

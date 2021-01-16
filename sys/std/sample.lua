@@ -11,9 +11,9 @@ local function SAMPLE(SampleSpace, n, replacement)
 	end
 	
 	
-	assert(type(SampleSpace)=="Vector","First argument (x) must be of type vector" ) 
-	assert(math.type(n)=="integer" and n>0,"Second argument (size) must be a positive integer") 
-	assert(type(replacement)=="boolean","Third argument (replace), must be type boolean") 
+	assert(type(SampleSpace)=="Vector","First arg (x) must be Vector" ) 
+	assert(math.type(n)=="integer" and n>0,"Second arg (size) must be positive integer") 
+	assert(type(replacement)=="boolean","Third arg (replace), must be boolean") 
 
 
 	local retVec=std.Vector.new(n)
@@ -56,7 +56,7 @@ end
 local function sample(...)
 	local arg=table.pack(...)
 
-	assert(#arg>=2 or type(arg[1])=="table", "ERROR: At least 2 arguments or a single argument of type table must be supplied")
+	assert(#arg>=2 or type(arg[1])=="table", "At least 2 args or a single argument of type table expected.")
 	
 	if(#arg==1 and type(arg[1])=="table") then
 		
@@ -72,14 +72,14 @@ local function sample(...)
 			elseif(key=="replace") then replace=value
 			
 			else 
-				error("ERROR: Signature: {x=, size=, replace=false}", std.const.ERRORLEVEL)
+				error("Signature: {x=, size=, replace=false}", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1
 
 		end
 		
-		assert(NTblArgs>0, "ERROR: Signature: {x=, size=, replace=false}")
+		assert(NTblArgs>0, "Signature: {x=, size=, replace=false}")
 
 		return SAMPLE(v, n, replace)
 
@@ -90,7 +90,7 @@ local function sample(...)
 	
 
 	else
-		error("ERROR: Signature: {x=, size=, replace=false} OR (x=, size=, replace=false)", std.const.ERRORLEVEL)
+		error("Signature: {x=, size=, replace=false} OR (x=, size=, replace=false)", std.const.ERRORLEVEL)
 	end
 
 

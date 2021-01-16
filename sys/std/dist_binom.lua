@@ -6,8 +6,8 @@ local std <const> =std
 
 local function DBINOM(vec, size, prob)
 
-	assert(type(size)=="number","ERROR: Second argument (size) must be a number!")
-	assert(type(prob)=="number","ERROR: Third argument (prob) must be a number!")
+	assert(type(size)=="number","Second arg (size) must be number!")
+	assert(type(prob)=="number","Third arg (prob) must be number!")
 
 	if(type(vec)=="Vector") then
 		local vecSize=#vec
@@ -22,7 +22,7 @@ local function DBINOM(vec, size, prob)
 		return SYSTEM.dbinom(vec,size, prob)
 
 	else
-		error("ERROR: First argument must be either a number or of type Vector!", std.const.ERRORLEVEL)
+		error("First arg: number or Vector!", std.const.ERRORLEVEL)
 	
 	end
 
@@ -46,16 +46,16 @@ local function dbinom(...)
 			elseif(k=="size") then size=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x, size and prob.", std.const.ERRORLEVEL) 
+				error("Keys can be: x, size and prob.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: x, size and prob.")
+		assert(NTblArgs>0,"Keys: x, size and prob.")
 
-		assert(xval~=nil and size~=nil and prob~=nil, "ERROR: A value must be assigned to all of the table keys (x, size and prob).")
+		assert(xval~=nil and size~=nil and prob~=nil, "A value must be assigned to all of the table keys (x, size and prob).")
 		
 		return DBINOM(xval,size, prob)
 		
@@ -71,8 +71,8 @@ end
 
 local function PBINOM(vec, size, prob)
 
-	assert(type(size)=="number","ERROR: Second argument (size) must be a number!")
-	assert(type(prob)=="number","ERROR: Third argument (prob) must be a number!")
+	assert(type(size)=="number","Second arg (size) must be number!")
+	assert(type(prob)=="number","Third arg (prob) must be number!")
 
 	if(type(vec)=="Vector") then
 
@@ -88,7 +88,7 @@ local function PBINOM(vec, size, prob)
 		return SYSTEM.pbinom(vec,size, prob)
 
 	else
-		error("ERROR: First argument must be either a number or of type Vector!", std.const.ERRORLEVEL)
+		error("First arg: number or Vector!", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -112,15 +112,15 @@ local function pbinom(...)
 			elseif(k=="size") then size=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: q, size and prob.", std.const.ERRORLEVEL) 
+				error("Keys: q, size and prob.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: q, size and prob.") 
+		assert(NTblArgs>0,"Keys: q, size and prob.") 
 
-		assert(qval~=nil and size~=nil and prob~=nil,"ERROR: A value must be assigned to all of the table keys (q, size and prob).")
+		assert(qval~=nil and size~=nil and prob~=nil,"A value must be assigned to all of the table keys (q, size and prob).")
 		
 		return PBINOM(qval,size, prob)
 	end
@@ -134,8 +134,8 @@ end
 
 local function QBINOM(vec, size, prob)
 
-	assert(math.type(size)=="integer","ERROR: Second argument (size) must be an integer.")
-	assert(type(prob)=="number","ERROR: Third argument (prob) must be a number.")
+	assert(math.type(size)=="integer","Second arg (size) must be integer.")
+	assert(type(prob)=="number","Third arg (prob) must be number.")
 
 	if(type(vec)=="Vector") then
 
@@ -151,7 +151,7 @@ local function QBINOM(vec, size, prob)
 		return SYSTEM.qbinom(vec,size, prob)
 
 	else
-		error("ERROR: First argument (p) must be either a number or of type Vector.", std.const.ERRORLEVEL)
+		error("First arg (p): number or Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -173,15 +173,15 @@ local function qbinom(...)
 			elseif(k=="size") then size=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: p, size and prob.", std.const.ERRORLEVEL) 
+				error("Keys: p, size and prob.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 		
-		assert(NTblArgs>0,"ERROR: Keys: p, size and prob.")			
+		assert(NTblArgs>0,"Keys: p, size and prob.")			
 	
-		assert(pval~=nil and size~=nil and prob~=nil,"ERROR: A value to all table keys must be assigned: p, size and prob")
+		assert(pval~=nil and size~=nil and prob~=nil,"A value to all table keys must be assigned: p, size and prob")
 		
 		return QBINOM(pval,size, prob)
 	end
@@ -195,11 +195,11 @@ end
 
 local function RBINOM(n, size, prob)
 	
-	assert(math.type(n)=="integer" and n>0, "ERROR: First argument (n) must be an integer number greater than zero.")
+	assert(math.type(n)=="integer" and n>0, "First arg (n) must be integer >0")
 	
-	assert(math.type(size)=="integer" and size>0,"ERROR: Second argument (size) must be an integer number greater than zero.")
+	assert(math.type(size)=="integer" and size>0,"Second arg (size) must be integer >0")
 	
-	assert(type(prob)=="number","ERROR: Third argument (prob) must be of type number")
+	assert(type(prob)=="number","Third arg (prob) must be number")
 
 	return SYSTEM.rbinom(n, size, prob)
 end
@@ -222,15 +222,15 @@ local function rbinom(...)
 			elseif(k=="size") then size=v
 			elseif(k=="prob") then prob=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: n, size and prob.", std.const.ERRORLEVEL) 
+				error("Keys: n, size and prob.", std.const.ERRORLEVEL) 
 			end
 		
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: n, size and prob.")
+		assert(NTblArgs>0,"Keys: n, size and prob.")
 
-		assert(arg1~=nil and size~=nil and prob~=nil,"ERROR: A value must be assigned to all keys: n, size and prob.")
+		assert(arg1~=nil and size~=nil and prob~=nil,"A value must be assigned to all keys: n, size and prob.")
 		
 		return RBINOM(arg1, size, prob)
 

@@ -6,7 +6,7 @@ local std <const> =std
 
 local function FindMode(Container)
 	
-	assert(type(Container)~="number" and type(Container)~="string", "ERROR: An iteratable container is required")
+	assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
 
 	local tbl={}
 	local NElem=0

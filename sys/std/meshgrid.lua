@@ -16,7 +16,7 @@ local function meshgrid( x, y)
 	--  1   2   3               6   6   6
 	--  1   2   3               7   7   7
 
-	assert(type(x)=="Vector" and type(y)=="Vector","ERROR: Arguments must be of type Vector") 
+	assert(type(x)=="Vector" and type(y)=="Vector","Args must be Vectors") 
 
 	local row, col=#y, #x
 	local X, Y=std.Matrix.new(row, col) , std.Matrix.new(row, col)

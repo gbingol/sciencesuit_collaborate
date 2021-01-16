@@ -8,16 +8,16 @@ local std <const> =std
 local function testwilcox1(xvec, mu, alternative, conflevel)
 
 	--Default values
-	assert(type(xvec)=="Vector" , "ERROR: Key x must be of type Vector")
+	assert(type(xvec)=="Vector" , "Key x must be Vector")
 	
-	assert(type(mu)=="number","ERROR: Key mu must be of type number")
+	assert(type(mu)=="number","Key mu must be number")
 	
 	conflevel=conflevel or 0.95
-	assert(type(conflevel)=="number","ERROR: Key conflevel must be of type number")
-	assert(conflevel>=0 and conflevel<=1,"ERROR: Key conflevel must be in the range [0,1].")
+	assert(type(conflevel)=="number","Key conflevel must be number")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in [0,1].")
 
 	alternative=alternative or "two.sided"
-	assert(type(alternative)=="string","ERROR: Key alternative must be of type string")
+	assert(type(alternative)=="string","Key alternative must be string")
 	alternative=string.lower(alternative)
 
 
@@ -37,7 +37,7 @@ local function testwilcox1(xvec, mu, alternative, conflevel)
 		
 		
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
+		error("The values for the arg 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 
@@ -77,14 +77,14 @@ local function testwilcox(...)
 			elseif(k=="conflevel") then conflevel=v
 			
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, y, mu, alternative, conflevel.", std.const.ERRORLEVEL) 
+				error("Keys: x, y, mu, alternative, conflevel.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
 		
 		end
 
-		assert(NArgsTbl>0,"ERROR: Keys: x, y, mu, alternative, conflevel.")
+		assert(NArgsTbl>0,"Keys: x, y, mu, alternative, conflevel.")
 		
 		if(yvec==nil) then
 			return testwilcox1(xvec, mu, alternative, conflevel)
@@ -95,7 +95,7 @@ local function testwilcox(...)
 		end
 	
 	else
-		error("ERROR: Argument must be a Lua table with probable keys: x, y, mu, alternative, conflevel.")
+		error("Arg must be a Lua table with probable keys: x, y, mu, alternative, conflevel.")
 	
 	end
 end

@@ -10,14 +10,14 @@ local function find_minmax(Container)
 	
 	--Returns the locations which has the minimum and maximum value
 	
-	assert(type(Container)~="number" and type(Container)~="string", "ERROR: An iteratable container is required")
+	assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
       
 
 	local m = getmetatable(Container)
 	local n = (m and m["__pairs"] and m["next"])
 	
 	if(not n) then 
-		assert(type(Container)=="table","ERROR: Userdata must support __pairs metamethod") 
+		assert(type(Container)=="table","Userdata must support __pairs metamethod") 
 	end
 	
       

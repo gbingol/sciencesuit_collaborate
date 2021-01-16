@@ -7,7 +7,7 @@ local function null(A)
 
 	--Finds the null space of A using svd decomposition
 	
-	assert(type(A)=="Matrix","ERROR: The argument to null function must be a matrix") 
+	assert(type(A)=="Matrix","The arg must be matrix") 
 	
 	local m,n=std.size(A)
 	local u,s,v=std.svd(A) -- u(m,m) s(m,n) v(n,n)

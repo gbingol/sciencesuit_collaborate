@@ -16,16 +16,16 @@ local function eig(...)
 	
 	local ComputeEigenVectors=false
 	
-	assert( type(arg[1])=="Matrix","ERROR: First argument must be of type matrix.")
+	assert( type(arg[1])=="Matrix","First arg must be matrix.")
 
 		
 	if(nargs==2) then
-		assert( type(arg[2])=="boolean","ERROR: Second argument must be of type boolean")
+		assert( type(arg[2])=="boolean","Second arg must be boolean")
 		
 		ComputeEigenVectors=arg[2]
 		
 	elseif(nargs==3) then
-		assert( type(arg[3])=="string","ERROR: Second argument must be of type string")
+		assert( type(arg[3])=="string","Second arg must be string")
 		
 		algorithm=string.lower(arg[3]) 
 	end

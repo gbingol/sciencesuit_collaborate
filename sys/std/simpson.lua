@@ -33,17 +33,19 @@ local function simpson(...)
 
 		assert(NTableArgs>=3,"Usage: {f=, a=, b=, inter=100}")
 
-		assert(type(f)=="function","ERROR: f must be of type function.")
-		assert(type(a)=="number" and type(b)=="number","ERROR: a and b must be numbers.")
-		assert(math.type(inter)=="integer" and inter>3 and inter%2==0, "ERROR: inter must be an even integer greater than 3.")
+		assert(type(f)=="function","f must be function.")
+		
+		assert(type(a)=="number" and type(b)=="number","a and b must be numbers.")
+		
+		assert(math.type(inter)=="integer" and inter>3 and inter%2==0, "inter must be an even integer greater than 3.")
 		
 		return SYSTEM.simpson(f, a, b, inter)
 			
 
 	--Input: f, a, b
 	elseif(nargs==3 ) then 
-		assert(type(arg[1])=="function","ERROR: First argument must be of type function.")
-		assert(type(arg[2])=="number" and type(arg[3])=="number","ERROR: Second and third arguments must be numbers")
+		assert(type(arg[1])=="function","First arg must be of type function.")
+		assert(type(arg[2])=="number" and type(arg[3])=="number","Second and third args must be numbers")
 
 		local f,a,b=arg[1], arg[2], arg[3]
 	

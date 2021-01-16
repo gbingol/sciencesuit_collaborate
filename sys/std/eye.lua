@@ -12,7 +12,7 @@ local function eye(nrow, ncol)
 	--				2) Identity matrix( square or rectangular)
 	
 	
-	assert(math.type(nrow)=="integer" and nrow>0 ,"ERROR: First argument must be a positive integer")
+	assert(math.type(nrow)=="integer" and nrow>0 ,"First arg must be a positive integer")
 	
 	if(ncol==nil) then
 		local m=std.Matrix.new(nrow,nrow)
@@ -24,7 +24,7 @@ local function eye(nrow, ncol)
 		
      
 	elseif(ncol~=nil) then
-		assert(math.type(ncol)=="integer" and ncol>0 ,"ERROR: Second argument must be a positive integer")
+		assert(math.type(ncol)=="integer" and ncol>0 ,"Second arg must be a positive integer")
 		
 		local n=nrow
 		

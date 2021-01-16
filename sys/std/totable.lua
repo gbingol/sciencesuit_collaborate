@@ -13,7 +13,7 @@ local function totable(container, Force1DTable)
 		Force1DTable=false
 	end
 
-	assert(type(Force1DTable)=="boolean", "Second argument must be of type boolean")
+	assert(type(Force1DTable)=="boolean", "Second arg must be boolean")
 
 	if(Force1DTable==false and (type(container)=="Matrix" or type(container)=="Range")) then
 		local r,c=std.size(container)

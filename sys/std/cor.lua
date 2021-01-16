@@ -11,9 +11,9 @@ local function COR(v1,v2)
 	
 	local len1,len2=#v1,#v2
 
-	assert(len1==len2,"ERROR: Both containers should be of same size.")
+	assert(len1==len2,"Both containers should be of same size.")
 
-	local var1,var2=std.var(v1),std.var(v2) --variance
+	local var1,var2=std.var(v1),std.var(v2)
 	local std1,std2=std.sqrt(var1),std.sqrt(var2)
 
 	return std.cov(v1,v2)/(std1*std2)

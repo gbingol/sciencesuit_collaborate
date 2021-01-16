@@ -11,13 +11,13 @@ local function tdma(A, b)
 	--  b is a vector containing right handside values of the equation
 	-- The function changes b, therefore it is cloned in the first line
 
-	assert(type(A)=="Matrix","First argument must be a tridiagonal matrix") 
-	assert(type(b)=="Vector","Second argument must be a vector") 
+	assert(type(A)=="Matrix","First arg must be a tridiagonal matrix") 
+	assert(type(b)=="Vector","Second arg must be Vector") 
 	
 	local d=b:clone()
 	local row, col=std.size(A)
 	
-	assert(row==#d,"ERROR: matrix row number and vector dimensions do not match in tdma") 
+	assert(row==#d,"matrix row number and vector dimensions do not match in tdma") 
 		
 	local vecA=std.Vector.new(row)
 	local vecB=std.Vector.new(row)
@@ -65,7 +65,7 @@ local function solve(A, b, IsTridiagonal)
 	
 	--Output: x: solution vector
 	
-	assert( type(A)=="Matrix" and type(b)=="Vector","ERROR: First argument must be of type Matrix and second argument of type Vector")
+	assert( type(A)=="Matrix" and type(b)=="Vector","First arg must be Matrix and second arg Vector")
 		
 	local matrix=A:clone()
 	local vec=b[{}]

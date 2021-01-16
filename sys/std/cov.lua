@@ -11,15 +11,15 @@ local function cov(cont1,cont2,str)
 
 	str=str or "s"
 	
-	assert(type(str)=="string","ERROR: Third argument must be of type string, 's' or 'p'")
+	assert(type(str)=="string","3rd arg: \"s\" or \"p\"")
 	str=string.lower(str)
 
-	assert(str=="s" or str=="p","ERROR: Third argument can be either \"s\" or \"p\"")
+	assert(str=="s" or str=="p","3rd arg: \"s\" or \"p\"")
 	
 	local sum1, len1=std.accumulate(cont1,0)
 	local sum2, len2=std.accumulate(cont2,0)
 
-	assert(len1==len2,"ERROR: Argument 1 and 2 should be of same size")
+	assert(len1==len2,"Arg 1 and 2 should be of same size")
 
 	local df=len1-1
 	if(str=="p") then df=len1 end

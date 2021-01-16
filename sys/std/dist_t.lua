@@ -6,10 +6,10 @@ local std <const> =std
 
 local function DT(x, df)
 	
-	assert(type(x)=="Vector" or type(x)=="number","ERROR: First argument (x) must be either a number or of type Vector")
+	assert(type(x)=="Vector" or type(x)=="number","First arg (x): number or Vector")
 	
-	assert(math.type(df)=="integer","ERROR: Degrees of freedom (key: df)  must be an integer.")
-	assert(df>0,"ERROR: Degrees of freedom (key: df)  must be greater than zero.")
+	assert(math.type(df) == "integer","Degrees of freedom (key: df)  must be integer.")
+	assert(df>0,"Degrees of freedom (key: df)  must be >0")
 	
 	if(type(x)=="Vector") then
 
@@ -41,14 +41,14 @@ local function dt(...)
 			if(k=="x") then xval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x and df.", std.const.ERRORLEVEL) 
+				error("Keys can be: x and df.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
 		
 		end
 
-		assert(NArgsTbl>0,"ERROR: Keys can be: x, and df.")
+		assert(NArgsTbl>0,"Keys can be: x, and df.")
 		
 		return DT(xval, df)
 	end
@@ -62,10 +62,10 @@ end
 
 local function PT(qval, df)
 
-	assert(type(qval)=="Vector" or type(qval)=="number","ERROR: First argument (q) must be either a number or of type Vector.")
+	assert(type(qval)=="Vector" or type(qval)=="number","First arg (q): number or Vector.")
 	
-	assert(math.type(df)=="integer","ERROR: Degrees of freedom (key: df)  must be an integer.")
-	assert(df>0,"ERROR: Degrees of freedom (key: df)  must be greater than zero.")
+	assert(math.type(df) == "integer","Degrees of freedom (key: df) must be integer.")
+	assert(df>0,"Degrees of freedom (key: df)  must be >0")
 	
 	if(type(qval)=="Vector") then
 
@@ -97,13 +97,13 @@ local function pt(...)
 			if(k=="q") then qval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: q and df.", std.const.ERRORLEVEL) 
+				error("Keys can be: q and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs==2, "ERROR: Keys can be: q and df.")
+		assert(NTblArgs==2, "Keys can be: q and df.")
 		
 		return PT(qval,df)
 	end
@@ -118,10 +118,11 @@ end
 
 local function QT(prob, df)
 
-	assert(type(prob)=="number" or type(prob)=="Vector","ERROR: First argument (p) must be either a number or of type Vector.")
+	assert(type(prob)=="number" or type(prob)=="Vector","First arg (p): number or Vector.")
 
-	assert(math.type(df)=="integer","ERROR: Degrees of freedom (key: df)  must be an integer.")
-	assert(df>0,"ERROR: Degrees of freedom (key: df)  must be greater than zero.")
+	assert(math.type(df)=="integer","Degrees of freedom (key: df) must be integer.")
+	
+	assert(df>0,"ERROR: Degrees of freedom (key: df)  must be >0")
 
 	if(type(prob)=="Vector") then
 
@@ -153,13 +154,13 @@ local function qt(...)
 			if(k=="p") then pval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: p and df.", std.const.ERRORLEVEL) 
+				error("Keys: p and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0, "ERROR: Keys can be: p and df.")
+		assert(NTblArgs>0, "Keys: p and df.")
 		
 
 		return QT(pval,df)
@@ -175,11 +176,11 @@ end
 
 local function RT(n, df)
 	
-	assert(math.type(n)=="integer","ERROR: First argument (key: n) must be an integer.")
-	assert(n>0,"ERROR: First argument (key: n) must be greater than zero.")
+	assert(math.type(n)=="integer","First arg (key: n) must be integer.")
+	assert(n>0,"First arg (key: n) must be >0")
 	
-	assert(math.type(df)=="integer","ERROR: Degrees of freedom (key: df)  must be an integer.")
-	assert(df>0,"ERROR: Degrees of freedom (key: df)  must be greater than zero.")
+	assert(math.type(df)=="integer","Degrees of freedom (key: df)  must be integer.")
+	assert(df>0,"Degrees of freedom (key: df)  must be >0")
 	
 	
 	return SYSTEM.rt(n,df)
@@ -201,14 +202,14 @@ local function rt(...)
 			if(k=="n") then arg1=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: n and df.", std.const.ERRORLEVEL) 
+				error("Keys: n and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0, "ERROR: Table keys: n and df.")
+		assert(NTblArgs>0, "Keys: n and df.")
 		
 		
 		return RT(arg1, df)

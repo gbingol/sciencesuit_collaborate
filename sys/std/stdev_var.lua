@@ -50,10 +50,10 @@ local function ComputeVariance(...)
 	VarType=VarType or "s"
 	Axes=Axes or -1
 	
-	assert(type(VarType)=="string","ERROR: Second argument must be of type string, 's' or 'p'")
+	assert(type(VarType)=="string","Second arg must be string, 's' or 'p'")
 	VarType=string.lower(VarType)
 
-	assert(VarType=="s" or VarType=="p","ERROR: Second argument can be either \"s\" or \"p\"")
+	assert(VarType=="s" or VarType=="p","Second arg can be either \"s\" or \"p\"")
 	
 	if(nargs==3) then
 		assert(math.type(Axes)=="integer" and (Axes>=0 and Axes<=1), "If provided 3rd argument must be of type integer and take value of either 0 or 1")

@@ -8,10 +8,10 @@ local function DNORM(vec, mean, sd)
 	mean=mean or 0
 	sd=sd or 1
 
-	assert(type(vec)=="Vector" or type(vec)=="number","ERROR: First argument must be either a number or of type Vector")
+	assert(type(vec)=="Vector" or type(vec)=="number","First arg: number or Vector")
 
-	assert(type(mean)=="number","ERROR: Second argument must be of type number")
-	assert(type(sd)=="number", "ERROR: Third argument must be of type number")
+	assert(type(mean)=="number","Second arg must be number")
+	assert(type(sd)=="number", "Third arg must be number")
 
 	if(type(vec)=="Vector") then
 
@@ -47,16 +47,16 @@ local function dnorm(...)
 			elseif(k=="mean") then mean=v
 			elseif(k=="sd") then sd=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, mean and sd.", std.const.ERRORLEVEL) 
+				error("Keys: x, mean and sd.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
 		
 		end
 
-		assert(NArgsTbl>0,"ERROR: Keys: x, mean and sd.")
+		assert(NArgsTbl>0,"Keys: x, mean and sd.")
 
-		assert(type(xval)=="number" or type(xval)=="Vector","ERROR: A number or Vector value must be assigned to the key 'x'.")
+		assert(type(xval)=="number" or type(xval)=="Vector","A number or Vector value must be assigned to the key 'x'.")
 			
 		return DNORM(xval, mean, sd)
 		
@@ -76,10 +76,10 @@ local function PNORM(vec, mean, sd)
 	mean=mean or 0
 	sd=sd or 1
 	
-	assert(type(vec)=="Vector" or type(vec)=="number","ERROR: First argument (q) must be either a number or of type Vector")
+	assert(type(vec)=="Vector" or type(vec)=="number","First arg (q): number or Vector")
 
-	assert(type(mean)=="number","ERROR: Second argument (mean) must be a number.")
-	assert(type(sd)=="number", "ERROR: Third argument (sd) must be a number.")
+	assert(type(mean)=="number","Second arg (mean) must be number.")
+	assert(type(sd)=="number", "Third arg (sd) must be number.")
 	
 	if(type(vec)=="Vector") then
 	
@@ -113,7 +113,7 @@ local function pnorm(...)
 			elseif(k=="mean") then mean=v
 			elseif(k=="sd") then sd=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: q, mean and sd.", std.const.ERRORLEVEL) end
+				error("Keys: q, mean and sd.", std.const.ERRORLEVEL) end
 		end
 		
 		return PNORM(qval,mean, sd)
@@ -135,10 +135,10 @@ local function QNORM(vec, mean, sd)
 	mean=mean or 0
 	sd=sd or 1
 
-	assert(type(vec)=="Vector" or type(vec)=="number","ERROR: First argument (p) must be either a number or of type Vector")
+	assert(type(vec)=="Vector" or type(vec)=="number","First arg (p): number or Vector")
 
-	assert(type(mean)=="number","ERROR: Second argument (mean) must be a number.")
-	assert(type(sd)=="number","ERROR: Third argument (sd) must be a number.")
+	assert(type(mean)=="number","Second arg (mean) must be number.")
+	assert(type(sd)=="number","Third arg (sd) must be number.")
 	
 
 	if(type(vec)=="Vector") then
@@ -176,13 +176,13 @@ local function qnorm(...)
 			elseif(k=="mean") then mean=v
 			elseif(k=="sd") then sd=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: p, mean and sd.", std.const.ERRORLEVEL) 
+				error("Keys: p, mean and sd.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 	
-		assert(NTblArgs>0,"ERROR: Keys are p, mean and sd.")
+		assert(NTblArgs>0,"Keys are p, mean and sd.")
 
 		return QNORM(pval,mean, sd)
 	end
@@ -198,9 +198,9 @@ local function RNORM(n, mean, sd)
 	mean=mean or 0
 	sd=sd or 1
 
-	assert(math.type(n)=="integer" and n>0,"ERROR: First argument (n) must be an integer greater than zero.")
-	assert(type(mean)=="number", "ERROR: Second argument must be of type number")
-	assert(type(sd)=="number", "ERROR: Third argument must be of type number")
+	assert(math.type(n)=="integer" and n>0,"First arg (n) must be an integer >0")
+	assert(type(mean)=="number", "Second arg must be number")
+	assert(type(sd)=="number", "Third arg must be number")
 	
 	return SYSTEM.rnorm(n, mean, sd)
 
@@ -224,13 +224,13 @@ local function rnorm(...)
 			elseif(k=="mean") then mean=v
 			elseif(k=="sd") then sd=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: n, mean and sd.", std.const.ERRORLEVEL) 
+				error("Keys: n, mean and sd.", std.const.ERRORLEVEL) 
 			end
 		
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys are n, mean and sd.")
+		assert(NTblArgs>0,"Keys are n, mean and sd.")
 		
 		return RNORM(arg1, mean, sd)
 		

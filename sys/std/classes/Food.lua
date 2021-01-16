@@ -183,7 +183,7 @@ local function ComputeAw(food)
 	
 	local aw2=retVal*math.exp(Qs/Ravg*(1/293.15 - 1/(T+273.15)))
 
-	assert(aw2<=1 and aw2>=0,"ERROR: Water activity is beyond range [0,1]")
+	assert(aw2<=1 and aw2>=0,"Water activity is beyond range [0,1]")
 	
 	
 	return aw2
@@ -197,7 +197,7 @@ std.Food={}
 std.Food.__index=std.Food
 function std.Food.new(tbl)
 
-	assert(type(tbl)=="table","ERROR: Cannot create a Food item without a valid Lua table")
+	assert(type(tbl)=="table","Couldnt create a Food item without a valid Lua table")
 
 	local FOOD={}--create the object
 	setmetatable(FOOD,std.Food) 
@@ -216,7 +216,7 @@ function std.Food.new(tbl)
 		elseif(key=="ash") then m_Ash=value
 		elseif(key=="salt") then m_Salt=value
 		else 
-			error("ERROR: Keys are CHO, Protein, Lipid(Fat, Oil), Ash, Water, Salt" , ERRORLEVEL)
+			error("Keys are CHO, Protein, Lipid(Fat, Oil), Ash, Water, Salt" , ERRORLEVEL)
 		end
 	end
 
@@ -278,7 +278,7 @@ function std.Food:cp(arg)
 	
 	
 	elseif(type(arg)=="number") then
-		assert(arg>=0,"ERROR: Cp cannot be equal to or smaller than zero")
+		assert(arg>=0,"Cp cannot be equal to or smaller than zero")
 		
 		self.m_cp_userdef=true
 		self.m_cp=arg
@@ -288,13 +288,13 @@ function std.Food:cp(arg)
 		
 		local retVal=arg(self)
 		
-		assert(type(retVal)=="number" and retVal>0, "ERROR: The provided function must return a number value greater than zero.")
+		assert(type(retVal)=="number" and retVal>0, "The provided function must return a number value greater than zero.")
 		
 		self.m_cp_userdef=true
 		self.m_cp=retVal
 	
 	else
-		error("ERROR: The arguments to the function must be either a nil value, a number or a function")
+		error("The args to the function must be either a nil value, a number or a function")
 	
 	end
 
@@ -319,7 +319,7 @@ function std.Food:k(arg)
 	
 	
 	elseif(type(arg)=="number") then
-		assert(arg>=0,"ERROR: k cannot be equal to or smaller than zero")
+		assert(arg>=0,"k cannot be equal to or smaller than zero")
 		
 		self.m_k_userdef=true
 		self.__m_k=arg
@@ -328,13 +328,13 @@ function std.Food:k(arg)
 	elseif(type(arg)=="function") then
 		local retVal=arg(self)
 		
-		assert(type(retVal)=="number" and retVal>0, "ERROR: The provided function must return a number value greater than zero.")
+		assert(type(retVal)=="number" and retVal>0, "Function must return a number value >0.")
 		
 		self.m_k_userdef=true
 		self.__m_k=retVal
 	
 	else
-		error("ERROR: The arguments to the function can be either a nil value, a number or a function")
+		error("The args to the function can be either a nil value, a number or a function")
 	
 	end
 	
@@ -359,7 +359,7 @@ function std.Food:rho(arg)
 	
 		
 	elseif(type(arg)=="number") then
-		assert(arg>=0,"ERROR: Density cannot be equal to or smaller than zero")
+		assert(arg>=0,"Density must be >0")
 		
 		self.m_rho_userdef=true
 		self.m_rho=arg
@@ -368,13 +368,13 @@ function std.Food:rho(arg)
 	elseif(type(arg)=="function") then
 		local retVal=arg(self)
 		
-		assert(type(retVal)=="number" and retVal>0, "ERROR: The provided function must return a number value greater than zero.")
+		assert(type(retVal)=="number" and retVal>0, "Function must return a number >0.")
 		
 		self.m_rho_userdef=true
 		self.m_rho=retVal
 	
 	else
-		error("ERROR: The arguments to the function can be either a nil value, a number or a function")
+		error("The arguments to the function can be either a nil value, a number or a function")
 	
 	end
 	
@@ -388,7 +388,7 @@ function std.Food:T(num)
 		return self.temperature 
 	end
 
-	assert(type(num)=="number", "ERROR: Argument must be of type number.")
+	assert(type(num)=="number", "Arg must be number.")
 	
 	self.temperature=num 
 end
@@ -408,7 +408,7 @@ function std.Food:aw(arg)
 	
 	
 	elseif(type(arg)=="number") then
-		assert(arg>0 and arg<=1,"ERROR: Water activity must be in the range of (0,1].")
+		assert(arg>0 and arg<=1,"Water activity must be in the range of (0,1].")
 		
 		self.__m_aw_userdef=true
 		self.__m_aw=arg
@@ -417,14 +417,14 @@ function std.Food:aw(arg)
 	elseif(type(arg)=="function") then
 		local retVal=arg(self)
 		
-		assert(type(retVal)=="number", "ERROR: The provided function must return a number value.")
-		assert(retVal>0 and retVal<=1,"ERROR: The provided function must return a water activity in the range of (0,1].")
+		assert(type(retVal)=="number", "Function must return a number value.")
+		assert(retVal>0 and retVal<=1,"Function must return a water activity in the range of (0,1].")
 		
 		self.__m_aw_userdef=true
 		self.__m_aw=retVal
 	
 	else
-		error("ERROR: The arguments to the function can be either a nil value, a number or a function")
+		error("The arguments to the function can be either a nil value, a number or a function")
 	
 	end
 	
@@ -439,20 +439,20 @@ function std.Food:ph(arg)
 	
 	
 	elseif(type(arg)=="number") then
-		assert(arg>0 and arg<14,"ERROR: pH must be in the range of (0,14).")
+		assert(arg>0 and arg<14,"pH must be in the range of (0,14).")
 		self.m_ph=arg
 	
 		
 	elseif(type(arg)=="function") then
 		local retVal=arg(self)
 		
-		assert(type(retVal)=="number", "ERROR: The provided function must return a number value.")
-		assert(retVal>0 and retVal<14,"ERROR: The provided function must return a pH in the range of (0,14).")
+		assert(type(retVal)=="number", "The provided function must return a number value.")
+		assert(retVal>0 and retVal<14,"The provided function must return a pH in the range of (0,14).")
 		
 		self.m_ph=retVal
 	
 	else
-		error("ERROR: The arguments to the function can be either a nil value, a number or a function")
+		error("The args to the function can be either a nil value, a number or a function")
 	
 	end
 	
@@ -461,7 +461,7 @@ end
 
 ----For many cases, NOT Recommended to set the weight externally
 function std.Food:SetWeight(num) 
-	assert(type(num)=="number","ERROR: Argument must be of type number.")
+	assert(type(num)=="number","Arg must be number.")
 	
 	self.weight=num  
 end
@@ -550,8 +550,8 @@ local function Subtraction (foodA, foodB)
 	local Ta , Tb=foodA:T() , foodB:T()
 	local mdiff=ma-mb;
 
-	assert(mdiff>=0,"ERROR: Weight can not be smaller than or equal to zero")   
-	assert(math.abs(Ta-Tb)<std.const.tolerance,"ERROR: In subtraction Food's cannot have different temperatures.") 
+	assert(mdiff>=0,"Weight can not be smaller than or equal to zero")   
+	assert(math.abs(Ta-Tb)<std.const.tolerance,"In subtraction Food's cannot have different temperatures.") 
 
 	local fA, fB=foodA:get(), foodB:get()
 	local diff_tbl={}
@@ -559,7 +559,7 @@ local function Subtraction (foodA, foodB)
 	for k,v in pairs(fA) do
 		if(fB[k]~=nil) then
 			local diff_val=ma*v-mb*fB[k]
-			assert(diff_val>=0, "ERROR:Weight of "..k.." can not be smaller than zero")
+			assert(diff_val>=0, "Weight of "..k.." can not be smaller than zero")
 			
 			if(diff_val<std.const.tolerance) then diff_val=0	end
 			
@@ -601,7 +601,7 @@ local function Multiplication(elemA,elemB)
 		num=elemA
 
 	else
-		error("ERROR: Food types can only be multiplied by numbers",ERRORLEVEL)
+		error("Food types can only be multiplied by numbers",ERRORLEVEL)
 	end
 
 

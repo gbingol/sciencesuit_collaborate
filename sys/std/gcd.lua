@@ -12,7 +12,7 @@ local function gcd(...)
 	local arg=table.pack(...)
 	
 	if(#arg==1) then
-		error("At least 2 arguments of type integer must be provided")
+		error("At least 2 arguments of type integer expected.")
 	end
 	
 	

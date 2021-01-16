@@ -7,16 +7,16 @@ local std <const> =std
 local function ttest1(xvec, alternative, mu, conflevel)
 
 	--Default values
-	assert(type(xvec)=="Vector" , "ERROR: Key x must be of type Vector")
+	assert(type(xvec)=="Vector" , "Key x must be Vector")
 	
-	assert(type(mu)=="number","ERROR: Key mu must be of type number")
+	assert(type(mu)=="number","Key mu must be number")
 	
 	conflevel=conflevel or 0.95
-	assert(type(conflevel)=="number","ERROR: Key conflevel must be of type number")
-	assert(conflevel>=0 and conflevel<=1,"ERROR: Key conflevel must be in the range [0,1].")
+	assert(type(conflevel)=="number","Key conflevel must be number")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in [0,1].")
 
 	alternative=alternative or "two.sided"
-	assert(type(alternative)=="string","ERROR: Key alternative must be of type string")
+	assert(type(alternative)=="string","Key alternative must be string")
 	alternative=string.lower(alternative)
 
 
@@ -79,23 +79,23 @@ end
 local function ttest2(xvec,yvec, varequal, alternative, mu, conflevel )
 	-- x,y: vectors to be compared assuming equal means
 
-	assert(type(xvec)=="Vector" and type(yvec)=="Vector", "ERROR: Keys x and y must be of type Vector")
+	assert(type(xvec)=="Vector" and type(yvec)=="Vector", "Keys x and y must be Vectors")
 	
 	mu=mu or 0
-	assert(type(mu)=="number","ERROR: Key mu must be of type number")
+	assert(type(mu)=="number","Key mu must be number")
 	
 	conflevel=conflevel or 0.95
-	assert(type(conflevel)=="number","ERROR: Key conflevel must be of type number")
-	assert(conflevel>=0 and conflevel<=1,"ERROR: Key conflevel must be in the range [0,1].")
+	assert(type(conflevel)=="number","Key conflevel must be number")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in [0,1].")
 
 	alternative=alternative or "two.sided"
-	assert(type(alternative)=="string","ERROR: Key alternative must be of type string")
+	assert(type(alternative)=="string","Key alternative must be string")
 	alternative=string.lower(alternative)
 
 	if(varequal==nil) then
 		varequal=true
 	else
-		assert(type(varequal)=="boolean", "ERROR: Key varequal must be of type boolean")
+		assert(type(varequal)=="boolean", "Key varequal must be boolean")
 	end
 
 
@@ -148,7 +148,7 @@ local function ttest2(xvec,yvec, varequal, alternative, mu, conflevel )
 		pvalue=std.pt{q=tcritical, df=df} --area on the left
 		
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
+		error("The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 	
@@ -199,18 +199,18 @@ end
 
 local function ttest_paired(xvec,yvec, alternative, mu, conflevel)
 
-	assert(type(xvec)=="Vector" and type(yvec)=="Vector", "ERROR: Keys x and y must be of type Vector")
+	assert(type(xvec)=="Vector" and type(yvec)=="Vector", "Keys x and y must be Vectors")
 	assert(#xvec==#yvec,"x and y vectors must have the same length")
 	
 	mu=mu or 0
-	assert(type(mu)=="number","ERROR: Key mu must be of type number")
+	assert(type(mu)=="number","Key mu must be number")
 	
 	conflevel=conflevel or 0.95
-	assert(type(conflevel)=="number","ERROR: Key conflevel must be of type number")
-	assert(conflevel>=0 and conflevel<=1,"ERROR: Key conflevel must be in the range [0,1].")
+	assert(type(conflevel)=="number","Key conflevel must be number")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in [0,1].")
 
 	alternative=alternative or "two.sided"
-	assert(type(alternative)=="string","ERROR: Key alternative must be of type string")
+	assert(type(alternative)=="string","Key alternative must be string")
 	alternative=string.lower(alternative)
 
 
@@ -262,14 +262,14 @@ local function ttest(...)
 			elseif(k=="conflevel") then conflevel=v
 			elseif(k=="paired") then paired=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, y, varequal, alternative, mu, conflevel, paired.", std.const.ERRORLEVEL) 
+				error("Keys: x, y, varequal, alternative, mu, conflevel, paired.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
 		
 		end
 
-		assert(NArgsTbl>0,"ERROR: Keys: x, y, varequal, alternative, mu, conflevel, paired.")
+		assert(NArgsTbl>0,"Keys: x, y, varequal, alternative, mu, conflevel, paired.")
 		
 		if(yvec==nil) then
 			return ttest1(xvec, alternative, mu, conflevel)
@@ -282,7 +282,7 @@ local function ttest(...)
 		end
 	
 	else
-		error("ERROR: Argument must be a Lua table with probable keys: x, y, varequal, alternative, mu, conflevel, paired.")
+		error("Arg must be a Lua table with probable keys: x, y, varequal, alternative, mu, conflevel, paired.")
 	
 	end
 end

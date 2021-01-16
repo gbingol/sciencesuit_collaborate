@@ -26,13 +26,13 @@ local function trapezoidal(...)
 			elseif(key=="b") then b=value
 			elseif(key=="inter") then N=value
 			else 
-				error("ERROR: Unexpected key found.", std.const.ERRORLEVEL) 
+				error("Unexpected key found.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 		
-		assert(math.type(N)=="integer" and N>=2, "ERROR:Number of intervals must be a positive integer, >=2")
+		assert(math.type(N)=="integer" and N>=2, "Number of intervals must be integer >=2")
 		
 		assert(NTblArgs>0,"Usage: f=, a=, b=, inter=100")
 
@@ -42,15 +42,15 @@ local function trapezoidal(...)
 	
 	--input: v1, v2
 	elseif(nargs==2) then
-		assert(type(arg[1])=="Vector" and type(arg[2])=="Vector","ERROR: Both arguments must be of type Vector.")
+		assert(type(arg[1])=="Vector" and type(arg[2])=="Vector","Both args must be Vectors.")
         
 		return SYSTEM.trapz_v(arg[1],arg[2])
 
 
 	--Input: f, a, b
 	elseif(nargs==3 ) then 
-		assert(type(arg[1])=="function","ERROR: First argument must be of type function.")
-		assert(type(arg[2])=="number" and type(arg[3])=="number","ERROR: Second and third arguments must be numbers")
+		assert(type(arg[1])=="function","First arg must be function.")
+		assert(type(arg[2])=="number" and type(arg[3])=="number","Second and third args must be numbers")
 		
 		local f,a,b=arg[1], arg[2], arg[3]
 	
@@ -58,7 +58,7 @@ local function trapezoidal(...)
         
 	--no match
 	else 
-		error("ERROR: The combination of the type of arguments could not be found." , std.const.ERRORLEVEL) 
+		error("The combination of the type of arguments could not be found." , std.const.ERRORLEVEL) 
 	end
 	
 	
