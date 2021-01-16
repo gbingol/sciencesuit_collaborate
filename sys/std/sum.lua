@@ -47,9 +47,21 @@ local function sum(...)
 		if(nargs==1) then
 			return Container:sum()
 		else
-			return Container:sum(args[2]) --axes
+			return Container:sum(args[2])
 		end
+
+	elseif(type(Container)=="Array") then
+		
+		local n=args[2] or 1
+	
+		if(n==1) then
+			return Container:sum()
+		else
+			return Container:sum(n)  -- exponent
+		end
+
 	end
+
 
 
 	--Generalized for other containers (slower)
