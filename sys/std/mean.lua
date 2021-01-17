@@ -75,7 +75,7 @@ local function mean(...)
 		local total, elemconsid=std.sum(Container)
 		
 		if(elemconsid ~= 0) then
-			return total/elemconsid
+			return total/elemconsid, elemconsid
 		end
 		
 		return nil

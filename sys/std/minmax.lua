@@ -12,7 +12,9 @@ local function minmax(Container, Axes )
 	assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
       
       
-	if(type(Container)=="Vector") then
+      
+      
+	if(type(Container)=="Vector" or type(Container)=="Array") then
 		return Container:minmax()
 		
 	elseif(type(Container)=="Matrix") then
@@ -35,7 +37,9 @@ local function minmax(Container, Axes )
 	local m = getmetatable(Container)
 	local n = (m and m["__pairs"] and m["next"])
       
-	if(not n) then assert(type(Container)=="table","Userdata must support __pairs metamethod") end
+	if(not n) then 
+		assert(type(Container)=="table","Userdata must support __pairs metamethod")
+	end  
       
 	local min, max=nil, nil
 	  
@@ -46,8 +50,11 @@ local function minmax(Container, Axes )
 	max=min
 
 	for key,value in pairs(Container) do
+		
 		if(value<=min) then min=value end
+		
 		if(value>=max) then max=value end
+		
 	end
 
             
@@ -57,4 +64,66 @@ end
 
 
 
+
+
+
+
+
+
+
+local function min(Container, Axes)
+	
+	local min, max=nil, nil
+	
+	
+	
+	if(type(Container)=="table" and (type(Container[1])=="Vector" or type(Container[1])=="Matrix")) then
+		
+		local Elem=Container[1]
+		
+		min, max=minmax(Elem, Container["axes"])
+		
+		return min
+		
+	end
+	
+	
+	min, max=minmax(Container, Axes)
+
+	return min
+end
+
+
+
+
+
+
+
+
+local function max(Container, Axes)
+	
+	local min, max=nil, nil
+	
+
+	if(type(Container)=="table" and (type(Container[1])=="Vector" or type(Container[1])=="Matrix")) then
+		
+		min, max=minmax(Container[1], Container["axes"])
+		
+		return max
+		
+	end
+	
+	
+	min, max=minmax(Container, Axes)
+
+	return max
+end
+
+
+
+
+
+
 std.minmax=minmax
+std.min=min
+std.max=max
