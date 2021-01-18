@@ -5,26 +5,25 @@ local std <const> =std
 
 local function cumsum(Container, axes)
 	
-	local retElem=nil
-
-	if(type(Container)=="Vector") then
-		local retElem=Container:clone()
+	
+	if(type(Container)=="Vector" or type(Container)=="Array") then
+		Container=Container:clone()
 		
-		retElem:cumsum()
+		Container:cumsum()
 		
-		return retElem
+		return Container
 		
 	elseif(type(Container)=="Matrix") then
-		local retElem=Container:clone()
+		Container=Container:clone()
 		
-		retElem:cumsum(axes)
+		Container:cumsum(axes)
 		
-		return retElem
+		return Container
 	end
 		
 
 	local sum=0
-	retElem={}
+	local retElem={}
 	
 	local i=1
 	for key, value in pairs(Container) do
@@ -41,5 +40,7 @@ local function cumsum(Container, axes)
 	return retElem
 
 end
+
+
 
 std.cumsum=cumsum

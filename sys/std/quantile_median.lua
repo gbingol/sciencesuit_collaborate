@@ -24,6 +24,11 @@ local function QUANTILE(Container, probs)
 
 	if(type(Container)=="Range") then
 		Container=std.tovector(Container)
+			
+	elseif (type(Container)=="Array") then
+		Container=Container:clone()
+		Container:remove_strings()
+		Container:remove_nils()
 	end
 
 	local m = getmetatable(Container)
