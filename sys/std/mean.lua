@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -93,5 +90,12 @@ local function mean(...)
 	
 end
 
+
+
 std.aver=mean
 std.mean=mean
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

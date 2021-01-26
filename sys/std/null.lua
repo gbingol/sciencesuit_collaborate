@@ -1,7 +1,7 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
+
 
 local function null(A)
 
@@ -47,5 +47,14 @@ local function null(A)
 	return retMat
 end
 
+
+
+
 std.null=null
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
     

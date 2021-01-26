@@ -1,14 +1,12 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
---INPUT: 1) eig(m)
---		2)	eig(m, ComputeEigVec)
---		3) eig(m, ComputeEigVec, algorithm)
-
-
 local std <const> =std
 
 local function eig(...)
+
+	--INPUT: 1) eig(m)
+	--		2)	eig(m, ComputeEigVec)
+	--		3) eig(m, ComputeEigVec, algorithm)
+	
+	
 	local arg=table.pack(...)
 	local nargs=#arg
 	
@@ -37,4 +35,10 @@ local function eig(...)
 	 
 end
 
+
+
 std.eig=eig
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

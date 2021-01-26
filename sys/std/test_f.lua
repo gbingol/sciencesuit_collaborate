@@ -1,7 +1,5 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
 
 
 local function FTEST(xvec,yvec, alternative, ratio, conflevel )
@@ -127,4 +125,11 @@ local function test_f (...)
 end
 
 
+
+
 std.test_f=test_f
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

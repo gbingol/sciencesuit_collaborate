@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -225,4 +222,11 @@ std.dchisq=dchisq
 std.pchisq=pchisq
 std.qchisq=qchisq
 std.rchisq=rchisq
+
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 

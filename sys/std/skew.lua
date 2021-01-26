@@ -1,7 +1,5 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
 
 
 local function skew(container)  
@@ -18,4 +16,12 @@ local function skew(container)
 	return std.sqrt(n*(n-1))*skew_p/(n-2)
 end
 
+
+
+
 std.skew=skew
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

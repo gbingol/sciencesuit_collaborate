@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local function count(...)
 	local args=table.pack(...)
 	local nargs=#args
@@ -58,3 +55,8 @@ end
 
 
 std.count=count
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

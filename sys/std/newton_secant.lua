@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -176,7 +173,15 @@ local function newton_funcs(...)
 
 end
 
+
+
+
 std.newton=newton_secant
-std.newton_funcs=newton_funcs
+--std.newton_funcs=newton_funcs
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 	
 	

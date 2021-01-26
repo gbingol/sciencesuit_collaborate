@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 local function diff(v1, v2)
@@ -46,7 +43,14 @@ local function diff(v1, v2)
 
 	return retVec
 
-end--function
+end
+
 
 
 std.diff=diff
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

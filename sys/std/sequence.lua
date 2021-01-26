@@ -1,7 +1,5 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
 
 
 local function seq(from, to, by)
@@ -76,4 +74,12 @@ local function sequence(...)
 
 end
 
+
+
+
 std.sequence=sequence	
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

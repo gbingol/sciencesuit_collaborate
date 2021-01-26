@@ -1,10 +1,8 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 require( "iuplua" )
 
 local std <const> =std
 local iup <const> =iup
+
 
 
 local function numtext(tbl)
@@ -86,4 +84,12 @@ local function numtext(tbl)
 end
 
 
+
+
 std.gui.numtext=numtext
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+

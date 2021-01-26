@@ -1,7 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
 
 local function sum(...)
 	--Finds the sum of a vector, matrix or range
@@ -75,4 +74,10 @@ local function sum(...)
 end
 
 
+
 std.sum=sum
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

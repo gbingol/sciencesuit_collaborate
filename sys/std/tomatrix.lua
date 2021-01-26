@@ -1,9 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
---Converts Lua Table, Array, Range and Vector to Matrix
-
 local std <const> =std
+
+
 
 
 local function Table1DToMatrix(tbl, row, col)
@@ -130,4 +127,13 @@ local function tomatrix(elem, row, col)
 
 end
 
+
+
+
 std.tomatrix=tomatrix
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+

@@ -1,7 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
 
 local function tdma(A, b)
 
@@ -93,9 +92,15 @@ local function solve(A, b, IsTridiagonal)
 		return solve(std.trans(matrix)*matrix, std.trans(matrix)*vec) 
 	end -- 
 	
-	assert(row>column,"Impossible to reach a solution with givens as there are fewer equations than unknowns") 
+	assert(row>column,"There are fewer equations than unknowns") 
 end
 
 
 
 std.solve=solve
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

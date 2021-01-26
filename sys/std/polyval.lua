@@ -1,8 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
+
+
 
 local function EVAL(v,x)
 	local dim=#v
@@ -42,6 +40,8 @@ local function Compute(v, Entry)
 end
 
 
+
+
 local function polyval(...)
 	
 	local arg=table.pack(...)
@@ -76,4 +76,10 @@ local function polyval(...)
 
 end
 
+
+
 std.polyval=polyval
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

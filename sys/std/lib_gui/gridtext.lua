@@ -1,7 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 require( "iuplua" )
 
 local std <const> =std
@@ -62,5 +58,13 @@ local function gridtext( tbl)
 end
 
 
+
+
 std.gui.gridtext=gridtext
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
 

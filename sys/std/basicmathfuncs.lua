@@ -1,7 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 
 local function ApplytoTypes(Entry,func,... )
@@ -338,3 +334,10 @@ end
 std.besselj=function(entry, order) 
 	return ApplytoTypes(entry, SYSTEM.besselj, order) 
 end
+
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

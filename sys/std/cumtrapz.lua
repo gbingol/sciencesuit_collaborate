@@ -1,7 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 
 local function CUMTRAPZ_V(v1,v2)
@@ -103,3 +99,8 @@ end
 
 
 std.cumtrapz=cumtrapz
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

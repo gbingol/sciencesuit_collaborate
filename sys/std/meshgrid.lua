@@ -1,7 +1,7 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
+
 
 local function meshgrid( x, y)
 	-- Places two row vectors on a grid on the xy-plane.
@@ -32,4 +32,12 @@ local function meshgrid( x, y)
 
 end
 
+
+
+
 std.meshgrid=meshgrid
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

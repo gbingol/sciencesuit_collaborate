@@ -1,5 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
 --NORMALAPPROXIMATIONSATISFIED=12 seems controversial to choose for normal approximation of binomial dist
@@ -285,4 +283,12 @@ local function sign_test(...)
 end
 
 
+
+
 std.test_sign=sign_test
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+

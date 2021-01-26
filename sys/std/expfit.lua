@@ -1,12 +1,10 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 
---y=a*e^(b*x), returned vector contains in the order of [a, b]
+
 
 local function expfit (...)
+	
+	--y=a*e^(b*x), returned vector contains in the order of [a, b]
 	
 	local arg=table.pack(...)
 	
@@ -59,6 +57,11 @@ local function expfit (...)
 end
 
 
+
 std.expfit=expfit
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 	
 	

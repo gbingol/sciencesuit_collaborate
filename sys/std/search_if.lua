@@ -1,7 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 
 
@@ -41,4 +37,12 @@ local function search_if(Container, func)
 
 end
 
+
+
+
 std.search_if = search_if
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

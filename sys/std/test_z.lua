@@ -1,7 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
 
 
 local function ztest1(xvec, sd, mu, alternative, conflevel)
@@ -119,4 +118,12 @@ local function ztest(...)
 end
 
 
+
+
 std.test_z=ztest
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+
