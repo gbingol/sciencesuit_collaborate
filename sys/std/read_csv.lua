@@ -36,7 +36,13 @@ local function read_csv(...)
 		
 		assert(NTblArgs>0,"Usage: file=, header=true, encode=false")
 
-		return SYSTEM.read_csv(file, header, encode)
+		local status, err=pcall(SYSTEM.read_csv,file, header, encode)
+		
+		if(status) then
+			return err
+		end
+
+		error(err, std.const.ERRORLEVEL)
 			
 	
 	
