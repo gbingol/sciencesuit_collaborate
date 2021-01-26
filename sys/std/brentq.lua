@@ -1,16 +1,16 @@
 local std <const> =std
 
 
-local function BRENTQ(f,X0, X1, tolerance, MaxIterations)
+local function BRENTQ(f,a, b, tolerance, MaxIterations)
 
         -- Finding root of an equation using Newton-Raphson Method
         -- Input: f a function, X0 is initial guess
 
 	assert(type(f)=="function", "f must be function.") 
 	 
-	assert(type(X0)=="number", "x0 must be number" ) 
+	assert(type(a)=="number", "a must be number" ) 
 	
-	assert(type(X1)=="number", "x1 must be number" ) 
+	assert(type(b)=="number", "b must be number" ) 
 	
 	tolerance=tolerance or 1E-5
 	MaxIterations=MaxIterations or 100
@@ -18,7 +18,7 @@ local function BRENTQ(f,X0, X1, tolerance, MaxIterations)
 	assert(math.type(MaxIterations)=="integer" and MaxIterations>0,"maxiter must be positive integer")
 	assert(type(tolerance)=="number" and tolerance>0, "tol must be positive number")
 	
-      return SYSTEM.brentq(f, X0, X1, tolerance, MaxIterations)
+      return SYSTEM.brentq(f, a, b, tolerance, MaxIterations)
 end
 
 
@@ -26,7 +26,7 @@ local function brentq(...)
 	local arg=table.pack(...)
 	
 	if(#arg==1  and type(arg[1])=="table") then
-		local func, x0,x1, tol, maxiter=nil, nil, nil, nil, nil
+		local func, a, b, tol, maxiter=nil, nil, nil, nil, nil
 		local NTblArgs=0
 
 		for k,v in pairs(arg[1]) do
@@ -34,23 +34,23 @@ local function brentq(...)
 			local key=string.lower(k)
 			
 			if(key=="f") then func=v
-			elseif(key=="x0") then x0=tonumber(v)
-			elseif(key=="x1") then x1=tonumber(v)
+			elseif(key=="a") then a=tonumber(v)
+			elseif(key=="b") then b=tonumber(v)
 			elseif(key=="tol") then tol=tonumber(v)
 			elseif(key=="maxiter") then maxiter=tonumber(v)
 			else 
-				error("Usage: {f=, x0=, x1=, tol=1E-5, maxiter=100}", std.const.ERRORLEVEL)
+				error("Usage: {f=, a=, b=, tol=1E-5, maxiter=100}", std.const.ERRORLEVEL)
 			end
 
 			NTblArgs=NTblArgs+1
 
 		end
 		
-		assert(NTblArgs>0, "Signature: {f=, x0=, x1=, tol=1E-5, maxiter=100}")
+		assert(NTblArgs>0, "Signature: {f=, a=, b=, tol=1E-5, maxiter=100}")
 
 		
 		
-		return BRENTQ(func, x0, x1, tol, maxiter)
+		return BRENTQ(func, a, b, tol, maxiter)
 			
 			
 	
