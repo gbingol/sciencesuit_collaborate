@@ -247,8 +247,9 @@ local function FoodThermalProcessing()
 			local TotalLogRed=std.cumsum(LogRed)
 			TotalLogRed:insert(1,0) -- at time=0 TotalLogRed(1)=0
 			
-			
-			WS[Row][Col] = {value=CurTemperatureRangeInfo, weight="bold"}
+			if(CurTemperatureRangeInfo~=nil) then
+				WS[Row][Col] = {value=CurTemperatureRangeInfo, weight="bold"}
+			end
 			
 			for i=1,#Time do
 				WS[Row+i][Col]=Time(i)
@@ -270,7 +271,8 @@ local function FoodThermalProcessing()
 		local range_time=std.Range.new(txtTime.value)
 		local range_T=std.Range.new(txtTemperature.value)
 		
-		
+		-- How many temperature locations? Each column should represents a single location
+		local NTempLocs=range_T:ncols() 
 		
 		
 		
@@ -284,17 +286,22 @@ local function FoodThermalProcessing()
 		end
 		
 		
+		if(NTempLocs>1) then
+			row = row + 2
+		end
 		
-		row = row + 2
 		col = 1
 		
 		
-		-- How many temperature locations? Each column should represents a single location
-		local NTempLocs=range_T:ncols() 
-		
 		for i=1,NTempLocs do
 			local status=nil
-			status, row=pcall(Compute,std.tovector(range_time), std.tovector(range_T:col(i)), row, col, tostring(range_T:col(i)))
+			local CurTemperatureRangeInfo=nil
+			
+			if(NTempLocs>1) then
+				CurTemperatureRangeInfo=tostring(range_T:col(i))
+			end
+			
+			status, row=pcall(Compute,std.tovector(range_time), std.tovector(range_T:col(i)), row, col, CurTemperatureRangeInfo)
 			
 			if(not status) then
 				iup.Message("Error", err)
