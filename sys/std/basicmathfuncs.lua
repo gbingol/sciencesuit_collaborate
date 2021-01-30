@@ -57,6 +57,8 @@ end
 
 
 
+
+
 std.acos=function(entry) 
 	
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
@@ -73,6 +75,8 @@ end
 
 
 
+
+
 std.asin=function(entry) 
 	
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
@@ -85,6 +89,8 @@ std.asin=function(entry)
 	
 	return  ApplytoTypes(entry, math.asin) 
 end
+
+
 
 
 
@@ -119,6 +125,7 @@ end
 
 
 
+
 std.cos=function(entry) 
 	
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
@@ -130,6 +137,7 @@ std.cos=function(entry)
 	end
 	
 	return  ApplytoTypes(entry,math.cos) end
+
 
 
 
@@ -148,6 +156,7 @@ end
 
 
 
+
 std.exp=function(entry)  
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
@@ -159,6 +168,7 @@ std.exp=function(entry)
 
 	return  ApplytoTypes(entry,math.exp)  
 end
+
 
 
 
@@ -203,9 +213,15 @@ end
 
 
 
+
+
+
 std.ln=function(entry) 
 	return  std.log(entry,math.exp(1)) 
 end
+
+
+
 
 
 
@@ -266,6 +282,8 @@ end
 
 
 
+
+
 std.sinh=function(entry) 
 		
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
@@ -280,6 +298,8 @@ std.sinh=function(entry)
 end
 
 
+
+
 std.tan=function(entry) 
 	
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
@@ -292,6 +312,8 @@ std.tan=function(entry)
 	
 	return  ApplytoTypes(entry,math.tan) 
 end
+
+
 
 
 
