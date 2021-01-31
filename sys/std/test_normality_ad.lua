@@ -1,18 +1,16 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
 
 
 local function AndersonDarling(vec)
 	
-	assert(type(vec)=="Vector", "Argument must be of type Vector")
+	assert(type(vec)=="Vector", "Argument must be Vector")
 	
 	local v=vec[{}] --clone
 	
 	local N=#vec
 
-	assert(N>2,"Argument must have at least 3 entries")
+	assert(N>2,"Arg must have at least 3 entries")
 	
 	local mean=std.mean(v)
 	local stdev=std.stdev(v)
@@ -67,3 +65,8 @@ end
 
 
 std.test_norm_ad=AndersonDarling
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

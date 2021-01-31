@@ -1,5 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 
 
 --NORMALAPPROXIMATIONSATISFIED=12 seems controversial to choose for normal approximation of binomial dist
@@ -108,16 +106,16 @@ end
 local function sign_test1(x_vector,md, alternative, conflevel)
 
 	--Default values
-	assert(type(x_vector)=="Vector" , "ERROR: Key x must be of type Vector")
+	assert(type(x_vector)=="Vector" , "Key x must be Vector")
 	
-	assert(type(md)=="number","ERROR: Key md must be of type number")
+	assert(type(md)=="number","Key md must be number")
 	
 	conflevel=conflevel or 0.95
-	assert(type(conflevel)=="number","ERROR: Key conflevel must be of type number")
-	assert(conflevel>=0 and conflevel<=1,"ERROR: Key conflevel must be in the range [0,1].")
+	assert(type(conflevel)=="number","Key conflevel must be number")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in the range [0,1].")
 
 	alternative=alternative or "two.sided"
-	assert(type(alternative)=="string","ERROR: Key alternative must be of type string")
+	assert(type(alternative)=="string","Key alternative must be string")
 	alternative=string.lower(alternative)
 
 	local alpha=(1-conflevel)
@@ -230,7 +228,7 @@ local function sign_test1(x_vector,md, alternative, conflevel)
 		retTable.interpolated.CILow="-inf"
 		retTable.interpolated.CIHigh=Interpolation(retTable.lower.prob, retTable.lower.CIHigh, retTable.upper.prob, retTable.upper.CIHigh, conflevel) 
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
+		error("The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 
@@ -262,7 +260,7 @@ local function sign_test(...)
 			elseif(k=="md") then md=v
 			elseif(k=="conflevel") then conflevel=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, y, alternative, md, conflevel.", std.const.ERRORLEVEL) 
+				error("Keys: x, y, alternative, md, conflevel.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
@@ -279,10 +277,18 @@ local function sign_test(...)
 		end
 	
 	else
-		error("ERROR: Argument must be a Lua table with probable keys: x, y, alternative, md, conflevel.")
+		error("Arg must be a Lua table with probable keys: x, y, alternative, md, conflevel.")
 	
 	end
 end
 
 
+
+
 std.test_sign=sign_test
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+

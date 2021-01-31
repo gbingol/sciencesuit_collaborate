@@ -25,6 +25,8 @@ end
 
 
 
+
+
 local function FoodThermalProcessing()
 
 	local m_Food=nil
@@ -161,13 +163,13 @@ local function FoodThermalProcessing()
 		m_database=std.Database.new()
 		m_database:open(testDBName)
 		
-		local row, col=0,0
+		
 
 		local QueryString="SELECT OrganismName, minPH, minAw, DValueTemperature, Dvalue, ZValue,Medium, Publication FROM Microorganism where MinAw<="..tostring(Aw).." and MinPH<="..tostring(pH)
 
-		m_QuerySet,row,col = m_database:sql(QueryString)
+		m_QuerySet,NRow,NCol = m_database:sql(QueryString)
 		
-		for i=1,row do
+		for i=1,NRow do
 			lstOrganisms[i]=m_QuerySet[i][1]
 		end
 	
@@ -218,12 +220,16 @@ local function FoodThermalProcessing()
 			return 
 		end
 
+		
+		
+		local WS=std.appendworksheet()
 
-		local function Compute(Time, Temperature)
+
+		local function Compute(Time, Temperature, Row, Col, CurTemperatureRangeInfo)
 			
 			assert(#Time == #Temperature, "The length of time and temperature data are not equal.")
 			
-			assert(math.abs(vtime(1))<std.const.tolerance, "Time sequence does not start from 0") 
+			assert(math.abs(Time(1))<std.const.tolerance, "Time sequence does not start from 0") 
 			
 			
 			
@@ -241,18 +247,23 @@ local function FoodThermalProcessing()
 			local TotalLogRed=std.cumsum(LogRed)
 			TotalLogRed:insert(1,0) -- at time=0 TotalLogRed(1)=0
 			
-			
+			if(CurTemperatureRangeInfo~=nil) then
+				WS[Row][Col] = {value=CurTemperatureRangeInfo, weight="bold"}
+			end
 			
 			for i=1,#Time do
-				WS[row+i][col]=Time(i)
-				WS[row+i][col+1]=Temperature(i)
-				WS[row+i][col+2]=string.format("%.3f",tostring(LethalRate(i)))
-				WS[row+i][col+3]=string.format("%.3f",tostring(DValue(i)))
-				WS[row+i][col+4]=string.format("%.2f",tostring(TotalLogRed(i)))
-				WS[row+i][col+5]=string.format("%.2f",tostring(FValue(i)))
+				WS[Row+i][Col]=Time(i)
+				WS[Row+i][Col+1]=Temperature(i)
+				WS[Row+i][Col+2]=string.format("%.3f",tostring(LethalRate(i)))
+				WS[Row+i][Col+3]=string.format("%.3f",tostring(DValue(i)))
+				WS[Row+i][Col+4]=string.format("%.2f",tostring(TotalLogRed(i)))
+				WS[Row+i][Col+5]=string.format("%.2f",tostring(FValue(i)))
 			end
 
-		end
+		
+		return Row + #Time  --Current Row, 
+
+		end --local func
 		
 		
 		
@@ -260,22 +271,37 @@ local function FoodThermalProcessing()
 		local range_time=std.Range.new(txtTime.value)
 		local range_T=std.Range.new(txtTemperature.value)
 		
-		local NLocs=range_T:ncols()
+		-- How many temperature locations? Each column should represents a single location
+		local NTempLocs=range_T:ncols() 
 		
 		
-		local WS=std.appendworksheet()
+		
 		local row, col=1,1 --which row shall we print on the grid
 		
 		local Headers={"Time ", "Temperature", "Lethality Rate", "D Value","Total Log Reduction", "F-Value"}
 		for i=1,#Headers do
-			WS[row][col]=Headers[i]
+			WS[row][col]={value=Headers[i], style="italic"}
+			
 			col=col+1
 		end
 		
-		row = row + 1; col = 1
 		
-		for i=1,NLocs do
-			local status, err=pcall(Compute,std.tovector(range_time), std.tovector(range_T:col(i)))
+		if(NTempLocs>1) then
+			row = row + 2
+		end
+		
+		col = 1
+		
+		
+		for i=1,NTempLocs do
+			local status=nil
+			local CurTemperatureRangeInfo=nil
+			
+			if(NTempLocs>1) then
+				CurTemperatureRangeInfo=tostring(range_T:col(i))
+			end
+			
+			status, row=pcall(Compute,std.tovector(range_time), std.tovector(range_T:col(i)), row, col, CurTemperatureRangeInfo)
 			
 			if(not status) then
 				iup.Message("Error", err)

@@ -1,8 +1,5 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
+
 
 
 local function tovector(Container, retVec)
@@ -43,4 +40,10 @@ local function tovector(Container, retVec)
 end
 
 
+
 std.tovector=tovector
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

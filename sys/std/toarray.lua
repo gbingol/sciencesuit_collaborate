@@ -1,8 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
+
+
 
 local function toarray(Container)
 
@@ -31,7 +29,7 @@ local function toarray(Container)
 				NonNum=NonNum+1
 			end
 		else
-			error("ERROR: Unknown type, supported types are string and number")
+			error("Expected types are string or number")
 		end
 		
 	end
@@ -41,4 +39,12 @@ local function toarray(Container)
 end
 
 
+
+
 std.toarray=toarray
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+

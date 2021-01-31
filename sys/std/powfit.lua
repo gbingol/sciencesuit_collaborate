@@ -1,12 +1,10 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 
---y=a*x^n, returned vector contains in the order of [a, n]
+
 
 local function powfit (...)
+	
+	--y=a*x^n, returned vector contains in the order of [a, n]
 	
 	local arg=table.pack(...)
 	
@@ -50,6 +48,12 @@ local function powfit (...)
 end
 
 
+
+
 std.powfit=powfit
 	
+	
+	
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 	

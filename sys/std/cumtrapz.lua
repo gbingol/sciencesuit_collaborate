@@ -1,13 +1,9 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 
 local function CUMTRAPZ_V(v1,v2)
 	
-	assert(type(v1)=="Vector", "ERROR: First argument must be of type Vector")
-	assert(type(v2)=="Vector", "ERROR: Second argument must be of type Vector")
+	assert(type(v1)=="Vector", "First arg must be of type Vector")
+	assert(type(v2)=="Vector", "Second arg must be of type Vector")
 	
 	
 	return SYSTEM.cumtrapz(v1,v2)
@@ -17,8 +13,8 @@ end
 
 local function CUMTRAPZ_FV(func, v2)
 
-	assert(type(func)=="function", "ERROR: First argument must be of type function")
-	assert(type(v2)=="Vector", "ERROR: Second argument must be of type Vector")
+	assert(type(func)=="function", "First arg must be of type function")
+	assert(type(v2)=="Vector", "Second arg must be of type Vector")
 	
 	
 	return SYSTEM.cumtrapz(func,v2)
@@ -30,9 +26,9 @@ local function CUMTRAPZ_F(func, a, b, N)
 
 	N=N or 10
 
-	assert(type(func)=="function", "ERROR: First argument must be of type function")
-	assert(type(a)=="number" and type(b)=="number", "ERROR: Second and third arguments must be of type number")
-	assert(math.type(N)=="integer" and N>3, "ERROR: Fourth argument must be of type integer greater than 3")
+	assert(type(func)=="function", "First arg must be of type function")
+	assert(type(a)=="number" and type(b)=="number", "2nd and 3rd arg must be of type number")
+	assert(math.type(N)=="integer" and N>3, "4th arg must be of type integer greater than 3")
 
 
 	return SYSTEM.cumtrapz(func,a,b,N)
@@ -64,7 +60,7 @@ local function cumtrapz(...)
 			elseif(key=="b") then b=value
 			elseif(key=="inter") then N=value
 			else 
-				error("ERROR: Unexpected key found, Usage: {f=, a=, b=, inter=10}", std.const.ERRORLEVEL) 
+				error("Unexpected key found, Usage: {f=, a=, b=, inter=10}", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -103,3 +99,8 @@ end
 
 
 std.cumtrapz=cumtrapz
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

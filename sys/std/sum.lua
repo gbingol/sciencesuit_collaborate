@@ -1,7 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
 
 local function sum(...)
 	--Finds the sum of a vector, matrix or range
@@ -47,9 +46,21 @@ local function sum(...)
 		if(nargs==1) then
 			return Container:sum()
 		else
-			return Container:sum(args[2]) --axes
+			return Container:sum(args[2])
 		end
+
+	elseif(type(Container)=="Array") then
+		
+		local n=args[2] or 1
+	
+		if(n==1) then
+			return Container:sum()
+		else
+			return Container:sum(n)  -- exponent
+		end
+
 	end
+
 
 
 	--Generalized for other containers (slower)
@@ -63,4 +74,10 @@ local function sum(...)
 end
 
 
+
 std.sum=sum
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

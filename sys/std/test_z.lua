@@ -1,25 +1,24 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
 
 
 local function ztest1(xvec, sd, mu, alternative, conflevel)
 
 	--Default values
-	assert(type(xvec)=="Vector" , "ERROR: Key x must be of type Vector.")
+	assert(type(xvec)=="Vector" , "Key x must be Vector.")
 	
-	assert(type(sd)=="number" and sd>0,"ERROR: Key sd must be of type number greater than 0.")
+	assert(type(sd)=="number" and sd>0,"Key sd must be number >0.")
 	
-	assert(type(mu)=="number","ERROR: Key mu must be of type number.")
+	assert(type(mu)=="number","Key mu must be number.")
 	
 	conflevel=conflevel or 0.95
-	assert(type(conflevel)=="number","ERROR: Key conflevel must be of type number.")
-	assert(conflevel>=0 and conflevel<=1,"ERROR: Key conflevel must be in the range [0,1].")
+	assert(type(conflevel)=="number","Key conflevel must be of type number.")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in [0,1].")
 
 
 	alternative=alternative or "two.sided"
-	assert(type(alternative)=="string","ERROR: Key alternative must be of type string.")
+	assert(type(alternative)=="string","Key alternative must be string.")
 	alternative=string.lower(alternative)
 	
 	
@@ -98,7 +97,7 @@ local function ztest(...)
 			elseif(k=="sd") then sd=v
 			elseif(k=="conflevel") then conflevel=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, alternative, mu, sd, conflevel.", std.const.ERRORLEVEL) 
+				error("Keys: x, alternative, mu, sd, conflevel.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
@@ -111,7 +110,7 @@ local function ztest(...)
 		
 	else
 	
-		error("ERROR: Argument must be a Lua table with keys: x, alternative, mu, sd, conflevel.")
+		error("Arg must be a Lua table with keys: x, alternative, mu, sd, conflevel.")
 
 	end
 			
@@ -119,4 +118,12 @@ local function ztest(...)
 end
 
 
+
+
 std.test_z=ztest
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
+

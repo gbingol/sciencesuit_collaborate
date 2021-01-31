@@ -1,13 +1,12 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
 
 local function rank(A)
 
     --Finds the rank of A using svd decomposition
 
-	assert(type(A)=="Matrix", "ERROR: The argument to rank function must be a matrix" ) 
+	assert(type(A)=="Matrix", "Matrix expected." ) 
 	
 	local m,n=std.size(A)
 	local u,s,v=std.svd(A) -- u(m,m) s(m,n) v(n,n)
@@ -34,4 +33,10 @@ local function rank(A)
 end
 
 
+
 std.rank=rank
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -9,11 +6,11 @@ local function NewtonRaphson(f,X0, fprime, tolerance, MaxIterations)
         -- Finding root of an equation using Newton-Raphson Method
         -- Input: f a function, X0 is initial guess
 
-	assert(type(f)=="function", "ERROR: f must be a function.") 
+	assert(type(f)=="function", "f must be function.") 
 	 
-	assert(type(X0)=="number", "ERROR: x0 must be a number" ) 
+	assert(type(X0)=="number", "x0 must be number" ) 
 	
-	assert(type(fprime)=="function", "ERROR: fprime must be a function.") 
+	assert(type(fprime)=="function", "fprime must be function.") 
 	
 	tolerance=tolerance or 1E-5
 	MaxIterations=MaxIterations or 100
@@ -27,11 +24,11 @@ local function Secant(f,X0, X1, tolerance, MaxIterations)
         -- Finding root of an equation using Newton-Raphson Method
         -- Input: f a function, X0 is initial guess
 
-	assert(type(f)=="function", "ERROR: f must be a function.") 
+	assert(type(f)=="function", "f must be function.") 
 	 
-	assert(type(X0)=="number", "ERROR: x0 must be a number" ) 
+	assert(type(X0)=="number", "x0 must be number" ) 
 	
-	assert(type(X1)=="number", "ERROR: x1 must be a number" ) 
+	assert(type(X1)=="number", "x1 must be number" ) 
 	
 	tolerance=tolerance or 1E-5
 	MaxIterations=MaxIterations or 100
@@ -71,8 +68,8 @@ local function newton_secant(...)
 		maxiter=maxiter or 100
 		tol=tol or 1E-5
 		
-		assert(math.type(maxiter)=="integer" and maxiter>0,"ERROR: Key maxiter must be a positive integer")
-		assert(type(tol)=="number" and tol>0, "ERROR: Key tol must be a positive number")
+		assert(math.type(maxiter)=="integer" and maxiter>0,"Key maxiter must be positive integer")
+		assert(type(tol)=="number" and tol>0, "Key tol must be positive number")
 		
 		
 		if(type(fprime)=="function") then
@@ -88,8 +85,8 @@ local function newton_secant(...)
 			
 	
 	elseif (#arg==3) then
-		assert(type(arg[1])=="function", "ERROR: First argument must be a function")
-		assert(type(arg[2])=="number", "ERROR: Second argument must be of type number.")
+		assert(type(arg[1])=="function", "First arg must be function")
+		assert(type(arg[2])=="number", "Second arg must be number.")
 		
 		if(type(arg[3])=="function") then
 			return NewtonRaphson(arg[1], arg[2], arg[3])
@@ -106,6 +103,7 @@ local function newton_secant(...)
 end
 
 
+--Not in use
 local function Newton_SystemNonlinearEqs(tblfuncs,v_initial)
 	--Solves a system of non-linear equations using Newton's approach
         --tblfuncs contains table of equations in the format of f(x1,x2,...)=0
@@ -149,13 +147,13 @@ local function Newton_SystemNonlinearEqs(tblfuncs,v_initial)
 		if(std.abs(maxfuncval)<TOLERANCE)  then return v  end
 
 		local JacobiDetValue=std.abs(std.det(J))
-		assert(JacobiDetValue>TOLERANCE,"ERROR: Jacobian is singular, try different initial vector values") 
+		assert(JacobiDetValue>TOLERANCE,"Jacobian is singular, try different initial vector values") 
 		
 		local H=std.solve(J,F)
 		v=v-H
 	end
 	
-        error("ERROR: Maximum iterations have been reached without convergence" , std.const.ERRORLEVEL)
+        error("Maximum iterations have been reached without convergence" , std.const.ERRORLEVEL)
         
     end -- function
     
@@ -169,13 +167,21 @@ local function newton_funcs(...)
 		end
 	
 	else
-		error("ERROR: Unexpected argument types", std.const.ERRORLEVEL)
+		error("Unexpected argument types", std.const.ERRORLEVEL)
 		
 	end
 
 end
 
+
+
+
 std.newton=newton_secant
-std.newton_funcs=newton_funcs
+--std.newton_funcs=newton_funcs
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 	
 	

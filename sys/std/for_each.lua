@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -10,9 +7,9 @@ local function foreach(Container, func,...)
 	-- ... : Possible second, third, fourth etc... arguments of the func
 	--Container: Lua Table or an iteratable container
 
-      assert(type(Container)~="number" and type(Container)~="string", "ERROR: An iteratable container is required")
+      assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
       
-      assert(type(func)=="function", "ERROR: Second argument must be a unary function ")
+      assert(type(func)=="function", "Second arg must be a unary function ")
       
       local func_args=table.pack(...)
       
@@ -36,4 +33,13 @@ local function foreach(Container, func,...)
 
 end
 
+
+
+
 std.for_each=foreach
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

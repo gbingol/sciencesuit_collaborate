@@ -1,7 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 
 local function ApplytoTypes(Entry,func,... )
@@ -48,7 +44,7 @@ end
 
 std.abs=function(entry) 
 
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:abs()
@@ -61,9 +57,11 @@ end
 
 
 
+
+
 std.acos=function(entry) 
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:acos()
@@ -77,9 +75,11 @@ end
 
 
 
+
+
 std.asin=function(entry) 
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:asin()
@@ -92,9 +92,11 @@ end
 
 
 
+
+
 std.atan=function(entry) 
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:atan()
@@ -110,7 +112,7 @@ end
 
 std.ceil=function(entry) 
 		
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:ceil()
@@ -123,9 +125,10 @@ end
 
 
 
+
 std.cos=function(entry) 
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:cos()
@@ -137,9 +140,10 @@ std.cos=function(entry)
 
 
 
+
 std.cosh=function(entry) 
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:cosh()
@@ -152,8 +156,9 @@ end
 
 
 
+
 std.exp=function(entry)  
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:exp()
@@ -167,9 +172,10 @@ end
 
 
 
+
 std.floor=function(entry) 
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:floor()
@@ -187,7 +193,7 @@ end
 std.log=function(entry, base) 
 	
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 		
 		if(base==nil) then
@@ -207,9 +213,15 @@ end
 
 
 
+
+
+
 std.ln=function(entry) 
 	return  std.log(entry,math.exp(1)) 
 end
+
+
+
 
 
 
@@ -223,7 +235,7 @@ end
 
 std.pow=function(entry, power)  
 
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:pow(power)
@@ -240,7 +252,7 @@ end
 
 
 std.sqrt=function(entry) 
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:sqrt()
@@ -257,7 +269,7 @@ end
 
 std.sin=function(entry) 
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:sin()
@@ -270,9 +282,11 @@ end
 
 
 
+
+
 std.sinh=function(entry) 
 		
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:sinh()
@@ -284,9 +298,11 @@ std.sinh=function(entry)
 end
 
 
+
+
 std.tan=function(entry) 
 	
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:tan()
@@ -299,9 +315,11 @@ end
 
 
 
+
+
 std.tanh=function(entry) 
 
-	if(type(entry)=="Vector" or type(entry)=="Matrix") then
+	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 
 		retEntry:tanh()
@@ -338,3 +356,10 @@ end
 std.besselj=function(entry, order) 
 	return ApplytoTypes(entry, SYSTEM.besselj, order) 
 end
+
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

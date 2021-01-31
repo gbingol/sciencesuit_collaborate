@@ -1,7 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 
 local function gcd(...)
@@ -12,7 +8,7 @@ local function gcd(...)
 	local arg=table.pack(...)
 	
 	if(#arg==1) then
-		error("At least 2 arguments of type integer must be provided")
+		error("At least 2 arguments of type integer expected.")
 	end
 	
 	
@@ -45,4 +41,12 @@ local function gcd(...)
 
 end
 
+
+
+
 std.gcd=gcd
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

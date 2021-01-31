@@ -1,12 +1,9 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
 local function FindMode(Container)
 	
-	assert(type(Container)~="number" and type(Container)~="string", "ERROR: An iteratable container is required")
+	assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
 
 	local tbl={}
 	local NElem=0
@@ -54,4 +51,12 @@ local function FindMode(Container)
 	
 end
 
+
+
+
 std.mode=FindMode
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

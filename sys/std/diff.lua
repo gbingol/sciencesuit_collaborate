@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 local function diff(v1, v2)
@@ -10,7 +7,7 @@ local function diff(v1, v2)
 	--OUTPUT: 		1) The difference between the consecutive elements, returns n-1 elements 
 	--			2) Numerical differentiation dy/dx. Uses forward, central and backward differences algorithms
 	
-	assert(type(v1)=="Vector","ERROR: First argument must be of type Vector")
+	assert(type(v1)=="Vector","First arg must be of type Vector")
 	
 	if(v2==nil) then
 		local dim=#v1
@@ -23,12 +20,12 @@ local function diff(v1, v2)
 	end
 
 
-	assert(type(v2)=="Vector","ERROR: Second argument must be of type Vector")	
+	assert(type(v2)=="Vector","Second arg must be of type Vector")	
 
 	local x,y=v1, v2
 	local dimx,dimy=#x, #y
 	
-	assert(dimx==dimy,"ERROR: Vector lengths must be same") 
+	assert(dimx==dimy,"Vector lengths must be same") 
 	
 	local retVec=std.Vector.new(dimx)
 	for i=1,dimx do
@@ -46,7 +43,14 @@ local function diff(v1, v2)
 
 	return retVec
 
-end--function
+end
+
 
 
 std.diff=diff
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

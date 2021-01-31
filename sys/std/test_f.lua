@@ -1,25 +1,23 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
 
 
 local function FTEST(xvec,yvec, alternative, ratio, conflevel )
 
-	assert(type(xvec)=="Vector" and type(yvec)=="Vector", "ERROR: Keys x and y must be of type Vector")
+	assert(type(xvec)=="Vector" and type(yvec)=="Vector", "Keys x and y must be of type Vector")
 	
 	ratio=ratio or 1
-	assert(type(ratio)=="number" and ratio>0,"ERROR: Key ratio must be greater than zero and of type number")
+	assert(type(ratio)=="number" and ratio>0,"Key ratio must be greater than zero and of type number")
 	
 	conflevel=conflevel or 0.95
-	assert(type(conflevel)=="number","ERROR: Key conflevel must be of type number")
-	assert(conflevel>=0 and conflevel<=1,"ERROR: Key conflevel must be in the range [0,1].")
+	assert(type(conflevel)=="number","Key conflevel must be of type number")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in the range [0,1].")
 
 	local alpha=(1-conflevel)
 
 
 	alternative=alternative or "two.sided"
-	assert(type(alternative)=="string","ERROR: Key alternative must be of type string")
+	assert(type(alternative)=="string","Key alternative must be of type string")
 	alternative=string.lower(alternative)
 
 
@@ -103,14 +101,14 @@ local function test_f (...)
 			elseif(k=="ratio") then ratio=v
 			elseif(k=="conflevel") then conflevel=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, y, ratio, alternative, conflevel.", std.const.ERRORLEVEL) 
+				error("Keys: x, y, ratio, alternative, conflevel.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
 		
 		end
 
-		assert(NArgsTbl>0,"ERROR: Keys: x, y, ratio, alternative, conflevel.")
+		assert(NArgsTbl>0,"Keys: x, y, ratio, alternative, conflevel.")
 		
 		return FTEST(xvec,yvec, alternative, ratio, conflevel )
 	
@@ -127,4 +125,11 @@ local function test_f (...)
 end
 
 
+
+
 std.test_f=test_f
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

@@ -1,14 +1,11 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
 local function DPOIS(vec, lambda)
 	
-	assert(type(vec)=="Vector" or type(vec)=="number","ERROR: First argument (x) must be either a number or of type Vector")
+	assert(type(vec)=="Vector" or type(vec)=="number","First arg (x): number or Vector")
 
-	assert(type(lambda)=="number","ERROR: Second argument (lambda) must be a number!")
+	assert(type(lambda)=="number","Second arg (lambda) must be number.")
 
 	if(type(vec)=="Vector") then
 		local vecSize=#vec
@@ -38,14 +35,14 @@ local function dpois(...)
 			if(k=="x") then xval=v
 			elseif(k=="lambda") then lambda=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys: x and lambda.", std.const.ERRORLEVEL) 
+				error("Keys: x and lambda.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0, "ERROR: Keys: x and lambda.")
+		assert(NTblArgs>0, "Keys: x and lambda.")
 		
 		return DPOIS(xval,lambda)
 		
@@ -61,9 +58,9 @@ end
 
 local function PPOIS(vec, lambda)
 
-	assert(type(vec)=="Vector" or type(vec)=="number","ERROR: First argument (q) must be either a number or of type Vector")
+	assert(type(vec)=="Vector" or type(vec)=="number","First arg (q): number or Vector.")
 
-	assert(type(lambda)=="number","ERROR: Second argument (lambda) must be a number!")
+	assert(type(lambda)=="number","Second arg (lambda) must be number.")
 
 	if(type(vec)=="Vector") then
 
@@ -94,13 +91,13 @@ local function ppois(...)
 			if(k=="q") then qval=v
 			elseif(k=="lambda") then lambda=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: q and lambda.", std.const.ERRORLEVEL) 
+				error("Keys: q and lambda.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: q and lambda.")
+		assert(NTblArgs>0,"Keys: q and lambda.")
 	
 		return PPOIS(qval,lambda)
 	end
@@ -114,9 +111,9 @@ end
 
 local function QPOIS(vec, lambda)
 
-	assert(type(vec)=="Vector" or type(vec)=="number","ERROR: First argument (p) must be either a number or of type Vector")
+	assert(type(vec)=="Vector" or type(vec)=="number","First arg (p): number or Vector.")
 
-	assert(type(lambda)=="number","ERROR: Second argument (lambda) must be a number!")
+	assert(type(lambda)=="number","Second arg (lambda) must be number.")
 
 	if(type(vec)=="Vector") then
 
@@ -146,13 +143,13 @@ local function qpois(...)
 			if(k=="p") then pval=v
 			elseif(k=="lambda") then lambda=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: p and lambda.", std.const.ERRORLEVEL) 
+				error("Keys: p and lambda.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: p and lambda.") 
+		assert(NTblArgs>0,"Keys: p and lambda.") 
 		
 
 		return QPOIS(pval,lambda)
@@ -167,8 +164,8 @@ end
 
 local function RPOIS(n, lambda)
 	
-	assert(math.type(n)=="integer" and n>0,"ERROR: First argument (key: n) must be an integer greater than zero.")
-	assert(type(lambda)=="number","ERROR: Second argument (lambda) must be of type number")
+	assert(math.type(n)=="integer" and n>0,"First arg (key: n) must be an integer >0")
+	assert(type(lambda)=="number","Second arg (lambda) must be number")
 
 	return SYSTEM.rpois(n, lambda)
 
@@ -189,14 +186,14 @@ local function rpois(...)
 			if(k=="n") then arg1=v
 			elseif(k=="lambda") then lambda=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: n and lambda.", std.const.ERRORLEVEL) 
+				error("Keys: n and lambda.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: n and lambda.")
+		assert(NTblArgs>0,"Keys: n and lambda.")
 		
 		return RPOIS(arg1, lambda)
 		
@@ -214,4 +211,9 @@ std.dpois=dpois
 std.ppois=ppois
 std.qpois=qpois
 std.rpois=rpois
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 

@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -39,10 +36,11 @@ local function SLM(yobs, factor, IsIntercept, Alpha)
 	Alpha=Alpha or 0.05
 	
 
-	assert(type(yobs)=="Vector","ERROR: First argument (dependent variable) must be of type Vector")
-	assert(type(factor)=="Vector" ,"ERROR: Second argument (factor) must be of type Vector")
+	assert(type(yobs)=="Vector","First arg (dependent variable) must be Vector")
 	
-	assert(#yobs==#factor,"ERROR: Length of the vectors must be equal") 
+	assert(type(factor)=="Vector" ,"Second arg (factor) must be Vector")
+	
+	assert(#yobs==#factor,"Length of the vectors must be equal") 
 	
 	if(IsIntercept==nil) then
 		IsIntercept=true
@@ -94,7 +92,7 @@ end
 
 local function SLM_Summary(retTable)
 	
-	assert(type(retTable)=="table" ,"Argument must be of type Lua table")
+	assert(type(retTable)=="table" ,"Arg must be of type Lua table")
 	
 	local coeffs=retTable.coefficients
 	
@@ -266,9 +264,11 @@ local function MLR(yobs,factmat, IsIntercept, Alpha)
 
 	Alpha=Alpha or 0.05
 
-	assert(type(yobs)=="Vector","ERROR: First argument (dependent variable) must be of type Vector")
-	assert(type(factmat)=="Matrix" ,"ERROR: Second argument(independent variables) must be of type Matrix") 
-	assert(type(IsIntercept)=="boolean", "ERROR: Third argument must be of type boolean")
+	assert(type(yobs)=="Vector","First argument (dependent) must be Vector")
+	
+	assert(type(factmat)=="Matrix" ,"Second arg(independents) must be Matrix") 
+	
+	assert(type(IsIntercept)=="boolean", "Third argument must be boolean")
 	      
 	assert(#yobs==factmat:nrows(),"Number of rows of matrix must be equal to the dimension of the Vector.")
 	
@@ -344,7 +344,7 @@ end
 
 local function MLR_Summary(retTable)
 	
-	assert(type(retTable)=="table" ,"Argument must be of type Lua table")
+	assert(type(retTable)=="table" ,"Arg must be of type Lua table")
 	
 	local coeff=retTable.coefficients
 	local yobs=retTable.yobs
@@ -477,7 +477,7 @@ function mt:__call(...)
 		return SLM(table.unpack(arg))
 		
 	else
-		error("Second argument must be either a Vector or a Matrix")
+		error("Second arg: Vector or Matrix")
 	end
 	
 	return nil
@@ -485,4 +485,11 @@ end
 
 
 
+
 std.lm=lm
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

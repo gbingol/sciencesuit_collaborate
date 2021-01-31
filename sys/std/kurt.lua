@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -9,7 +6,7 @@ local function kurt(v) --kurtosis
 	local total, n=std.accumulate( v,0)
 	local avg=total/n
 
-	assert(n>=4,"ERROR: Container must have at least 4 elements")
+	assert(n>=4,"Container must have at least 4 elements")
 
 	local stdev=std.stdev(v)
 	
@@ -19,4 +16,11 @@ local function kurt(v) --kurtosis
 end
 
 
+
+
 std.kurt=kurt
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

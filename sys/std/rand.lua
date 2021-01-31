@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -14,7 +11,7 @@ local function rand(m,n)
 		return std.runif(m) 
 	end 
 
-	assert(math.type(m)=="integer" and math.type(n)=="integer" and m>0 and n>0,"First and second arguments must be an integer greater than zero.")
+	assert(math.type(m)=="integer" and math.type(n)=="integer" and m>0 and n>0,"First and second args must be integers >0.")
 
 	local row,col=m , n
 
@@ -37,4 +34,11 @@ local function rand(m,n)
      
 end
 
+
+
+
 std.rand=rand
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

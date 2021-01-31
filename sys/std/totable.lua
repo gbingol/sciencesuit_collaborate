@@ -1,7 +1,6 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
 
 
 local function totable(container, Force1DTable) 
@@ -13,7 +12,7 @@ local function totable(container, Force1DTable)
 		Force1DTable=false
 	end
 
-	assert(type(Force1DTable)=="boolean", "Second argument must be of type boolean")
+	assert(type(Force1DTable)=="boolean", "Second arg must be boolean")
 
 	if(Force1DTable==false and (type(container)=="Matrix" or type(container)=="Range")) then
 		local r,c=std.size(container)
@@ -46,3 +45,8 @@ end
 
 
 std.totable=totable
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

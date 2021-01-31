@@ -1,16 +1,13 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
 local function DF(arg1, df1, df2)
 	
-	assert(math.type(df1)=="integer","ERROR: Degrees of freedom (key: df1)  must be an integer.")
-	assert(df1>0,"ERROR: Degrees of freedom (key: df1)  must be greater than zero.")
+	assert(math.type(df1)=="integer","Degrees of freedom (key: df1)  must be integer.")
+	assert(df1>0,"Degrees of freedom (key: df1)  must be >0")
 
-	assert(math.type(df2)=="integer","ERROR: Degrees of freedom (key: df2)  must be an integer.")
-	assert(df2>0,"ERROR: Degrees of freedom (key: df2)  must be greater than zero.")
+	assert(math.type(df2)=="integer","Degrees of freedom (key: df2)  must be integer.")
+	assert(df2>0,"Degrees of freedom (key: df2)  must be >0")
 	
 	if(type(arg1)=="Vector") then
 
@@ -26,7 +23,7 @@ local function DF(arg1, df1, df2)
 		return SYSTEM.df(arg1,df1, df2)
 
 	else
-		error("ERROR: First argument (key: x) must be either a number or of type Vector!", std.const.ERRORLEVEL)
+		error("First arg (key: x): number or Vector.", std.const.ERRORLEVEL)
 	
 	end
 
@@ -49,15 +46,15 @@ local function df(...)
 			elseif(k=="df1") then df1=v
 			elseif(k=="df2") then df2=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: x, df1 and df2.", std.const.ERRORLEVEL) 
+				error("Kkeys: x, df1 and df2.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
 		
 		end
 
-		assert(NArgsTbl>0,"ERROR: Keys: x, df1 and df2.")
-		assert(type(xval)=="number" or type(xval)=="Vector", "ERROR: A number or Vector value must be assigned to the key 'x'. ")
+		assert(NArgsTbl>0,"Keys: x, df1 and df2.")
+		assert(type(xval)=="number" or type(xval)=="Vector", "A number or Vector value must be assigned to the key 'x'. ")
 		
 		return DF(xval, df1, df2)
 
@@ -72,11 +69,11 @@ end
 
 local function PF(qval, df1, df2)
 
-	assert(math.type(df1)=="integer","ERROR: Degrees of freedom (key: df1)  must be an integer.")
-	assert(df1>0,"ERROR: Degrees of freedom (key: df1)  must be greater than zero.")
+	assert(math.type(df1)=="integer","Degrees of freedom (key: df1)  must be integer.")
+	assert(df1>0,"Degrees of freedom (key: df1)  must be greater than zero.")
 
-	assert(math.type(df2)=="integer","ERROR: Degrees of freedom (key: df2)  must be an integer.")
-	assert(df2>0,"ERROR: Degrees of freedom (key: df2)  must be greater than zero.")
+	assert(math.type(df2)=="integer","Degrees of freedom (key: df2)  must be integer.")
+	assert(df2>0,"Degrees of freedom (key: df2)  must be >0")
 
 	if(type(qval)=="Vector") then
 
@@ -92,7 +89,7 @@ local function PF(qval, df1, df2)
 		return SYSTEM.pf(qval, df1, df2)
 
 	else
-		error("ERROR: First argument (q) must be either a number or of type Vector.", std.const.ERRORLEVEL)
+		error("First argument (q): number or Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -113,15 +110,15 @@ local function pf(...)
 			elseif(k=="df1") then df1=v
 			elseif(k=="df2") then df2=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: q, df1 and df2.", std.const.ERRORLEVEL) 
+				error("Keys: q, df1 and df2.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: q, df1 and df2.")
+		assert(NTblArgs>0,"Keys: q, df1 and df2.")
 		
-		assert(type(qval)=="number" or type(qval)=="Vector","ERROR: 'q' must be either a number or a Vector.")
+		assert(type(qval)=="number" or type(qval)=="Vector","'q': number or Vector.")
 		
 		return PF(qval,df1, df2)
 	end
@@ -135,11 +132,11 @@ end
 
 local function QF(prob, df1, df2)
 
-	assert(math.type(df1)=="integer","ERROR: Degrees of freedom (key: df1)  must be an integer.")
-	assert(df1>0,"ERROR: Degrees of freedom (key: df1)  must be greater than zero.")
+	assert(math.type(df1)=="integer","Degrees of freedom (key: df1)  must be integer.")
+	assert(df1>0,"Degrees of freedom (key: df1)  must be >0")
 
-	assert(math.type(df2)=="integer","ERROR: Degrees of freedom (key: df2)  must be an integer.")
-	assert(df2>0,"ERROR: Degrees of freedom (key: df2)  must be greater than zero.")
+	assert(math.type(df2)=="integer","Degrees of freedom (key: df2)  must be integer.")
+	assert(df2>0,"Degrees of freedom (key: df2)  must be >0")
 
 	if(type(prob)=="Vector") then
 
@@ -155,7 +152,7 @@ local function QF(prob, df1, df2)
 		return SYSTEM.qf(prob, df1, df2)
 
 	else
-		error("ERROR: First argument (p) must be either a number or of type Vector.", std.const.ERRORLEVEL)
+		error("First argument (p): number or Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -176,14 +173,14 @@ local function qf(...)
 			elseif(k=="df1") then df1=v
 			elseif(k=="df2") then df2=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: p, df1 and df2.", std.const.ERRORLEVEL) 
+				error("Keys: p, df1 and df2.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: p, df1 and df2.")
-		assert(type(pval)=="number" or type(pval)=="Vector","ERROR: 'p' must be either a number or a Vector.")
+		assert(NTblArgs>0,"Keys: p, df1 and df2.")
+		assert(type(pval)=="number" or type(pval)=="Vector","ERROR: 'p': number or Vector.")
 		
 		return QF(pval,df1, df2)
 	end
@@ -198,14 +195,14 @@ end
 
 local function RF(n, df1, df2)
 	
-	assert(math.type(n)=="integer","ERROR: First argument (key: n) must be an integer.")
-	assert(n>0,"ERROR: First argument (key: n) must be greater than zero.")
+	assert(math.type(n)=="integer","First argument (key: n) must be integer.")
+	assert(n>0,"First argument (key: n) must be >0.")
 	
-	assert(math.type(df1)=="integer","ERROR: Degrees of freedom (key: df1)  must be an integer.")
-	assert(df1>0,"ERROR: Degrees of freedom (key: df1)  must be greater than zero.")
+	assert(math.type(df1)=="integer","(key: df1)  must be integer.")
+	assert(df1>0,"(key: df1)  must be >0")
 
-	assert(math.type(df2)=="integer","ERROR: Degrees of freedom (key: df2)  must be an integer.")
-	assert(df2>0,"ERROR: Degrees of freedom (key: df2)  must be greater than zero.")
+	assert(math.type(df2)=="integer","(key: df2)  must be integer.")
+	assert(df2>0,"(key: df2)  must be >0")
 
 
 	return SYSTEM.rf(n,df1, df2)
@@ -230,14 +227,14 @@ local function rf(...)
 			elseif(k=="df1") then df1=v
 			elseif(k=="df2") then df2=v
 			else 
-				error("ERROR: Unrecognized key in the table, valid keys: n, df1 and df2.", std.const.ERRORLEVEL) 
+				error("Keys: n, df1 and df2.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0, "ERROR: Keys: n, df1 and df2.")
+		assert(NTblArgs>0, "Keys: n, df1 and df2.")
 		
 		return RF(arg1, df1, df2)
 
@@ -253,4 +250,10 @@ std.pf=pf
 std.qf=qf
 std.rf=rf
 
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 

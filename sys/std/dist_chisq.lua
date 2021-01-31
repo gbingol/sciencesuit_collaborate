@@ -1,12 +1,9 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
 local function DCHISQ(arg1, df)
 	
-	assert(math.type(df)=="integer" and df>0,"ERROR: Degrees of freedom (key: df)  must be an integer greater than zero.")
+	assert(math.type(df)=="integer" and df>0,"(key: df)  must be integer >0")
 
 	if(type(arg1)=="Vector") then
 		local vecSize=#arg1
@@ -21,7 +18,7 @@ local function DCHISQ(arg1, df)
 		return SYSTEM.dchisq(arg1,df)
 
 	else
-		error("ERROR: First argument (key: x) must be either a number or of type Vector!", std.const.ERRORLEVEL)
+		error("First arg (key: x): number or Vector!", std.const.ERRORLEVEL)
 	
 	end
 
@@ -43,15 +40,15 @@ local function dchisq(...)
 			if(k=="x") then xval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: x and df.", std.const.ERRORLEVEL) 
+				error("Keys can be: x and df.", std.const.ERRORLEVEL) 
 			end
 
 			NArgsTbl=NArgsTbl+1
 		end
 
-		assert(NArgsTbl>0,"ERROR: Keys: x, and df.")
+		assert(NArgsTbl>0,"Keys: x, and df.")
 
-		assert(type(xval)=="number" or type(xval)=="Vector","ERROR: A number or Vector value must be assigned to the key 'x'." )
+		assert(type(xval)=="number" or type(xval)=="Vector","A number or Vector value must be assigned to the key 'x'." )
 			
 		return DCHISQ(xval, df)
 		
@@ -67,7 +64,7 @@ end
 
 local function PCHISQ(qval, df)
 
-	assert(math.type(df)=="integer" and df>0,"ERROR: Degrees of freedom (key: df) must be an integer greater than zero.")
+	assert(math.type(df)=="integer" and df>0,"Degrees of freedom (key: df) must be integer >0")
 
 	if(type(qval)=="Vector") then
 		local retVec=std.Vector.new(#qval)
@@ -81,7 +78,7 @@ local function PCHISQ(qval, df)
 		return SYSTEM.pchisq(qval,df)
 
 	else
-		error("ERROR: First argument (q) must be either a number or of type Vector.", std.const.ERRORLEVEL)
+		error("First argument (q): number or Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -101,15 +98,15 @@ local function pchisq(...)
 			if(k=="q") then qval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: q and df.", std.const.ERRORLEVEL) 
+				error("Keys can be: q and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs==2, "ERROR: Keys: q and df.")
+		assert(NTblArgs==2, "Keys: q and df.")
 	
-		assert(type(qval)=="number" or type(qval)=="Vector","ERROR: 'q' must be either a number or a Vector.")
+		assert(type(qval)=="number" or type(qval)=="Vector","'q': number or Vector.")
 	
 		return PCHISQ(qval,df)
 	end
@@ -124,7 +121,7 @@ end
 
 local function QCHISQ(prob, df)
 
-	assert(math.type(df)=="integer" and df>0,"ERROR: Degrees of freedom (key: df) must be an integer greater than zero.")
+	assert(math.type(df)=="integer" and df>0,"Degrees of freedom (key: df) must be integer >0")
 
 	if(type(prob)=="Vector") then
 		local retVec=std.Vector.new(#prob)
@@ -138,7 +135,7 @@ local function QCHISQ(prob, df)
 		return SYSTEM.qchisq(prob,df)
 
 	else
-		error("ERROR: First argument (p) must be either a number or of type Vector.", std.const.ERRORLEVEL)
+		error("First argument (p): number or Vector.", std.const.ERRORLEVEL)
 	end
 
 	return nil
@@ -158,15 +155,15 @@ local function qchisq(...)
 			if(k=="p") then pval=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table, keys can be: p and df.", std.const.ERRORLEVEL) 
+				error("Keys can be: p and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: p and df.")
+		assert(NTblArgs>0,"Keys: p and df.")
 
-		assert(type(pval)=="number" or type(pval)=="Vector","ERROR: 'p' must be either a number or a Vector.")
+		assert(type(pval)=="number" or type(pval)=="Vector","'p': number or Vector.")
 		
 		return QCHISQ(pval,df)
 	end
@@ -181,8 +178,8 @@ end
 
 local function RCHISQ(n, df)
 	
-	assert(math.type(n)=="integer" and n>0,"ERROR: First argument (key: n) must be an integer greater than zero.")
-	assert(math.type(df)=="integer" and df>0,"ERROR: Second argument (key: df) must be an integer greater than zero.")
+	assert(math.type(n)=="integer" and n>0,"First arg (key: n) must be integer >0")
+	assert(math.type(df)=="integer" and df>0,"Second arg (key: df) must be integer >0")
 	
 	return SYSTEM.rchisq(n,df)
 		
@@ -203,14 +200,14 @@ local function rchisq(...)
 			if(k=="n") then arg1=v
 			elseif(k=="df") then df=v
 			else 
-				error("ERROR: Unrecognized key in the table. Valid keys: n and df.", std.const.ERRORLEVEL) 
+				error("Keys: n and df.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		
 		end
 
-		assert(NTblArgs>0,"ERROR: Keys: n and df.")
+		assert(NTblArgs>0,"Keys: n and df.")
 		
 		return RCHISQ(arg1, df)
 
@@ -225,4 +222,11 @@ std.dchisq=dchisq
 std.pchisq=pchisq
 std.qchisq=qchisq
 std.rchisq=rchisq
+
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
 

@@ -67,7 +67,7 @@ end
 
 
 local function ConvertWorksheetColumnLabel(arg)
-	assert(type(arg)=="string" or (math.type(arg)=="integer" and arg>0), "Argument must be a string (A, B, AA...) or a positive integer")
+	assert(type(arg)=="string" or (math.type(arg)=="integer" and arg>0), "Arg must be a string (A, B, AA...) or a positive integer")
 
 	if(type(arg)=="string") then 
 		return LetterstoColumnNumber(arg)

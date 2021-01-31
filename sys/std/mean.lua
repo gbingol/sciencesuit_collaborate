@@ -1,6 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
 
 
@@ -67,6 +64,19 @@ local function mean(...)
 				return vec/Container:ncols()
 			end
 		end
+
+
+	elseif(type(Container)=="Array") then
+	
+		--elemconsid is the count of numbers in the array
+		local total, elemconsid=std.sum(Container)
+		
+		if(elemconsid ~= 0) then
+			return total/elemconsid, elemconsid
+		end
+		
+		return nil
+
 	end
 
 	
@@ -80,5 +90,12 @@ local function mean(...)
 	
 end
 
+
+
 std.aver=mean
 std.mean=mean
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

@@ -1,15 +1,17 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
 local std <const> =std
+
+
+
 
 local function LINSPACE(a,b,n)
 
-	assert(type(a)=="number","ERROR: First argument (a) must be number." ) 
-	assert(type(b)=="number","ERROR: Second argument (b) must be number." ) 
-	assert(math.type(n)=="integer" and n>1,"ERROR: Third argument (n) must be an integer greater than 1." ) 
+	assert(type(a)=="number","First arg (a) must be number." ) 
+	
+	assert(type(b)=="number","Second arg (b) must be number." ) 
+	
+	assert(math.type(n)=="integer" and n>1,"Third arg (n) must be integer greater than 1." ) 
 
-	assert(b>a, "ERROR: Second argument (b) must be greater than the first argument (a).") 
+	assert(b>a, "Second arg (b) must be greater than the first argument (a).") 
 
 	local dx=(b-a)/(n-1) 
 
@@ -25,6 +27,8 @@ local function LINSPACE(a,b,n)
 
     return retVec
 end
+
+
 
 
 local function linspace(...)
@@ -64,4 +68,11 @@ end
 
 
 
+
 std.linspace=linspace
+
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org

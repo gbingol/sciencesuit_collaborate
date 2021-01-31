@@ -71,7 +71,7 @@ local function FindProperties(fluid, key, value)
 		end
 	end
 	
-	assert(PosKey>=0,"ERROR: The property you are looking for is not available, have you used member function get() to query available properties")
+	assert(PosKey>=0,"The property you are looking for is not available, have you used member function get() to query available properties")
 	
 	strQuery=strQuery.." FROM "..fluid.m_FluidName.." WHERE "..tostring(key)
 	

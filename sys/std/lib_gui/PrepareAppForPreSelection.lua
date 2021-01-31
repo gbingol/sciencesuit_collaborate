@@ -1,7 +1,3 @@
--- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
--- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
-
-
 local std <const> =std
 local iup <const> =iup
 
@@ -19,7 +15,7 @@ local function PrepareAppForPreSelection_Userdata(... )
 	if(nargs==1) then
 		local txtInput=args[1] 
 
-		assert(type(txtInput)=="userdata", "Entry must be of type userdata")
+		assert(type(txtInput)=="userdata", "Entry must be userdata")
 		
 		txtInput.value=tostring(MainRange)
 		
@@ -38,7 +34,7 @@ local function PrepareAppForPreSelection_Userdata(... )
 		
 		local txtInput=args[i] 
 
-		assert(type(txtInput)=="userdata", "Entries must be of type userdata")
+		assert(type(txtInput)=="userdata", "Entries must be userdata")
 	
 		local SubRange=MainRange:col(i)
 		
@@ -73,7 +69,7 @@ local function PrepareAppForPreSelection_Table(... )
 		
 		local UserTable=args[i] 
 
-		assert(type(UserTable) == "table", "Entries must be of type table")
+		assert(type(UserTable) == "table", "Entries must be table")
 	
 		local txtInput=UserTable.txt
 		
@@ -126,11 +122,18 @@ local function PrepareAppForPreSelection(... )
 		PrepareAppForPreSelection_Table(table.unpack(args))
 		
 	else
-		error("Arguments must be either of type table or of type userdata")
+		error("Args must be table or userdata")
 	end
 
 
 end
 
 
+
+
 std.gui.PrepareAppForPreSelection=PrepareAppForPreSelection
+
+
+
+-- Author:	Gokhan Bingol (gbingol@sciencesuit.org)
+-- License: Subject to end-user license agreement conditions available at www.sciencesuit.org
