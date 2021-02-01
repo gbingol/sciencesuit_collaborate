@@ -20,13 +20,20 @@ local function anova2(yobs, x1, x2)
 	--yobs: Observed variable
 	--x1,x2: factors
 
-	assert(type(yobs)=="Vector","ERROR: First argument, response, must be of type Vector")
-	assert(type(x1)=="Vector" or type(x1)=="Array","ERROR: Second argument, factor #1, must of either type Vector or Array")
-	assert(type(x2)=="Vector" or type(x2)=="Array","ERROR: Third argument, factor #2, must of either type Vector or Array") 
+	assert(type(yobs)=="Vector" or type(yobs)=="Array","First arg, response, must be Vector or Array")
+	assert(type(x1)=="Vector" or type(x1)=="Array","Second arg, factor #1, must be either type Vector or Array")
+	assert(type(x2)=="Vector" or type(x2)=="Array","Third arg, factor #2, must be either type Vector or Array") 
 	
-	v1, v2 =x1[{}], x2[{}]
+	v1, v2 =x1:clone(), x2:clone()
 	v1:unique()
 	v2:unique()
+	
+	
+	if(type(yobs)=="Array") then
+		yobs=yobs:clone()
+		
+		yobs:keep_numbers()
+	end
 	
 
 	--prepare a 3D table
@@ -42,6 +49,7 @@ local function anova2(yobs, x1, x2)
 	--The formatted data looks like how Excel accepts data for 2-factor ANOVA 
 	for k=1, #yobs do
 		local i,j=0, 0
+		
 		repeat i=i+1 until x2(k)==v2(i)
 		repeat j=j+1 until x1(k)==v1(j)
 		
@@ -55,14 +63,20 @@ local function anova2(yobs, x1, x2)
 	end
 	
 
+
 	local MatAverage=std.Matrix.new(#v2, #v1)
+	
 	for i=1, #v2 do
 		local m=std.trans(std.tomatrix(tbl[i]))
 		local vec=std.trans(GetAveragePerCol(m))
+		
 		for j=1, #vec do 
 			MatAverage[i][j]=vec(j) 
 		end
+
 	end
+
+
 
 	local RowPerEntryMatrix=std.Matrix.new(#v2, #v1) --to check whether balanced or not
 	local GrandMean=std.mean(MatAverage)
@@ -70,12 +84,16 @@ local function anova2(yobs, x1, x2)
 	
 	
 	for i=1, #v2 do
+		
 		for j=1,#v1 do
+			
 			local sz=#tbl[i][j]
 			RowPerEntryMatrix[i][j]=sz
+			
 			for k=1, sz do
 				SSerror=SSerror +(tbl[i][j][k]-MatAverage(i,j))^2
 			end
+
 		end
 	end
 
@@ -104,6 +122,7 @@ local function anova2(yobs, x1, x2)
 		 
 	local meanj=GetAveragePerCol(MatAverage)
 	local meani=GetAveragePerCol(std.trans(MatAverage))    
+	
 	for i=1, std.size(v2) do
 		for j=1, std.size(v1) do
 			SSinteract=SSinteract+(MatAverage(i,j)-meanj(j) -meani(i)+GrandMean)^2

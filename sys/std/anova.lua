@@ -15,11 +15,19 @@ local function SingleFactorANOVA(...)
 	local Averages={}
 	local SampleSizes={}
 		
+		
+	
 	for i=1, #args do
 		
-		local vec=args[i] --Each entry of args is a Vector
+		local vec=args[i] --Each entry of args is a Vector/Array
 
-		assert(type(vec)=="Vector", "Each entry must be of type Vector")
+		assert(type(vec)=="Vector" or type(vec)=="Array", "Each entry must be Vector or Array")
+		
+		if(type(vec)=="Array") then
+			vec=vec:clone()
+			
+			vec:keep_numbers()
+		end
 		
 		local vecSize=#vec
 		
