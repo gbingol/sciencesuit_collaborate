@@ -18,7 +18,7 @@ local function ttest1(xvec, alternative, mu, conflevel)
 
 
 
-	local dim=std.size(xvec) 
+	local dim=#xvec 
 	local df=dim-1 --degrees of freedom
 	local xaver=std.mean(xvec)
 	local stdev=std.stdev(xvec) -- sample's standard deviation
