@@ -4,23 +4,45 @@ local std <const> =std
 
 local function FTEST(xvec,yvec, alternative, ratio, conflevel )
 
-	assert(type(xvec)=="Vector" and type(yvec)=="Vector", "Keys x and y must be of type Vector")
+	assert(type(xvec)=="Vector" or type(xvec)=="Array", "Key x must be Vector/Array")
+	
+	assert(type(yvec)=="Vector" or type(yvec)=="Array", "Key y must be Vector/Array")
+	
 	
 	ratio=ratio or 1
-	assert(type(ratio)=="number" and ratio>0,"Key ratio must be greater than zero and of type number")
+	assert(type(ratio)=="number" and ratio>0,"Key ratio must be number >0")
+	
+	
 	
 	conflevel=conflevel or 0.95
-	assert(type(conflevel)=="number","Key conflevel must be of type number")
-	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in the range [0,1].")
+	assert(type(conflevel)=="number","Key conflevel must be number")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in [0,1].")
 
 	local alpha=(1-conflevel)
 
 
+
 	alternative=alternative or "two.sided"
-	assert(type(alternative)=="string","Key alternative must be of type string")
+	assert(type(alternative)=="string","Key alternative must be string")
 	alternative=string.lower(alternative)
+	
 
 
+
+	if(type(xvec)=="Array") then
+		xvec=xvec:clone()
+		
+		xvec:keep_numbers()
+	end
+
+
+	if(type(yvec)=="Array") then
+		yvec=yvec:clone()
+		
+		yvec:keep_numbers()
+	end
+	
+	
 
 	local df1,df2=#xvec-1, #yvec-1 --degrees of freedoms
 	local var1, var2=std.var(xvec), std.var(yvec) --variances
@@ -36,13 +58,13 @@ local function FTEST(xvec,yvec, alternative, ratio, conflevel )
 	if(alternative=="two.sided" or alternative=="notequal") then
 	
 		--F distribution is non-symmetric
-		local a=std.pf{q=Fcritical, df1=df1, df2=df2}
-		local b=1-std.pf{q=Fcritical, df1=df1, df2=df2}
+		local a = std.pf{q=Fcritical, df1=df1, df2=df2}
+		local b = 1-std.pf{q=Fcritical, df1=df1, df2=df2}
 		
-		local c=std.pf{q=1/Fcritical, df1=df1, df2=df2}
-		local d=1-std.pf{q=1/Fcritical, df1=df1, df2=df2}
+		local c = std.pf{q=1/Fcritical, df1=df1, df2=df2}
+		local d = 1-std.pf{q=1/Fcritical, df1=df1, df2=df2}
 		
-		pvalue=math.min(a,b)+math.min(c,d)
+		pvalue = math.min(a,b)+math.min(c,d)
 
 	elseif(alternative=="greater") then
 		pvalue=(1-std.pf{q=Fcritical, df1=df1, df2=df2}) -- area on the right
@@ -51,7 +73,7 @@ local function FTEST(xvec,yvec, alternative, ratio, conflevel )
 		pvalue=std.pf{q=Fcritical, df1=df1, df2=df2} --area on the left
 		
 	else
-		error("ERROR: The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
+		error("Values for arg 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 	
@@ -70,6 +92,8 @@ local function FTEST(xvec,yvec, alternative, ratio, conflevel )
 		ttable.CI_upper=varRatio *std.qf{p=1-alpha, df1=df1, df2=df2}
 	end
 
+
+	--prepare the return table
 	ttable.Fcritical=Fcritical
 	ttable.df1=df1
 	ttable.df2=df2
@@ -128,6 +152,8 @@ end
 
 
 std.test_f=test_f
+
+
 
 
 
