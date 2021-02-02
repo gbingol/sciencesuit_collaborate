@@ -12,7 +12,6 @@ local std <const> =std
 
 local NORMALAPPROXIMATIONSATISFIED=12
 
-local TOLERANCE=std.const.tolerance
 
 
 local function Interpolation(x1, y1, x2, y2, val) 
@@ -37,16 +36,16 @@ local function FindCI(xvec, alternative, conflevel)
 	
 	
 	
-	local lower,exact, upper=0, 0, 0
-	local lower_found, upper_found=false, false
-	local lower_pos, upper_pos=0,0
+	local lower,exact, upper = 0, 0, 0
+	local lower_found, upper_found = false, false
+	local lower_pos, upper_pos = 0, 0
 	
-	local probability=0
+	local probability = 0
 	
-	local SampleSize=#vec
+	local SampleSize = #vec
 	
 	
-	for i=0, #vec do
+	for i=0, SampleSize do
 		
 		local pbinom=std.pbinom{q=i, size=SampleSize, prob=0.5}
 
@@ -110,13 +109,17 @@ local function sign_test1(x_vector,md, alternative, conflevel)
 	
 	assert(type(md)=="number","Key md must be number")
 	
+	
 	conflevel=conflevel or 0.95
 	assert(type(conflevel)=="number","Key conflevel must be number")
-	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in the range [0,1].")
+	assert(conflevel>=0 and conflevel<=1,"Key conflevel must be in [0,1].")
+
+
 
 	alternative=alternative or "two.sided"
 	assert(type(alternative)=="string","Key alternative must be string")
 	alternative=string.lower(alternative)
+
 
 	local alpha=(1-conflevel)
 	
@@ -126,20 +129,24 @@ local function sign_test1(x_vector,md, alternative, conflevel)
 	local NElemGreater, NElemEqual=0, 0
 	local ElemsEqual, k={}, 0
 	
+	
 	for i=1,#xvec do
-		local difference=xvec[i]-md
+		local difference = xvec[i] - md
 		
 		if(difference>0) then
 			NElemGreater=NElemGreater+1
-			
-		elseif(math.abs(difference)<TOLERANCE) then --remove elements which are in the TOLERANCE neighbourhood of md
+		
+		--remove elements which are in the TOLERANCE neighbourhood of md
+		elseif(math.abs(difference)<std.const.tolerance) then 
 			NElemEqual=NElemEqual+1
 		
 			xvec[i]=nil   
 			
-			i=i-1 --once an element is deleted from xvec, the element to be deleted from kth position moves to (k-1)th
+			--once an element is deleted from xvec, the element to be deleted from kth position moves to (k-1)th
+			i=i-1 
 		end
 	end
+
 
 
 	local SampleSize=#xvec 
@@ -157,7 +164,8 @@ local function sign_test1(x_vector,md, alternative, conflevel)
 			
 			local n=math.min(NElemGreater,SampleSize-NElemGreater)
 			
-			pvalue=2*std.pbinom{q=n,size=SampleSize, prob=0.5} --B(n, 0.5) is symmetric
+			--B(n, 0.5) is symmetric
+			pvalue = 2*std.pbinom{q=n,size=SampleSize, prob=0.5} 
 			
 
 		elseif(alternative=="greater") then
@@ -178,21 +186,27 @@ local function sign_test1(x_vector,md, alternative, conflevel)
 		
 		if(alternative=="two.sided" or alternative=="notequal") then
 			if(zvalue<=0) then
-				pvalue=std.pnorm{q=zvalue}+ (1-std.pnorm{q=-1.0*zvalue}) --area on the left + area on the right of positive
+				--area on the left + area on the right of positive
+				pvalue=std.pnorm{q=zvalue}+ (1-std.pnorm{q=-1.0*zvalue}) 
 				
 			elseif(zvalue>0) then
-				pvalue=(1-std.pnorm{q=zvalue}) +std.pnorm{q=-zvalue} --area on the right of positive + area on the left of negative 
+				--area on the right of positive + area on the left of negative 
+				pvalue=(1-std.pnorm{q=zvalue}) +std.pnorm{q=-zvalue} 
 			end
 
 		elseif(alternative=="greater") then
-			pvalue=(1-std.pnorm{q=zvalue}) -- area on the right
+			-- area on the right
+			pvalue=(1-std.pnorm{q=zvalue}) 
 			
 		elseif(alternative=="less") then
-			pvalue=std.pnorm{q=zvalue} --area on the left
+			--area on the left
+			pvalue=std.pnorm{q=zvalue} 
 			
 		end
 			
 	end
+
+
 
 
 	--computation and arranging return values for confidence interval
@@ -200,7 +214,6 @@ local function sign_test1(x_vector,md, alternative, conflevel)
 	retTable=FindCI(xvec, alternative, conflevel)
 	
 	if(#retTable==1) then
-		
 		return pvalue, retTable
 	end
 
@@ -228,12 +241,13 @@ local function sign_test1(x_vector,md, alternative, conflevel)
 		retTable.interpolated.CILow="-inf"
 		retTable.interpolated.CIHigh=Interpolation(retTable.lower.prob, retTable.lower.CIHigh, retTable.upper.prob, retTable.upper.CIHigh, conflevel) 
 	else
-		error("The values for the argument 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
+		error("Values for arg 'alternative': \"two.sided\" or \"notequal\", \"greater\", \"less\"", std.const.ERRORLEVEL)
 	end
 
 
 	retTable.nequal=NElemEqual
 	retTable.ngreater=NElemGreater
+
 
 	return pvalue, retTable
 
@@ -267,7 +281,7 @@ local function sign_test(...)
 		
 		end
 
-		assert(NArgsTbl>0,"ERROR: Keys: x, y, alternative, md, conflevel.")
+		assert(NArgsTbl>0,"Keys: x, y, alternative, md, conflevel.")
 		
 		if(yvec==nil) then
 			return sign_test1(xvec, md, alternative, conflevel)
@@ -277,7 +291,7 @@ local function sign_test(...)
 		end
 	
 	else
-		error("Arg must be a Lua table with probable keys: x, y, alternative, md, conflevel.")
+		error("Lua table expected, keys: x, y, alternative, md, conflevel.", std.const.ERRORLEVEL)
 	
 	end
 end
