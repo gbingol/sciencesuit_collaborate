@@ -23,8 +23,12 @@ local function NORM(func, vec, mean, sd)
 		retCont=std.Vector.new(#vec)
 		
 		if(type(vec)=="Array") then
+			vec=vec:clone()
+			vec:keep_numbers()
+			
 			retCont=std.Array.new(#vec)
 		end
+		
 		
 		for i=1,#vec do
 			retCont[i]=func(vec(i),mean, sd)
@@ -84,8 +88,6 @@ end
 
 
 
---***********************************************************************************************
-
 
 local function pnorm(...)
 	local args=table.pack(...)
@@ -116,7 +118,9 @@ local function pnorm(...)
 end
 
 
---************************************************************
+
+
+
 
 local function qnorm(...)
 	local args=table.pack(...)
@@ -155,7 +159,7 @@ end
 
 
 
---********************************************************************************
+
 
 local function RNORM(n, mean, sd)
 	mean=mean or 0
@@ -202,6 +206,10 @@ local function rnorm(...)
 	return RNORM(args[1],args[2], args[3])
 
 end
+
+
+
+
 
 
 
