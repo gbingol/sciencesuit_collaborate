@@ -1,28 +1,41 @@
 local std <const> =std
 
 
-local function DNORM(vec, mean, sd)
+local function NORM(func, vec, mean, sd)
+	
+	--func: SYSTEM.dnorm, SYSTEM.pnorm, SYSTEM.qnorm
+	assert(type(func)=="function", "First arg must be function")
+	
 	mean=mean or 0
+	
 	sd=sd or 1
 
-	assert(type(vec)=="Vector" or type(vec)=="number","First arg: number or Vector")
+
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector")
 
 	assert(type(mean)=="number","Second arg must be number")
 	assert(type(sd)=="number", "Third arg must be number")
 
-	if(type(vec)=="Vector") then
 
-		local vecSize=#vec
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.dnorm(vec(i),mean, sd)
+	if(type(vec)=="Vector" or type(vec)=="Array") then
+		local retCont=nil
+		
+		retCont=std.Vector.new(#vec)
+		
+		if(type(vec)=="Array") then
+			retCont=std.Array.new(#vec)
 		end
 		
-		return retVec
+		for i=1,#vec do
+			retCont[i]=func(vec(i),mean, sd)
+		end
+		
+		return retCont
 
 	end
 		
-	return SYSTEM.dnorm(vec,mean, sd)
+		
+	return func(vec,mean, sd)
 
 end
 
@@ -32,7 +45,6 @@ local function dnorm(...)
 	local args=table.pack(...)
 	
 	if(#args==1 and type(args[1])=="table") then
-		
 		local xval, mean, sd=nil, 0, 1
 		local NArgsTbl=0
 		
@@ -51,48 +63,29 @@ local function dnorm(...)
 		
 		end
 
+
 		assert(NArgsTbl>0,"Keys: x, mean and sd.")
 
-		assert(type(xval)=="number" or type(xval)=="Vector","A number or Vector value must be assigned to the key 'x'.")
+		assert(type(xval)=="number" or type(xval)=="Vector"  or type(xval)=="Array","Number/Vector/Array expected for key 'x'.")
 			
-		return DNORM(xval, mean, sd)
+			
+		return NORM(SYSTEM.dnorm, xval, mean, sd)
 		
 	end
 
-	return DNORM(args[1],args[2], args[3])
+
+	return NORM(SYSTEM.dnorm, args[1],args[2], args[3])
 
 end
+
+
+
+
 
 
 
 --***********************************************************************************************
 
-
-local function PNORM(vec, mean, sd)
-
-	mean=mean or 0
-	sd=sd or 1
-	
-	assert(type(vec)=="Vector" or type(vec)=="number","First arg (q): number or Vector")
-
-	assert(type(mean)=="number","Second arg (mean) must be number.")
-	assert(type(sd)=="number", "Third arg (sd) must be number.")
-	
-	if(type(vec)=="Vector") then
-	
-		local vecSize=#vec
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.pnorm(vec(i),mean, sd)
-		end
-
-		return retVec
-		
-	end
-		
-	return SYSTEM.pnorm(vec,mean, sd)
-		
-end
 
 local function pnorm(...)
 	local args=table.pack(...)
@@ -113,48 +106,17 @@ local function pnorm(...)
 				error("Keys: q, mean and sd.", std.const.ERRORLEVEL) end
 		end
 		
-		return PNORM(qval,mean, sd)
+		return NORM(SYSTEM.pnorm, qval,mean, sd)
 		
 	end
 	
 	
-	return PNORM(args[1], args[2], args[3])
+	return NORM(SYSTEM.pnorm, args[1], args[2], args[3])
 	
 end
 
 
 --************************************************************
-
-
-
-local function QNORM(vec, mean, sd)
-
-	mean=mean or 0
-	sd=sd or 1
-
-	assert(type(vec)=="Vector" or type(vec)=="number","First arg (p): number or Vector")
-
-	assert(type(mean)=="number","Second arg (mean) must be number.")
-	assert(type(sd)=="number","Third arg (sd) must be number.")
-	
-
-	if(type(vec)=="Vector") then
-
-		local vecSize=#vec
-		local retVec=std.Vector.new(vecSize)
-		
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.qnorm(vec(i),mean, sd)
-		end
-
-		return retVec
-	end
-
-	
-	return SYSTEM.qnorm(vec,mean, sd)
-
-end
-
 
 local function qnorm(...)
 	local args=table.pack(...)
@@ -181,12 +143,16 @@ local function qnorm(...)
 	
 		assert(NTblArgs>0,"Keys are p, mean and sd.")
 
-		return QNORM(pval,mean, sd)
+		return NORM(SYSTEM.qnorm, pval,mean, sd)
 	end
 
 	
-	return QNORM(args[1], args[2], args[3])
+	return NORM(SYSTEM.qnorm, args[1], args[2], args[3])
 end
+
+
+
+
 
 
 --********************************************************************************
