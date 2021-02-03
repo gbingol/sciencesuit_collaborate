@@ -11,7 +11,7 @@ local function NORM(func, vec, mean, sd)
 	sd=sd or 1
 
 
-	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector")
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector/Array")
 
 	assert(type(mean)=="number","Second arg must be number")
 	assert(type(sd)=="number", "Third arg must be number")
@@ -20,13 +20,14 @@ local function NORM(func, vec, mean, sd)
 	if(type(vec)=="Vector" or type(vec)=="Array") then
 		local retCont=nil
 		
-		retCont=std.Vector.new(#vec)
-		
 		if(type(vec)=="Array") then
 			vec=vec:clone()
 			vec:keep_numbers()
 			
 			retCont=std.Array.new(#vec)
+			
+		else
+			retCont=std.Vector.new(#vec)
 		end
 		
 		
@@ -34,13 +35,13 @@ local function NORM(func, vec, mean, sd)
 			retCont[i]=func(vec(i),mean, sd)
 		end
 		
+		
 		return retCont
 
 	end
 		
 		
-	return func(vec,mean, sd)
-
+	return func(vec, mean, sd)
 end
 
 

@@ -7,7 +7,7 @@ local function BINOM(func, vec, size, prob)
 	--func: SYSTEM.dbinom, SYSTEM.pbinom, SYSTEM.qbinom
 	assert(type(func)=="function", "First arg must be function")
 
-	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector")
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector/Array")
 
 	assert(type(size)=="number","Second arg (size) must be number")
 	assert(type(prob)=="number","Third arg (prob) must be number")
@@ -16,18 +16,21 @@ local function BINOM(func, vec, size, prob)
 	if(type(vec)=="Vector" or type(vec)=="Array") then
 		local retCont=nil
 		
-		retCont=std.Vector.new(#vec)
-		
 		if(type(vec)=="Array") then
 			vec=vec:clone()
 			vec:keep_numbers()
 			
 			retCont=std.Array.new(#vec)
+			
+		else
+			retCont=std.Vector.new(#vec)
 		end
+
 
 		for i=1,#vec do
 			retCont[i]= func(vec(i),size, prob)
 		end
+
 
 		return retCont
 
@@ -35,8 +38,6 @@ local function BINOM(func, vec, size, prob)
 		
 		
 	return func(vec,size, prob)
-
-	
 end
 
 

@@ -6,7 +6,7 @@ local function FDIST(func, vec, df1, df2)
 	
 	assert(type(func)=="function", "function expected")
 	
-	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector")
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector/Array")
 	
 	
 	assert(math.type(df1) == "integer","Degrees of freedom (df1)  must be integer.")
@@ -20,22 +20,21 @@ local function FDIST(func, vec, df1, df2)
 		
 		local retCont=nil
 		
-		retCont=std.Vector.new(#vec)
-		
-		
 		if(type(vec)=="Array") then
 			vec=vec:clone()
 			vec:keep_numbers()
 			
 			retCont=std.Array.new(#vec)
+			
+		else
+			retCont=std.Vector.new(#vec)
 		end
 	
 	
 	
-		for i=1,vecSize do
-			retCont[i]=func(vec(i),df1, df2)
+		for i=1,#vec do
+			retCont[i]=func(vec(i), df1, df2)
 		end
-		
 		
 		
 		return retCont

@@ -5,22 +5,24 @@ local function CHISQ(func, vec, df)
 	
 	assert(type(func)=="function", "function expected")
 	
-	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector")
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector/Array")
 	
-	assert(math.type(df)=="integer" and df>0,"(key: df)  must be integer >0")
+	assert(math.type(df)=="integer" and df>0,"(df)  must be integer >0")
 
 	
 	if(type(vec)=="Vector" or type(vec)=="Array") then
 		local retCont=nil
-		
-		retCont=std.Vector.new(#vec)
 		
 		if(type(vec)=="Array") then
 			vec=vec:clone()
 			vec:keep_numbers()
 			
 			retCont=std.Array.new(#vec)
+			
+		else
+			retCont=std.Vector.new(#vec)
 		end
+	
 	
 		for i=1,#vec do
 			retCont[i]=func(vec(i), df)
@@ -32,8 +34,7 @@ local function CHISQ(func, vec, df)
 	end
 
 
-	return func(arg1,df)
-
+	return func(vec, df)
 end
 
 

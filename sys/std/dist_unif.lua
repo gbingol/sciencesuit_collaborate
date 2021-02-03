@@ -5,12 +5,12 @@ local function DUNIF(x, min, max)
 	min=min or 0
 	max=max or 1
 	
-	assert(type(min)=="number", "Key min must be number")
-	assert(type(max)=="number", "Key max must be number")
+	assert(type(min)=="number", "min must be number")
+	assert(type(max)=="number", "max must be number")
 	
-	assert(min<max, "min must be < max")
+	assert(min<max, "min < max expected")
 	
-	assert(type(x)=="number" or type(x)=="Vector", "Key x: number or Vector")
+	assert(type(x)=="number" or type(x)=="Vector" or type(x)=="Array", "Key x: number/Vector/Array")
 	
 	if(type(x)=="number") then
 		if(x<min or x>max) then
@@ -19,16 +19,30 @@ local function DUNIF(x, min, max)
 			return 1/(max-min)
 		end
 	
-	elseif(type(x)=="Vector") then
-		local retVec=std.Vector.new(#x)
-		for i=1, #x do
-			retVec[i]=DUNIF(x(i),min, max)
+	elseif(type(x)=="Vector" or type(x)=="Array") then
+		local retCont= nil
+		
+		if(type(x)=="Array") then
+			x=x:clone()
+			x:keep_numbers()
+			
+			retCont=std.Array.new(#x)
+		
+		else
+			retCont=std.Vector.new(#x)
 		end
 		
-		return retVec
+		
+		for i=1, #x do
+			retCont[i]=DUNIF(x(i),min, max)
+		end
+		
+		
+		return retCont
 	end
 	
 end
+
 
 
 local function dunif(...)
@@ -68,6 +82,8 @@ end
 
 
 
+
+
 local function PUNIF(q, min, max)
 	min=min or 0
 	max=max or 1
@@ -77,7 +93,7 @@ local function PUNIF(q, min, max)
 	
 	assert(min<max, "min must be < max")
 	
-	assert(type(q)=="number" or type(q)=="Vector", "Key q: number or Vector")
+	assert(type(q)=="number" or type(q)=="Vector" or type(q)=="Array", "Key q: number/Vector/Array")
 	
 	
 	if(type(q)=="number") then
@@ -89,16 +105,32 @@ local function PUNIF(q, min, max)
 			return (q-min)/(max-min)
 		end
 	
-	elseif(type(q)=="Vector") then
-		local retVec=std.Vector.new(#q)
+	
+	elseif(type(q)=="Vector" or type(q)=="Array") then
+		local retCont= nil
+		
+		if(type(q)=="Array") then
+			q=q:clone()
+			q:keep_numbers()
+			
+			retCont=std.Array.new(#q)
+		
+		else
+			retCont=std.Vector.new(#q)
+		end
+
+
 		for i=1, #q do
-			retVec[i]=PUNIF(q(i),min, max)
+			retCont[i]=PUNIF(q(i),min, max)
 		end
 		
-		return retVec
+		
+		return retCont
 	end
 	
 end
+
+
 
 
 local function punif(...)
@@ -137,6 +169,9 @@ end
 
 
 
+
+
+
 local function QUNIF(p, min, max)
 	min=min or 0
 	max=max or 1
@@ -146,7 +181,7 @@ local function QUNIF(p, min, max)
 	
 	assert(min<max, "min must be < max")
 	
-	assert(type(p)=="number" or type(p)=="Vector", "Key p (probability): number or Vector.")
+	assert(type(p)=="number" or type(p)=="Vector" or type(p)=="Array", "Key p (probability): number/Vector/Array.")
 	
 	
 	if(type(p)=="number") then
@@ -154,17 +189,31 @@ local function QUNIF(p, min, max)
 		
 		return p*(max-min)+min
 		
-	elseif(type(p)=="Vector") then
-		local retVec=std.Vector.new(#p)
+	elseif(type(p)=="Vector" or type(p)=="Array") then
+		local retCont= nil
+		
+		if(type(p)=="Array") then
+			p=p:clone()
+			p:keep_numbers()
+			
+			retCont=std.Array.new(#p)
+		
+		else
+			retCont=std.Vector.new(#p)
+		end
+
+
 		for i=1, #p do
-			retVec[i]=QUNIF(p(i),min, max)
+			retCont[i]=QUNIF(p(i),min, max)
 		end
 		
-		return retVec
+		return retCont
 		
 	end
 		
 end
+
+
 
 
 local function qunif(...)
@@ -259,10 +308,16 @@ end
 
 
 
+
+
+
 std.dunif=dunif
 std.punif=punif
 std.qunif=qunif
 std.runif=runif
+
+
+
 
 
 
