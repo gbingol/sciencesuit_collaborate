@@ -5,10 +5,18 @@ local std <const> =std
 
 local function FSOLVE(tblfuncs,v_initial, MAXITERATIONS)
 	--Solves a system of non-linear equations using Newton's approach
-      --tblfuncs contains table of equations in the format of f(x1,x2,...)=0
-      --v initial starting vector
+	--tblfuncs contains table of equations in the format of f(x1,x2,...)=0
+	--v initial starting vector
 
-      MAXITERATIONS = MAXITERATIONS or 100
+	--USAGE EXAMPLE
+      
+	-- f1=function(x,y) return x^2+y^2-5 end
+	-- f2=function(x,y) return x^2-y^2-1 end
+	-- std.fsolve({f1,f2}, std.tovector{1,1})
+
+	--	1.73205   1.41421   COL 
+
+	MAXITERATIONS = MAXITERATIONS or 100
 
 	local v = v_initial({})
 	local dim = #v
@@ -27,22 +35,22 @@ local function FSOLVE(tblfuncs,v_initial, MAXITERATIONS)
                   
                   assert(type(func)=="function","Table entries must be lua functions of form f(x1,x2,...) = 0" ) 
                         
-			F[i]=f(unpack(totable(v)))
+			F[i]=func(table.unpack(std.totable(v)))
 		end
 
 
-            for i=1,dim do
+		for i=1,dim do
                   
-                  func=tblfunc[i]     --function
+			func=tblfuncs[i]     --function
                   
 			for j=1,dim do
 				local oldval=v(j)
 				v[j]=v(j) + std.const.tolerance -- to find f(xi+dx,...)
 
-				local f_dxi = f(unpack(std.totable(v))) --f(xi+dx,...)
+				local f_dxi = func(table.unpack(std.totable(v))) --f(xi+dx,...)
 				v[j] = oldval
 
-				local f_xi = f(unpack(std.totable(v)))  --f(xi,...)
+				local f_xi = func(table.unpack(std.totable(v)))  --f(xi,...)
 				
 				if(std.abs(maxfuncval) < std.abs(f_xi)) then 
 					maxfuncval = std.abs(f_xi) 
@@ -54,20 +62,21 @@ local function FSOLVE(tblfuncs,v_initial, MAXITERATIONS)
 
 
 
-            if(std.abs(maxfuncval)<std.const.tolerance)  then 
-                  return v  
-            end
+		if(std.abs(maxfuncval) < std.const.tolerance)  then 
+			return v, k
+		end
 
-            local JacobiDetValue=std.abs(std.det(J))
+		local JacobiDetValue=std.abs(std.det(Jacobi))
             
 		assert(JacobiDetValue > std.const.tolerance,"Jacobian is singular, try different initial vector values") 
 		
-		local H=std.solve(J,F)
-            v=v-H
+		local H=std.solve(Jacobi,F)
+		
+		v=v-H
             
 	end
 	
-      error("Maximum iterations have been reached without convergence" , std.const.ERRORLEVEL)
+	error("Max iterations exceeded without convergence" , std.const.ERRORLEVEL)
         
 end -- function
     
@@ -78,13 +87,14 @@ end -- function
 local function fsolve(...)
 	local arg=table.pack(...)
 	
-	if(#arg==2 and type(arg[1])=="table" and type(arg[2])=="Vector") then
+	if(type(arg[1])=="table" and type(arg[2])=="Vector") then
+		
 		if(type(arg[1][1])=="function") then
 			return FSOLVE(arg[1],arg[2])
 		end
 	
 	else
-		error("Unexpected argument types", std.const.ERRORLEVEL)
+		error("Expected (table, vector)", std.const.ERRORLEVEL)
 		
 	end
 
