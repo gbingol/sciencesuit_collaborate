@@ -4,7 +4,7 @@ local std <const> =std
 
 local function AndersonDarling(vec)
 	
-	assert(type(vec)=="Vector" , "Arg must be Vector")
+	assert(type(vec)=="Vector"  or  type(vec)=="Array", "Vector/Array expected.")
 	
 	vec=vec:clone()
 	
@@ -22,32 +22,31 @@ local function AndersonDarling(vec)
 	
 	vec:sort("A")
 	
-	--Cant support Array as pnorm only accepts Vector
-	local f_x=std.pnorm{q=vec,mean=mean, sd=stdev}
+	
+	local f_x=std.pnorm{q=vec, mean=mean, sd=stdev}
 	
 	local f_x_1 = 1-f_x
 	
+	
 	f_x_1:sort("A")
+
 
 	
 	local S=std.Vector.new(N)
-	local probability=std.Vector.new(N)
 
-	
 	for i=1, N do
-		S[i] = (2*i-1)*(std.ln(f_x[i]) + std.ln(f_x_1[i]))
-		
-		probability[i] = (i-0.3) / (N + 0.4)
+		S[i] = (2*i - 1)*(std.ln(f_x[i]) +  std.ln(f_x_1[i]) )
 	end
 	
+
 	
-	local z=std.qnorm{p=probability}
 	
-	local AD = -N-std.sum(S)/N
+	local AD = -N - std.mean(S)
 	
-	local AD_star = AD*(1+0.75/N+2.25/N^2)
+	local AD_star =  AD*(1 + 0.75/N + 2.25/N^2)
 	
 	local p = {0,0,0,0}
+	
 	
 	
 	if(AD_star<13 and AD_star>=0.6) then

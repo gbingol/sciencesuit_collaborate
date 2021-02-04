@@ -8,30 +8,34 @@
 
 
 <h3>Syntax:</h3>
-<p>test_norm_ad(vec)</p>
+<p>test_norm_ad(cont)</p>
 
 <p>
-      where argument <em>vec</em> must be of type Vector and the function returns p-value and the test-statistic, namely the A<sup>2</sup>.
+      argument <em>cont</em> must be Vector/Array. <br>
+      Returns p-value and the test-statistic, namely the A<sup>2</sup>.
 </p>
 
 
 <p>&nbsp;</p>
-<p>The null hypothesis: H<sub>0</sub>: The data follows the normal distribution.</p>
+<p>H<sub>0</sub>: The data follows the normal distribution.</p>
 
 
 <p>&nbsp;</p>
+
+
 <h3>Example:</h3>
-  
 <p>
-&gt;&gt;pval, A2=std.test_norm_ad(vec) <br />
+      &gt;&gt;pval, A2=std.test_norm_ad(vec) <br />
 
-<br />
+      <br />
 
-&gt;&gt;pval <br />
-0.356325	<br />
-&gt;&gt;A2 <br />
-0.380373
+      &gt;&gt;pval <br />
+      0.356325	<br />
+
+      &gt;&gt;A2 <br />
+      0.380373
 </p>
+
 
 </body>
 
