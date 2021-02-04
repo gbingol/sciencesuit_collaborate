@@ -7,20 +7,22 @@
 
 <p>
     Computes the lower tail quantile (inverse of pnorm). <br>
-    Returns a Vector or a number.
+    Returns number/Vector/Array.
 </p>
 
-<p><b> Syntax:</b></p> 
+
+<h3> Syntax:</h3> 
 <p><b>1)</b> qnorm{p=,mean=0, sd=1}</p>
 <p><b>2)</b> qnorm(p=,mean=0, sd=1)</p>
 
 
 <p>&nbsp;</p>
 
+
 <table border="1" cellspacing="0">
     <tr>
         <td><i>p:</i></td>  
-        <td>Cumulative probability (left-tailed) &larr; Vector / number</td>
+        <td>Cumulative probability (left-tailed) &larr; number/Vector/Array</td>
     </tr>
 
     <tr>
@@ -34,12 +36,15 @@
     </tr>
     
 </table>
-    
-<p><b>Example Usage:</b></p>
+  
+
+<h3>Example Usage:</h3>
 <p>
     &gt;&gt;std.pnorm{q=0} <br>
     0.5	<br>
+
     <br>
+
     &gt;&gt;std.qnorm{p=0.5, mean=0, sd=1} <br>
     0	
 </p>
