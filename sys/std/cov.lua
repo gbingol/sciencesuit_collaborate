@@ -58,15 +58,18 @@ local function cov(cont1, cont2, str)
 	local total=0
 	
 	local k2,v2=next(cont2,nil)
+	
 	for k1, v1 in pairs(cont1) do
-		total=total+(v1-avg1)*(v2-avg2)
+		total = total + (v1-avg1)*(v2-avg2)
 		
-		k2,v2=next(cont2,k2)
+		k2,v2 = next(cont2,k2)
 	end
 	
 
 	return total/df
 end
+
+
 
 
 std.cov=cov

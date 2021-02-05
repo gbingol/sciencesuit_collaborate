@@ -2,7 +2,7 @@ local function count(...)
 	local args=table.pack(...)
 	local nargs=#args
 	
-	assert(nargs>0, "At least 1 argument must be supplied")
+	assert(nargs>0, "At least 1 arg expected.")
 	
 	
 	if(nargs==1 and type(args[1])=="table" ) then
@@ -11,7 +11,7 @@ local function count(...)
 		
 		local container, breaks, left, right=tbl[1], "FD", false, true
 		
-		assert(type(container)=="Array" or type(container)=="Vector", "First argument must be either a Vector or an Array")
+		assert(type(container)=="Array" or type(container)=="Vector", "First arg must be Vector/Array")
 		
 		for key,val in pairs(args[1]) do
 			
@@ -23,16 +23,14 @@ local function count(...)
 				elseif(key == "left") then left = val
 				elseif(key == "right") then right = val
 				else 
-					error("ERROR: Unrecognized key="..key.. ". Keys can be: breaks, left and right.", std.const.ERRORLEVEL) 
+					error("Keys: breaks, left and right.", std.const.ERRORLEVEL) 
 				end
-			
 			end
 
-		
 		end
 
-		return SYSTEM.count(container, breaks, left, right)
 
+		return SYSTEM.count(container, breaks, left, right)
 	end
 
 
@@ -41,10 +39,13 @@ local function count(...)
 	
 	if(nargs==1) then
 		return SYSTEM.count(container)
+		
 	elseif(nargs==2) then
 		return SYSTEM.count(container, breaks)
+		
 	elseif(nargs==3) then
 		return SYSTEM.count(container, breaks, left)
+		
 	elseif(nargs==4) then
 		return SYSTEM.count(container, breaks, left, right)
 	end
@@ -55,6 +56,9 @@ end
 
 
 std.count=count
+
+
+
 
 
 

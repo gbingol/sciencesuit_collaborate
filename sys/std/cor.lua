@@ -3,7 +3,7 @@ local std <const> =std
 
 local function COR(v1,v2)
 
-	--Calculates the correlation coefficient between two vectors of same size
+	--Calculates the correlation coefficient between two containers of same size
 
 	if(type(v1)=="Array") then
 		v1=v1:clone()

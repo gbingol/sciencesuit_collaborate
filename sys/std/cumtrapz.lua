@@ -2,19 +2,19 @@ local std <const> =std
 
 local function CUMTRAPZ_V(v1,v2)
 	
-	assert(type(v1)=="Vector", "First arg must be of type Vector")
-	assert(type(v2)=="Vector", "Second arg must be of type Vector")
+	assert(type(v1)=="Vector", "First arg must be Vector")
+	assert(type(v2)=="Vector", "Second arg must be Vector")
 	
 	
-	return SYSTEM.cumtrapz(v1,v2)
+	return SYSTEM.cumtrapz(v1, v2)
 end
 
 
 
 local function CUMTRAPZ_FV(func, v2)
 
-	assert(type(func)=="function", "First arg must be of type function")
-	assert(type(v2)=="Vector", "Second arg must be of type Vector")
+	assert(type(func)=="function", "First arg must be function")
+	assert(type(v2)=="Vector", "Second arg must Vector")
 	
 	
 	return SYSTEM.cumtrapz(func,v2)
@@ -26,9 +26,9 @@ local function CUMTRAPZ_F(func, a, b, N)
 
 	N=N or 10
 
-	assert(type(func)=="function", "First arg must be of type function")
+	assert(type(func)=="function", "First arg must be function")
 	assert(type(a)=="number" and type(b)=="number", "2nd and 3rd arg must be of type number")
-	assert(math.type(N)=="integer" and N>3, "4th arg must be of type integer greater than 3")
+	assert(math.type(N)=="integer" and N>3, "4th arg must be integer > 3")
 
 
 	return SYSTEM.cumtrapz(func,a,b,N)
@@ -98,7 +98,13 @@ end
 
 
 
+
+
+
 std.cumtrapz=cumtrapz
+
+
+
 
 
 
