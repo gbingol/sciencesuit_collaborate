@@ -3,7 +3,7 @@ local std <const> =std
 
 --Not tested 
 
-local function FSOLVE(tblfuncs,v_initial, MAXITERATIONS)
+local function FSOLVE(tblfuncs,vinitial, MAXITERATIONS)
 	--Solves a system of non-linear equations using Newton's approach
 	--tblfuncs contains table of equations in the format of f(x1,x2,...)=0
 	--v initial starting vector
@@ -18,12 +18,25 @@ local function FSOLVE(tblfuncs,v_initial, MAXITERATIONS)
 
 	MAXITERATIONS = MAXITERATIONS or 100
 
-	local v = v_initial({})
+	--v will be the solution vector
+	local v = vinitial:clone()
 	local dim = #v
+
 	local F = std.Vector.new(dim)
-	local Jacobi = std.Matrix.new(dim,dim) 
+
+	local Jacobi = std.Matrix.new(dim, dim) 
       
       
+	--check parameters and their conditions
+	assert(type(v)=="Vector", "Initial values must be Vector")
+      
+	assert(#tblfuncs >= 2, "At least 2 functions are required")
+	assert(dim >=2, "At least 2 initial values are required")
+	
+	assert(#tblfuncs == dim, "Number of functions must be equal to number of initial conditions")
+      
+
+
 
 	for k=1, MAXITERATIONS do
 	
@@ -31,9 +44,9 @@ local function FSOLVE(tblfuncs,v_initial, MAXITERATIONS)
 		local func=nil
 
 		for i=1,dim do
-                  func=tblfuncs[i] --a function
+			func=tblfuncs[i] --a function
                   
-                  assert(type(func)=="function","Table entries must be lua functions of form f(x1,x2,...) = 0" ) 
+			assert(type(func)=="function","Table entries must be lua functions of form f(x1,x2,...) = 0" ) 
                         
 			F[i]=func(table.unpack(std.totable(v)))
 		end
@@ -45,36 +58,42 @@ local function FSOLVE(tblfuncs,v_initial, MAXITERATIONS)
                   
 			for j=1,dim do
 				local oldval=v(j)
-				v[j]=v(j) + std.const.tolerance -- to find f(xi+dx,...)
-
-				local f_dxi = func(table.unpack(std.totable(v))) --f(xi+dx,...)
+				
+				--Note that vector contains (xi+dx,...)
+				v[j]=v(j) + std.const.tolerance  
+				
+				--evaluate function with (xi+dx,...)
+				local f_dxi = func(table.unpack(std.totable(v))) 
+				
+				--restore the old value, vector again contains (xi,...)
 				v[j] = oldval
-
-				local f_xi = func(table.unpack(std.totable(v)))  --f(xi,...)
+				
+				--evaluate function with (xi,...)
+				local f_xi = func(table.unpack(std.totable(v)))  
 				
 				if(std.abs(maxfuncval) < std.abs(f_xi)) then 
 					maxfuncval = std.abs(f_xi) 
 				end
 				
+				--register the derivative with respect to xi to Jacobian matrix
 				Jacobi[i][j] = (f_dxi - f_xi) / std.const.tolerance
 			end --j
 		end --i
 
 
-
+		
 		if(std.abs(maxfuncval) < std.const.tolerance)  then 
 			return v, k
 		end
 
-		local JacobiDetValue=std.abs(std.det(Jacobi))
             
-		assert(JacobiDetValue > std.const.tolerance,"Jacobian is singular, try different initial vector values") 
+		assert(std.abs(std.det(Jacobi)) > std.const.tolerance,"Jacobian is singular, try with different initial values") 
 		
-		local H=std.solve(Jacobi,F)
 		
-		v=v-H
+		v = v - std.solve(Jacobi, F)
             
 	end
+	
 	
 	error("Max iterations exceeded without convergence" , std.const.ERRORLEVEL)
         
@@ -94,7 +113,7 @@ local function fsolve(...)
 		end
 	
 	else
-		error("Expected (table, vector)", std.const.ERRORLEVEL)
+		error("Expected (table of functions, vector)", std.const.ERRORLEVEL)
 		
 	end
 
