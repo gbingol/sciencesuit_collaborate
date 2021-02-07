@@ -50,6 +50,7 @@ local function cumtrapz(...)
 		
 		local f, a, b, N=nil, nil, nil, 10
 		local ContX, ContY = nil, nil
+		local Nodes = nil
 		
 		local NTblArgs=0
 		
@@ -62,22 +63,24 @@ local function cumtrapz(...)
 			elseif(key=="inter") then N=value
 			elseif(key=="x") then ContX=value
 			elseif(key=="y") then ContY=value
+			elseif(key=="nodes") then Nodes=value 
 			else 
-				error("Keys: {x=, y=, f=, a=, b=, inter=10}", std.const.ERRORLEVEL) 
+				error("Keys: {x=, y=, f=, a=, b=, nodes=, inter=10}", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
 		end
 		
-		assert(NTblArgs>0, "Usage: {[x=], [y=], [f=], [a=], [b=], [inter=10]}")
+		assert(NTblArgs>0, "Usage: {[x=], [y=], [f=], [nodes=], [a=], [b=], [inter=10]}")
 		
 		
 		--Min 3 parameters (f, a, b) required for the function integrated within a bound
 		if(NTblArgs>=3) then
-			assert(f ~=nil and a ~= nil and b~=nil, "If 3 parameters defined f, a and b must be defined")
+			assert(f ~=nil and a ~= nil and b~=nil, "If more than 2 params defined f, a and b must be defined")
 			
 			assert(ContX == nil, "If f, a, b and/or inter are defined, x cant be defined")
 			assert(ContY == nil, "If f, a, b and/or inter are defined, y cant be defined")
+			assert(Nodes == nil, "If f, a, b and/or inter are defined, nodes cant be defined")
 			
 			--return type is vector
 			return CUMTRAPZ_F(f, a, b, N)
@@ -94,17 +97,14 @@ local function cumtrapz(...)
 
 		--if f defined, at this stage we expect either x or y to be defined
 		if(f ~=nil) then
-			assert(ContY ~= nil or ContX ~= nil, "If f is defined, then either (x or y) OR (a and b) must be defined.")
+			assert(Nodes ~= nil,"If f is defined, then either breaks OR (a and b) must be defined.")
+			assert(ContY == nil or ContX == nil, "If f is defined, then either nodes OR (a and b) must be defined.")
 			
-			if(ContY ~= nil and ContX ~= nil) then
-				error("If f is defined, x and y cant be defined at the same time", std.const.ERRORLEVEL)
-			end
+			assert(type(Nodes) == "Vector" or type(Nodes) == "Array", "breaks must be Array/Vector")
 			
-			if(ContX ~= nil) then
-				return CUMTRAPZ_FV(f, ContX)
-			else
-				return CUMTRAPZ_FV(f, ContY)
-			end
+			
+			return CUMTRAPZ_FV(f, Nodes)
+			
 		end
 
 
@@ -126,17 +126,19 @@ local function cumtrapz(...)
 		if(type(arg[1])=="Vector" or type(arg[1])=="Array") then
 			return CUMTRAPZ_V(arg[1], arg[2])
 		
-		--input: function, Vector
+		--input: function, Vector/Array
 		elseif(type(arg[1])=="function") then
+			assert(type(arg[2])=="Vector" or type(arg[2])=="Array", "Vector/Array expected")
+			
 			return CUMTRAPZ_FV(arg[1], arg[2])
 		
 		else
-			error("(f=, y=) or (x,= y=)" , std.const.ERRORLEVEL) 
+			error("(f=, breaks=) or (x=, y=)" , std.const.ERRORLEVEL) 
 		end
 	
 
 	else 
-		error("Usage: {f=, a=, b=, inter=10} or (f=, x=) or (x,= y=)" , std.const.ERRORLEVEL) 
+		error("Usage: {f=, a=, b=, inter=10} or (f=, breaks=) or (x,= y=)" , std.const.ERRORLEVEL) 
 	end
 end
 
