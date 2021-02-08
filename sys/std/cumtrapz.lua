@@ -56,7 +56,8 @@ local function cumtrapz(...)
 		
 		for key, value in pairs(arg[1]) do
 			key=string.lower(key)
-
+			
+			
 			if(key=="f") then f=value
 			elseif(key=="a") then a=value
 			elseif(key=="b") then b=value
@@ -111,6 +112,7 @@ local function cumtrapz(...)
 		--At this point, if x defined then y must be defined
 		if(ContX ~=nil) then
 			assert(ContY ~= nil, "If x is defined, then y also must be defined")
+						
 			
 			return CUMTRAPZ_V(ContX, ContY)
 		end
@@ -133,12 +135,12 @@ local function cumtrapz(...)
 			return CUMTRAPZ_FV(arg[1], arg[2])
 		
 		else
-			error("(f=, breaks=) or (x=, y=)" , std.const.ERRORLEVEL) 
+			error("(f=, nodes=) or (x=, y=)" , std.const.ERRORLEVEL) 
 		end
 	
 
 	else 
-		error("Usage: {f=, a=, b=, inter=10} or (f=, breaks=) or (x,= y=)" , std.const.ERRORLEVEL) 
+		error("Usage: {f=, a=, b=, inter=10} or (f=, nodes=) or (x,= y=)" , std.const.ERRORLEVEL) 
 	end
 end
 
