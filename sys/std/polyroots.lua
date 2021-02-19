@@ -39,8 +39,8 @@ local function MONICPOLY(vec)
 	Companion:insert(Zeros, 1, "col")  -- (dim-2) by (dim-1) 
 	
 	
-	vec[1] = nil
-	vec = -vec	
+	vec = -vec
+	vec[1] = nil		
 	vec:reverse()
 	
 	Companion:append(vec, "row") -- (dim -1) * (dim-1)
