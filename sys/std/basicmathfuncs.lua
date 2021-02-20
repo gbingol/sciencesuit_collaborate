@@ -41,7 +41,6 @@ end
 
 --Lua Math library
 
-
 std.abs=function(entry) 
 
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
@@ -50,6 +49,9 @@ std.abs=function(entry)
 		retEntry:abs()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:abs()
 	end
 	
 	return  ApplytoTypes(entry, math.abs) 
@@ -67,6 +69,9 @@ std.acos=function(entry)
 		retEntry:acos()
 		
 		return retEntry
+		
+	elseif(type(entry)=="Complex") then
+		return entry:acos()
 	end
 	
 	
@@ -191,8 +196,7 @@ end
 
 
 std.log=function(entry, base) 
-	
-	
+		
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
 		
