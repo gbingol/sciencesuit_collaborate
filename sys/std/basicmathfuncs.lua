@@ -86,10 +86,12 @@ std.asin=function(entry)
 	
 	if(type(entry)=="Vector" or type(entry)=="Matrix"  or type(entry)=="Array") then
 		local retEntry=entry:clone()
-
 		retEntry:asin()
 		
 		return retEntry
+		
+	elseif(type(entry)=="Complex") then
+		return entry:asin()
 	end
 	
 	return  ApplytoTypes(entry, math.asin) 
@@ -107,6 +109,9 @@ std.atan=function(entry)
 		retEntry:atan()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:atan()
 	end
 	
 	return  ApplytoTypes(entry, math.atan) 
@@ -123,6 +128,9 @@ std.ceil=function(entry)
 		retEntry:ceil()
 		
 		return retEntry
+		
+	elseif(type(entry)=="Complex") then
+		error("std.ceil does not support complex numbers", std.const.ERRORLEVEL)
 	end
 	
 	return  ApplytoTypes(entry, math.ceil) 
@@ -139,6 +147,9 @@ std.cos=function(entry)
 		retEntry:cos()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:cos()
 	end
 	
 	return  ApplytoTypes(entry,math.cos) end
@@ -154,6 +165,9 @@ std.cosh=function(entry)
 		retEntry:cosh()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:cosh()
 	end
 	
 	return  ApplytoTypes(entry,math.cosh) 
@@ -169,6 +183,9 @@ std.exp=function(entry)
 		retEntry:exp()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:exp()
 	end
 
 	return  ApplytoTypes(entry,math.exp)  
@@ -186,6 +203,9 @@ std.floor=function(entry)
 		retEntry:floor()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		error("std.floor does not support complex numbers", std.const.ERRORLEVEL)
 	end
 	
 	return  ApplytoTypes(entry,math.floor) 
@@ -207,6 +227,13 @@ std.log=function(entry, base)
 		end
 
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		if(base == nil) then
+			return entry:log()
+		end
+	
+		return entry:log(base)
 	end
 	
 
@@ -245,7 +272,12 @@ std.pow=function(entry, power)
 		retEntry:pow(power)
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:pow(power)
 	end
+
+
 	
 	return ApplytoTypes(entry, math.pow, power) 
 end
@@ -262,6 +294,9 @@ std.sqrt=function(entry)
 		retEntry:sqrt()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:sqrt()
 	end
 
 	return  ApplytoTypes(entry,math.sqrt)   
@@ -279,6 +314,9 @@ std.sin=function(entry)
 		retEntry:sin()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:sin()
 	end
 	
 	return  ApplytoTypes(entry,math.sin) 
@@ -296,6 +334,9 @@ std.sinh=function(entry)
 		retEntry:sinh()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:sinh()
 	end
 	
 	return  ApplytoTypes(entry,math.sinh) 
@@ -312,6 +353,9 @@ std.tan=function(entry)
 		retEntry:tan()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:tan()
 	end
 	
 	return  ApplytoTypes(entry,math.tan) 
@@ -329,6 +373,9 @@ std.tanh=function(entry)
 		retEntry:tanh()
 		
 		return retEntry
+	
+	elseif(type(entry)=="Complex") then
+		return entry:tanh()
 	end
 	
 	return  ApplytoTypes(entry,math.tanh) 
