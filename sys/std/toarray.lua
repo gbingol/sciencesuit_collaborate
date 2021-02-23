@@ -2,39 +2,28 @@ local std <const> =std
 
 
 
-local function toarray(Container)
+local function toarray(Container, Arr)
 
 	--If the entry is a matrix then it returns the elements in a row-order sequence
 	--If the entry is a 1D table then it is converted to vector
 	
-	local retArr=std.Array.new(0)
-	local Num, NonNum=0, 0
+	if(Arr==nil) then
+		Arr=std.Array.new(0)
+	end
 
 	for k, v in pairs(Container) do
 		
 		local typ=type(v)
 		
-		if(typ=="number") then 
-			retArr:push_back(v)
-			Num=Num+1
-			
-		elseif(typ=="string") then
-			local val=tonumber(v)
-			
-			if(val~=nil) then
-				retArr:push_back(val)
-				Num=Num+1
-			else
-				retArr:push_back(v)
-				NonNum=NonNum+1
-			end
+		if(typ=="number" or typ=="string" or typ=="Complex") then
+			Arr:push_back(v)
 		else
-			error("Expected types are string or number")
+			toarray(v, Arr)
 		end
 		
 	end
 
-	return retArr, Num, NonNum
+	return Arr
 
 end
 
