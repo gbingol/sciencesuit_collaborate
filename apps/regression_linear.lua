@@ -119,7 +119,7 @@ local function LinearRegression()
 		assert(NString==0, "There are non-numeric entries in the response")
 		
 		
-		local Alpha=1-tonumber(txtConfidence.value)/100
+		local Alpha = 1 - tonumber(txtConfidence.value)/100
 		assert(Alpha>0 and Alpha<1,  "Confidence Level must be in the range of (0, 100)")
 		
 		local RegresResult=std.lm( yobs, factors, IsThereIntercept, Alpha)
