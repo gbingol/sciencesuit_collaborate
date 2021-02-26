@@ -145,7 +145,7 @@ local function  dlgTwoSample2Test()
 		
 		
 		if(SamplesInTwoCol) then
-			v1 , v2=std.tovector(rng1) , std.tovector(rng2)
+			v1 , v2=std.util.tovector(rng1) , std.util.tovector(rng2)
 			
 			assert(v1~=nil and #v1>=3, "Either there is none or less than 3 valid numeric data in the selected range of Variable #1.") 
 			assert(v2~=nil and #v2>=3, "Either there is none or less than 3 valid numeric data in the selected range of Variable #2.") 	
@@ -157,7 +157,7 @@ local function  dlgTwoSample2Test()
 		local uniquesubscripts=nil
 		if (not SamplesInTwoCol) then
 		
-			local samples , subscripts=std.tovector(rng1) , std.toarray(rng2)
+			local samples , subscripts=std.util.tovector(rng1) , std.util.toarray(rng2)
 			
 			uniquesubscripts=subscripts:clone()
 			uniquesubscripts:unique()

@@ -109,12 +109,12 @@ local function LinearRegression()
 					
 		local factors=nil
 		if(rngFactors:ncols()>1) then
-			factors=std.tomatrix(rngFactors, rngFactors:nrows(), rngFactors:ncols())
+			factors=std.util.tomatrix(rngFactors, rngFactors:nrows(), rngFactors:ncols())
 		else
-			factors=std.tovector(rngFactors)
+			factors=std.util.tovector(rngFactors)
 		end
 		
-		local yobs <close>, NString=std.tovector(rngResponse)
+		local yobs <close>, NString=std.util.tovector(rngResponse)
 		
 		assert(NString==0, "There are non-numeric entries in the response")
 		

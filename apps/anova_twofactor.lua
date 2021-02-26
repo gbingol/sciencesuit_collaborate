@@ -104,7 +104,7 @@ local function ANOVATwoFactor()
 		end
 
 
-		local vecResponse, NonNum=std.tovector(rngResponse)
+		local vecResponse, NonNum=std.util.tovector(rngResponse)
 		if(vecResponse==nil or NonNum>0) then 
 			iup.Message("ERROR","Response range contains non-numeric data.") 
 			
@@ -122,7 +122,7 @@ local function ANOVATwoFactor()
 			return 
 		end
 
-		local pvalue, AnovaTable=std.anova2(vecResponse ,std.tovector(rngFactor1), std.tovector(rngFactor2) )
+		local pvalue, AnovaTable=std.anova2(vecResponse ,std.util.tovector(rngFactor1), std.util.tovector(rngFactor2) )
 		
 		if(pvalue==nil) then 
 			iup.Message("ERROR",AnovaTable) 

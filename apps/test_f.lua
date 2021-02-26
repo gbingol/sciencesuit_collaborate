@@ -100,7 +100,7 @@ local function  dlgTestF()
 			
 		
 		local pval,Ftable=nil, nil
-		local sample1, sample2=std.tovector(rng1), std.tovector(rng2)
+		local sample1, sample2=std.util.tovector(rng1), std.util.tovector(rng2)
 		
 		if(sample1==nil or #sample1<3) then 
 			iup.Message("ERROR","Either there is none or less than 3 valid numeric data in the selected range of Sample #1.") 

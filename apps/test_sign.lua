@@ -134,7 +134,7 @@ local function  dlgSignTest()
 		 
 		 
 		
-		local xvec, yvec=std.tovector(rng1), nil
+		local xvec, yvec=std.util.tovector(rng1), nil
 		
 		 
 		if(IsPaired) then
@@ -155,7 +155,7 @@ local function  dlgSignTest()
 			end
 
 
-			yvec=std.tovector(rng2)
+			yvec=std.util.tovector(rng2)
 			
 			if(#xvec~=#yvec) then
 				iup.Message("ERROR","If paired test is selected, then both variables must be of same size.")
