@@ -29,7 +29,7 @@ local function FSOLVE(Funcs,vinitial, MAXITERATIONS)
 	MAXITERATIONS = MAXITERATIONS or 100
 
 	--v will be the solution vector
-	local v = std.tovector(vinitial)
+	local v = std.std.util.tovector(vinitial)
 	local dim = #v
 
 	local F = std.Vector.new(dim)
@@ -50,7 +50,7 @@ local function FSOLVE(Funcs,vinitial, MAXITERATIONS)
 			
 			assert(type(func)=="function","Table entries must be lua functions of form f(t) = 0" ) 
 			
-			F[i] = func(std.totable(v))
+			F[i] = func(std.std.util.totable(v))
                   
 		
 			for j=1, dim do
@@ -60,13 +60,13 @@ local function FSOLVE(Funcs,vinitial, MAXITERATIONS)
 				v[j] = v(j) + std.const.tolerance  
 				
 				--evaluate function with (xi+dx,...)
-				local f_dxi = func(std.totable(v)) 
+				local f_dxi = func(std.util.totable(v)) 
 				
 				--restore the old value, vector again contains (xi,...)
 				v[j] = oldval
 				
 				--evaluate function with (xi,...)
-				local f_xi = func(std.totable(v))  
+				local f_xi = func(std.util.totable(v))  
 				
 				if(std.abs(maxfuncval) < std.abs(f_xi)) then 
 					maxfuncval = std.abs(f_xi) 
@@ -80,7 +80,7 @@ local function FSOLVE(Funcs,vinitial, MAXITERATIONS)
 
 		--return solution vector (as table) and number of iterations
 		if(std.abs(maxfuncval) < std.const.tolerance)  then 
-			return std.totable(v),  iter
+			return std.util.totable(v),  iter
 		end
 
 		local DetJacobi = std.abs(std.det(Jacobi))

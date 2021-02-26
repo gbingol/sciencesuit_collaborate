@@ -67,7 +67,7 @@ local function anova2(yobs, x1, x2)
 	local MatAverage=std.Matrix.new(#v2, #v1)
 	
 	for i=1, #v2 do
-		local m=std.trans(std.tomatrix(tbl[i]))
+		local m=std.trans(std.util.tomatrix(tbl[i]))
 		local vec=std.trans(GetAveragePerCol(m))
 		
 		for j=1, #vec do 
