@@ -7,12 +7,12 @@ local function COR(v1,v2)
 
 	if(type(v1)=="Array") then
 		v1=v1:clone()
-		v1:keep_numbers()
+		v1:keep_realnumbers()
 	end
 
 	if(type(v2)=="Array") then
 		v2=v2:clone()
-		v2:keep_numbers()
+		v2:keep_realnumbers()
 	end
 
 

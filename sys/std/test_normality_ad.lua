@@ -9,7 +9,7 @@ local function AndersonDarling(vec)
 	vec=vec:clone()
 	
 	if(type(vec)=="Array") then
-		vec:keep_numbers()
+		vec:keep_realnumbers()
 	end
 	
 	local N=#vec

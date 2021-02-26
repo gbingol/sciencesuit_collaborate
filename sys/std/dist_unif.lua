@@ -24,7 +24,7 @@ local function DUNIF(x, min, max)
 		
 		if(type(x)=="Array") then
 			x=x:clone()
-			x:keep_numbers()
+			x:keep_realnumbers()
 			
 			retCont=std.Array.new(#x)
 		
@@ -111,7 +111,7 @@ local function PUNIF(q, min, max)
 		
 		if(type(q)=="Array") then
 			q=q:clone()
-			q:keep_numbers()
+			q:keep_realnumbers()
 			
 			retCont=std.Array.new(#q)
 		
@@ -194,7 +194,7 @@ local function QUNIF(p, min, max)
 		
 		if(type(p)=="Array") then
 			p=p:clone()
-			p:keep_numbers()
+			p:keep_realnumbers()
 			
 			retCont=std.Array.new(#p)
 		

@@ -32,7 +32,7 @@ local function anova2(yobs, x1, x2)
 	if(type(yobs)=="Array") then
 		yobs=yobs:clone()
 		
-		yobs:keep_numbers()
+		yobs:keep_realnumbers()
 	end
 	
 

@@ -26,7 +26,7 @@ local function SingleFactorANOVA(...)
 		if(type(vec)=="Array") then
 			vec=vec:clone()
 			
-			vec:keep_numbers()
+			vec:keep_realnumbers()
 		end
 		
 		local vecSize=#vec

@@ -16,7 +16,7 @@ local function SIGNRANK(func, vec, n)
 		
 		if(type(vec)=="Array") then
 			vec=vec:clone()
-			vec:keep_numbers()
+			vec:keep_realnumbers()
 			
 			retCont=std.Array.new(#vec)
 			
