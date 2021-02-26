@@ -5,7 +5,7 @@ local function isiteratable(container)
 	
 	--1) Lua tables are iteratable
 	--2) if there is no metatable then it is not a container
-	--3) if there metatable, it must have a method called "next"
+	--3) if there metatable, it must have methods: "next" and __pairs
 	
 
 	if(type(container) == "table") then
@@ -13,14 +13,10 @@ local function isiteratable(container)
 	end
 
 	local m = getmetatable(container)
-	
-	if(m == nil) then 
-		return false
-	end
 
-	local n = (m and m["next"]) 
+	local iteratable = (m and m["next"] and m["__pairs"]) 
 	
-	if(n) then
+	if(iteratable) then
 		return true
 	end
 
