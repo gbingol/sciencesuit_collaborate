@@ -1,3 +1,5 @@
+local std <const> =std
+
 
 local function isiteratable(container)
 	
