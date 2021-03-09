@@ -24,7 +24,7 @@ local function anova2(yobs, x1, x2)
 	assert(type(x1)=="Vector" or type(x1)=="Array","Second arg, factor #1, must be either type Vector/Array")
 	assert(type(x2)=="Vector" or type(x2)=="Array","Third arg, factor #2, must be either type Vector/Array") 
 	
-	v1, v2 =x1:clone(), x2:clone()
+	local v1, v2 =x1:clone(), x2:clone()
 	v1:unique()
 	v2:unique()
 	
@@ -37,7 +37,7 @@ local function anova2(yobs, x1, x2)
 	
 
 	--prepare a 3D table
-	tbl={}
+	local tbl={}
 	for i=1, #v2 do
 		tbl[i]={}
 		for j=1,#v1 do
