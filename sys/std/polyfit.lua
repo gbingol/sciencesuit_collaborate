@@ -1,4 +1,4 @@
-local std <const> =std
+local std <const> = std
 
 
 local function polyfit(...)
@@ -26,6 +26,8 @@ local function polyfit(...)
 			NTblArgs=NTblArgs+1
 
 		end
+
+
 		
 		assert(NTblArgs>0, "Usage: {x=, y=, n=, [intercept=]}")
 
