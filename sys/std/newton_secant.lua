@@ -103,81 +103,8 @@ local function newton_secant(...)
 end
 
 
---Not in use
-local function Newton_SystemNonlinearEqs(tblfuncs,v_initial)
-	--Solves a system of non-linear equations using Newton's approach
-        --tblfuncs contains table of equations in the format of f(x1,x2,...)=0
-        --v initial starting vector
-
-	local v=v_initial({})
-	local dim=#v
-	local F=std.Vector.new(dim)
-	local Jacobi=std.Matrix.new(dim,dim) -- Jacobian
-	
-	for k=1,MAXITERATIONS do
-	
-		local maxfuncval=0 --convergence criteria
-		local func=nil
-
-		for i=1,dim do
-			func=tblfuncs[i] --a function
-			assert(type(func)=="function","ERROR: Table entries must be lua functions of form f(x1,x2,...)=0" ) 
-			F[i]=f(unpack(totable(v)))
-		end
-
-		for i=1,dim do
-			func=tblfunc[i]     --function
-			for j=1,dim do
-				local oldval=v(j)
-				v[j]=v(j)+TOLERANCE -- to find f(xi+dx,...)
-
-				local f_dxi=f(unpack(std.totable(v))) --f(xi+dx,...)
-				v[j]=oldval
-
-				local f_xi=f(unpack(std.totable(v)))  --f(xi,...)
-				
-				if(std.abs(maxfuncval)<std.abs(f_xi)) then 
-					maxfuncval=std.abs(f_xi) 
-				end
-				
-				Jacobi[i][j]=(f_dxi-f_xi)/TOLERANCE
-			end --j
-		end --i
-
-		if(std.abs(maxfuncval)<TOLERANCE)  then return v  end
-
-		local JacobiDetValue=std.abs(std.det(J))
-		assert(JacobiDetValue>TOLERANCE,"Jacobian is singular, try different initial vector values") 
-		
-		local H=std.solve(J,F)
-		v=v-H
-	end
-	
-        error("Maximum iterations have been reached without convergence" , std.const.ERRORLEVEL)
-        
-    end -- function
-    
-    
-local function newton_funcs(...)
-	local arg=table.pack(...)
-	
-	if(#arg==2 and type(arg[1])=="table" and type(arg[2])=="Vector") then
-		if(type(arg[1][1])=="function") then
-			return Newton_SystemNonlinearEqs(arg[1],arg[2])
-		end
-	
-	else
-		error("Unexpected argument types", std.const.ERRORLEVEL)
-		
-	end
-
-end
-
-
-
 
 std.newton=newton_secant
---std.newton_funcs=newton_funcs
 
 
 

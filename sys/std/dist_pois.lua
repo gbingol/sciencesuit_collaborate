@@ -1,25 +1,46 @@
 local std <const> =std
 
 
-local function DPOIS(vec, lambda)
+local function POIS(func, vec, lambda)
 	
-	assert(type(vec)=="Vector" or type(vec)=="number","First arg (x): number or Vector")
+	assert(type(func)=="function", "function expected")
+	
+	
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","Arg (x), number/Vector/Array")
 
-	assert(type(lambda)=="number","Second arg (lambda) must be number.")
-
-	if(type(vec)=="Vector") then
-		local vecSize=#vec
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.dpois(vec(i),lambda)
+	assert(type(lambda)=="number","Arg (lambda) must be number.")
+	
+	
+	
+	if(type(vec)=="Vector" or type(vec)=="Array") then
+		local retCont=nil
+		
+		if(type(vec)=="Array") then
+			vec=vec:clone()
+			vec:keep_realnumbers()
+			
+			retCont=std.Array.new(#vec)
+			
+		else
+			retCont=std.Vector.new(#vec)
 		end
+	
+		for i=1,#vec do
+			retCont[i]=func(vec(i), lambda)
+		end
+		
+		
+		return retCont
 
-		return retVec
 	end
 
-	return SYSTEM.dpois(vec, lambda)
+
+	return func(vec, lambda)
 
 end
+
+
+
 
 
 local function dpois(...)
@@ -44,38 +65,19 @@ local function dpois(...)
 
 		assert(NTblArgs>0, "Keys: x and lambda.")
 		
-		return DPOIS(xval,lambda)
+		return POIS(SYSTEM.dpois, xval,lambda)
 		
 	end
 	
 	
-	return DPOIS(args[1],args[2])
+	return POIS(SYSTEM.dpois, args[1],args[2])
 
 end
 
 
---******************************************************
 
-local function PPOIS(vec, lambda)
 
-	assert(type(vec)=="Vector" or type(vec)=="number","First arg (q): number or Vector.")
 
-	assert(type(lambda)=="number","Second arg (lambda) must be number.")
-
-	if(type(vec)=="Vector") then
-
-		local vecSize=#vec
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.ppois(vec(i),lambda)
-		end
-
-		return retVec
-	end
-
-	return SYSTEM.ppois(vec,lambda)
-	
-end
 
 
 local function ppois(...)
@@ -99,36 +101,19 @@ local function ppois(...)
 
 		assert(NTblArgs>0,"Keys: q and lambda.")
 	
-		return PPOIS(qval,lambda)
+	
+		return POIS(SYSTEM.ppois, qval,lambda)
 	end
 			
 	
-	return PPOIS(args[1], args[2])
+	return POIS(SYSTEM.ppois, args[1], args[2])
 end
 
 
---****************************************************
 
-local function QPOIS(vec, lambda)
 
-	assert(type(vec)=="Vector" or type(vec)=="number","First arg (p): number or Vector.")
 
-	assert(type(lambda)=="number","Second arg (lambda) must be number.")
 
-	if(type(vec)=="Vector") then
-
-		local vecSize=#vec
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.qpois(vec(i),lambda)
-		end
-
-		return retVec
-	end
-
-	return SYSTEM.qpois(vec,lambda)
-
-end
 
 local function qpois(...)
 	local args=table.pack(...)
@@ -152,20 +137,25 @@ local function qpois(...)
 		assert(NTblArgs>0,"Keys: p and lambda.") 
 		
 
-		return QPOIS(pval,lambda)
+		return POIS(SYSTEM.qpois, pval,lambda)
 	end
 
 	
-	return QPOIS(args[1], args[2])
+	return POIS(SYSTEM.qpois, args[1], args[2])
 end
 
 
---************************
+
+
+
+
 
 local function RPOIS(n, lambda)
 	
-	assert(math.type(n)=="integer" and n>0,"First arg (key: n) must be an integer >0")
+	assert(math.type(n)=="integer" and n>0,"First arg (n) must be an integer >0")
+	
 	assert(type(lambda)=="number","Second arg (lambda) must be number")
+
 
 	return SYSTEM.rpois(n, lambda)
 
@@ -207,10 +197,17 @@ end
 
 
 
+
+
+
 std.dpois=dpois
 std.ppois=ppois
 std.qpois=qpois
 std.rpois=rpois
+
+
+
+
 
 
 

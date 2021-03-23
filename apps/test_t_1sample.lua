@@ -132,7 +132,7 @@ local function  ttest1sample()
 		local v1, v2=nil
 		
 		
-		local v1 =std.tovector(rng1) 
+		local v1 =std.util.tovector(rng1) 
 		if(v1==nil or #v1<3) then 
 			iup.Message("ERROR","Either there is none or less than 3 valid numeric data in the selected range of Variable #1.") 
 			return 

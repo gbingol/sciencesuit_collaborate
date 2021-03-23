@@ -4,7 +4,7 @@ local function bisect(...)
 	
 	local arg=table.pack(...)
 
-	assert(#arg>=3 or type(arg[1])=="table", "At least 3 arguments or a single argument of type table must be supplied")
+	assert(#arg>=3 or type(arg[1])=="table", "At least 3 args or a table expected.")
 	
 	if(#arg==1 and type(arg[1])=="table") then
 		local func, a, b, tol, maxiter, method, modified=nil, nil, nil, nil, nil, nil, false
@@ -29,34 +29,42 @@ local function bisect(...)
 
 		end
 		
-		assert(NTblArgs>0, "ERROR: Signature: {f, a, b, tol=1E-5, maxiter=100, method=\"bf\",modified=false}")
+		
+		
+		assert(NTblArgs>0, "Usage: {f, a, b, tol=1E-5, maxiter=100, method=\"bf\",modified=false}")
 
-		assert(type(func)=="function", "First argument must be a unary function")
-		assert(type(a)=="number", "Second argument must be a number")
-		assert(type(b)=="number", "Third argument must be a number")
+		assert(type(func)=="function", "First arg must be a unary function")
+		assert(type(a)=="number", "Second arg must be a number")
+		assert(type(b)=="number", "Third arg must be a number")
 
 
 		maxiter=maxiter or 100
 		tol=tol or 1E-5
 		method=method or "bf"
 
+
+
 		assert(math.type(maxiter)=="integer" and maxiter>0,"Key maxiter must be a positive integer.")
 		
-		assert(type(tol)=="number" and tol>0, "Key tol must be a positive number")
+		assert(type(tol)=="number" and tol>0, "Key tol must be >0")
 		
-		assert(type(method)=="string" and (method=="bf" or method=="rf"), "Key method must be a string and either \"bf\" or \"rf\"")
+		assert(type(method)=="string" and (method=="bf" or method=="rf"), "Key method must be string and \"bf\" or \"rf\"")
 		
-		assert(type(modified)=="boolean", "Key modified must be a boolean value. true for Modified False Position method.")
+		assert(type(modified)=="boolean", "Key modified must be boolean. true for Modified False Position.")
+		
+		
 		
 		if(string.lower(method)=="bf" and modified==true) then
-			error("Key modified (Modified False Position) is only taken into account when the method is False Position") 
+			error("Key modified is only taken into account when the method is False Position") 
 		end
+		
 		
 		return SYSTEM.bisection(func, a, b, tol, maxiter, method, modified)
 	
 	elseif(#arg==3) then
-		assert(type(arg[1])=="function", "First argument must be a function")
-		assert(type(arg[2])=="number" and type(arg[3])=="number", "Second and third arguments must be of type number.")
+		assert(type(arg[1])=="function", "First arg must be a function")
+		assert(type(arg[2])=="number" and type(arg[3])=="number", "Second and third args must be number.")
+		
 		
 		return SYSTEM.bisection(arg[1], arg[2], arg[3])
 
@@ -68,6 +76,8 @@ local function bisect(...)
 	
 end
 			
+
+
 
 std.bisection=bisect
 

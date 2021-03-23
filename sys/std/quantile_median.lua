@@ -14,28 +14,18 @@ end
 
 local function QUANTILE(Container, probs)
 	
-	assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
+	assert(std.util.isiteratable(Container) == true, "An iteratable container is required")
 	
 	assert(type(probs)=="number", "prob must be number") 
 	assert(probs>=0 and probs<=1, "prob outside [0,1]")
 
 	if(type(Container)=="Range") then
-		Container=std.tovector(Container)
+		Container=std.util.tovector(Container)
 			
 	elseif (type(Container)=="Array") then
 		Container=Container:clone()
-		Container:remove_strings()
-		Container:remove_nils()
+		Container:keep_realnumbers()
 	end
-
-	local m = getmetatable(Container)
-	
-	if(m) then
-		local n=m["__pairs"]
-		
-		assert(n~=nil,"The container is not iteratable")
-	end
-			
 		
 	  
 	local elem=ConvertToTable(Container)

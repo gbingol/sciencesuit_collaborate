@@ -1,6 +1,7 @@
-local function Interpolation(x1, y1, x2, y2, val) 
+local function Interpolation(x1, y1, x2, y2, val)
+
 	-- Given 2 data points (x1,y1) and (x2,y2) we are looking for the y-value of the point x=val 
-	if(x1==x2) then 
+	if(x1 == x2) then 
 		return y1 
 	end
 
@@ -14,8 +15,8 @@ end
 
 
 local function GetRange(fluid, key, IsSuperHeated) 
-	local db=fluid.m_Database
-	local FluidTable=""
+	local db = fluid.m_Database
+	local FluidTable = ""
 	
 	if(IsSuperHeated==nil or  IsSuperHeated==true) then
 		FluidTable=fluid.m_SuperHeatedTable
@@ -25,7 +26,7 @@ local function GetRange(fluid, key, IsSuperHeated)
 	
 	local strQuery="SELECT max("..key..") FROM "..FluidTable
 	
-	set,row,col=db:sql(strQuery)
+	local set,row,col=db:sql(strQuery)
 	
 	local maxval=tonumber(set[1])
 	
@@ -61,10 +62,10 @@ local function Initialize(str, ConnectionInfo)
 	
 	
 	local THERMOFLUID={}
+
 	
-	
-	local testDBName =std.const.exedir.."/datafiles/ThermoFluids.db"
-	local m_database=std.Database.new()
+	local testDBName = std.const.exedir.."/datafiles/ThermoFluids.db"
+	local m_database = std.Database.new()
 	m_database:open(testDBName)
 	
 	
@@ -87,6 +88,7 @@ local function Initialize(str, ConnectionInfo)
 	THERMOFLUID.m_SaturationTable=set[1][1]
 	THERMOFLUID.m_SuperHeatedTable=set[1][2]
 	
+
 	return THERMOFLUID
 end
 
@@ -189,39 +191,42 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	local retTable={}
 	
 	
-	local T=Interpolation(x1, TL, x2, TH, val)
-	local P=Interpolation(x1,PL,x2,PH,val)
-	local Vf=Interpolation(x1,VfL,x2,VfH,val)
-	local Vg=Interpolation(x1,VgL,x2,VgH,val)
-	local Hf=Interpolation(x1,HfL,x2,HfH,val)
-	local Hg=Interpolation(x1,HgL,x2,HgH,val)
-	local Sf=Interpolation(x1,SfL,x2,SfH,val)
-	local Sg=Interpolation(x1,SgL,x2,SgH,val)
+	local T = Interpolation(x1, TL, x2, TH, val)
+	local P = Interpolation(x1,PL,x2,PH,val)
+	local Vf = Interpolation(x1,VfL,x2,VfH,val)
+	local Vg = Interpolation(x1,VgL,x2,VgH,val)
+	local Hf = Interpolation(x1,HfL,x2,HfH,val)
+	local Hg = Interpolation(x1,HgL,x2,HgH,val)
+	local Sf = Interpolation(x1,SfL,x2,SfH,val)
+	local Sg = Interpolation(x1,SgL,x2,SgH,val)
 	
 	local Uf=Hf-P*Vf;
 	local Ug=Hg-P*Vg; 
 
 	retTable.T=T
 	retTable.P=P
-	retTable.vf=Vf; 
+	retTable.vf=Vf;
 	retTable.vg=Vg
-	retTable.uf=Uf; 
+	retTable.uf=Uf;
 	retTable.ug=Ug
-	retTable.hf=Hf; 
+	retTable.hf=Hf;
 	retTable.hg=Hg
-	retTable.sf=Sf; 
+	retTable.sf=Sf;
 	retTable.sg=Sg
 	
+
 	if(param1=="t" or param1=="p") then
 		retTable[string.upper(param1)]=val
 	else
 		retTable[param1]=val
 	end
 	
+
 	if(Quality~=nil) then 
 		Quality=string.lower(Quality) 
 	end
 	
+
 	if(Quality=="s")  then 
 		retTable.x=(qValue-Sf)/(Sg-Sf) 
 	elseif(Quality=="h") then 
@@ -246,12 +251,12 @@ local function GetVHSProperties(fluid, P, T, msg) --Only use for superheated
 	local db=fluid.m_Database
 	local strQuery="SELECT V,H,S FROM "..fluid.m_SuperHeatedTable.." WHERE P="..tostring(P).." AND T="..tostring(T)
 	
-	local set,row,col=db:sql(strQuery)
+	local set, row, col = db:sql(strQuery)
 	
-	local errMsg=msg.."\n"
+	local errMsg = msg.."\n"
 	errMsg=errMsg.."Properties could not be found at P="..tostring(P).." and T="..tostring(T)
 	
-	assert(set~=nil,errMsg)
+	assert(set ~= nil, errMsg)
 		
 
 	return set, row, col

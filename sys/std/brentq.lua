@@ -46,7 +46,7 @@ local function brentq(...)
 
 		end
 		
-		assert(NTblArgs>0, "Signature: {f=, a=, b=, tol=1E-5, maxiter=100}")
+		assert(NTblArgs>0, "Usage: {f=, a=, b=, tol=1E-5, maxiter=100}")
 
 		
 		

@@ -21,7 +21,7 @@ local function ttest1(xvec, alternative, mu, conflevel)
 	if(type(xvec)=="Array") then
 		xvec=xvec:clone()
 		
-		xvec:keep_numbers()
+		xvec:keep_realnumbers()
 	end
 
 
@@ -120,14 +120,14 @@ local function ttest2(xvec,yvec, varequal, alternative, mu, conflevel )
 	if(type(xvec)=="Array") then
 		xvec=xvec:clone()
 		
-		xvec:keep_numbers()
+		xvec:keep_realnumbers()
 	end
 
 
 	if(type(yvec)=="Array") then
 		yvec=yvec:clone()
 		
-		yvec:keep_numbers()
+		yvec:keep_realnumbers()
 	end
 	
 
@@ -259,14 +259,14 @@ local function ttest_paired(xvec, yvec, alternative, mu, conflevel)
 	if(type(xvec)=="Array") then
 		xvec=xvec:clone()
 		
-		xvec:keep_numbers()
+		xvec:keep_realnumbers()
 	end
 
 
 	if(type(yvec)=="Array") then
 		yvec=yvec:clone()
 		
-		yvec:keep_numbers()
+		yvec:keep_realnumbers()
 	end
 	
 	

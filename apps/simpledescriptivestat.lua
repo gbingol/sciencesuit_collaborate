@@ -227,7 +227,7 @@ local function  DescriptiveStat()
 			local DescInfo=true
 			local nrows,ncols=std.size(InputRange)
 			for i=1,ncols do
-				local v=std.tovector(InputRange:col(i))
+				local v=std.util.tovector(InputRange:col(i))
 				
 				PrinttoWS(v,row, col+(i-1), DescInfo)
 				
@@ -235,7 +235,7 @@ local function  DescriptiveStat()
 			end
 			
 		else
-			PrinttoWS(std.tovector(InputRange),row, col, true)
+			PrinttoWS(std.util.tovector(InputRange),row, col, true)
 		end
 		
 	end

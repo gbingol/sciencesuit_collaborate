@@ -1,34 +1,52 @@
 local std <const> =std
 
 
-local function DF(arg1, df1, df2)
+local function FDIST(func, vec, df1, df2)
 	
-	assert(math.type(df1)=="integer","Degrees of freedom (key: df1)  must be integer.")
-	assert(df1>0,"Degrees of freedom (key: df1)  must be >0")
-
-	assert(math.type(df2)=="integer","Degrees of freedom (key: df2)  must be integer.")
-	assert(df2>0,"Degrees of freedom (key: df2)  must be >0")
 	
-	if(type(arg1)=="Vector") then
+	assert(type(func)=="function", "function expected")
+	
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector/Array")
+	
+	
+	assert(math.type(df1) == "integer","Degrees of freedom (df1)  must be integer.")
+	assert(df1 > 0,"Degrees of freedom (df1)  must be >0")
 
-		local vecSize=#arg1
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.df(arg1(i),df1, df2)
+	assert(math.type(df2) == "integer","Degrees of freedom (df2)  must be integer.")
+	assert(df2 > 0,"Degrees of freedom (df2)  must be >0")
+	
+	
+	if(type(vec)=="Vector" or type(vec)=="Array") then
+		
+		local retCont=nil
+		
+		if(type(vec)=="Array") then
+			vec=vec:clone()
+			vec:keep_realnumbers()
+			
+			retCont=std.Array.new(#vec)
+			
+		else
+			retCont=std.Vector.new(#vec)
+		end
+	
+	
+	
+		for i=1,#vec do
+			retCont[i]=func(vec(i), df1, df2)
 		end
 		
-		return retVec
-
-	elseif(type(arg1)=="number") then
-		return SYSTEM.df(arg1,df1, df2)
-
-	else
-		error("First arg (key: x): number or Vector.", std.const.ERRORLEVEL)
-	
+		
+		return retCont
+		
 	end
 
-	return nil
+	
+	return func(vec,df1, df2)
 end
+
+
+
 
 
 
@@ -54,46 +72,20 @@ local function df(...)
 		end
 
 		assert(NArgsTbl>0,"Keys: x, df1 and df2.")
-		assert(type(xval)=="number" or type(xval)=="Vector", "A number or Vector value must be assigned to the key 'x'. ")
 		
-		return DF(xval, df1, df2)
+		
+		return FDIST(SYSTEM.df, xval, df1, df2)
 
 	end
 
-	return DF(args[1],args[2], args[3])
+	return FDIST(SYSTEM.df, args[1],args[2], args[3])
 
 end
 
 
-----------------------------------------------------------------
 
-local function PF(qval, df1, df2)
 
-	assert(math.type(df1)=="integer","Degrees of freedom (key: df1)  must be integer.")
-	assert(df1>0,"Degrees of freedom (key: df1)  must be greater than zero.")
 
-	assert(math.type(df2)=="integer","Degrees of freedom (key: df2)  must be integer.")
-	assert(df2>0,"Degrees of freedom (key: df2)  must be >0")
-
-	if(type(qval)=="Vector") then
-
-		local vecSize=#qval
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.pf(qval(i),df1, df2)
-		end
-
-		return retVec
-
-	elseif(type(qval)=="number") then
-		return SYSTEM.pf(qval, df1, df2)
-
-	else
-		error("First argument (q): number or Vector.", std.const.ERRORLEVEL)
-	end
-
-	return nil
-end
 
 
 local function pf(...)
@@ -118,45 +110,19 @@ local function pf(...)
 
 		assert(NTblArgs>0,"Keys: q, df1 and df2.")
 		
-		assert(type(qval)=="number" or type(qval)=="Vector","'q': number or Vector.")
 		
-		return PF(qval,df1, df2)
+		return FDIST(SYSTEM.pf, qval,df1, df2)
 	end
 
 	
-	return PF(args[1], args[2], args[3])
+	return FDIST(SYSTEM.pf, args[1], args[2], args[3])
 end
 
 
-------------------------------------------------------------
 
-local function QF(prob, df1, df2)
 
-	assert(math.type(df1)=="integer","Degrees of freedom (key: df1)  must be integer.")
-	assert(df1>0,"Degrees of freedom (key: df1)  must be >0")
 
-	assert(math.type(df2)=="integer","Degrees of freedom (key: df2)  must be integer.")
-	assert(df2>0,"Degrees of freedom (key: df2)  must be >0")
 
-	if(type(prob)=="Vector") then
-
-		local vecSize=#prob
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.qf(prob(i),df1, df2)
-		end
-
-		return retVec
-
-	elseif(type(prob)=="number") then
-		return SYSTEM.qf(prob, df1, df2)
-
-	else
-		error("First argument (p): number or Vector.", std.const.ERRORLEVEL)
-	end
-
-	return nil
-end
 
 
 local function qf(...)
@@ -180,32 +146,35 @@ local function qf(...)
 		end
 
 		assert(NTblArgs>0,"Keys: p, df1 and df2.")
-		assert(type(pval)=="number" or type(pval)=="Vector","ERROR: 'p': number or Vector.")
+	
 		
-		return QF(pval,df1, df2)
+		return FDIST(SYSTEM.qf, pval,df1, df2)
 	end
 
 	
-	return QF(args[1], args[2], args[3])
+	return FDIST(SYSTEM.qf, args[1], args[2], args[3])
 end
 
 
 
---*************************Random number generation*************************
+
+
+
+
 
 local function RF(n, df1, df2)
 	
 	assert(math.type(n)=="integer","First argument (key: n) must be integer.")
-	assert(n>0,"First argument (key: n) must be >0.")
+	assert(n > 0, "First argument (key: n) must be >0.")
 	
-	assert(math.type(df1)=="integer","(key: df1)  must be integer.")
-	assert(df1>0,"(key: df1)  must be >0")
+	assert(math.type(df1) == "integer", "(key: df1)  must be integer.")
+	assert(df1 > 0,"(key: df1)  must be >0")
 
 	assert(math.type(df2)=="integer","(key: df2)  must be integer.")
-	assert(df2>0,"(key: df2)  must be >0")
+	assert(df2 > 0,"(key: df2)  must be >0")
 
 
-	return SYSTEM.rf(n,df1, df2)
+	return SYSTEM.rf(n, df1, df2)
 		
 end
 
@@ -243,6 +212,11 @@ local function rf(...)
 	return RF(args[1],args[2], args[3])
 
 end
+
+
+
+
+
 
 
 std.df=df

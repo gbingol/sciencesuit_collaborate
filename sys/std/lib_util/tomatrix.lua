@@ -130,7 +130,7 @@ end
 
 
 
-std.tomatrix=tomatrix
+std.util.tomatrix=tomatrix
 
 
 

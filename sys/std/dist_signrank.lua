@@ -1,26 +1,47 @@
 local std <const> =std
 
 
-local function DSIGNRANK( arg, n)
+local function SIGNRANK(func, vec, n)
 
-	assert(type(arg)=="Vector" or type(arg)=="number","First arg must be either a number or of type Vector!")
-	assert(math.type(n)=="integer" and n>0,"Second arg (n) must be an integer >0")
+	assert(type(func)=="function", "function expected")
+	
+	
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","number/Vector/Array expected")
+	
+	assert(math.type(n)=="integer" and n > 0,"Second arg (n) must be an integer >0")
 
-	if(type(arg)=="Vector") then
-		local retVec=arg[{}] --clone
+
+	if(type(vec)=="Vector" or type(vec)=="Array") then
+		local retCont=nil
 		
-		std.for_each(retVec,SYSTEM.dsignrank,n)
+		if(type(vec)=="Array") then
+			vec=vec:clone()
+			vec:keep_realnumbers()
+			
+			retCont=std.Array.new(#vec)
+			
+		else
+			retCont=std.Vector.new(#vec)
+		end
 
-		return retVec
 
-
-	elseif(type(arg)=="number") then
-		return SYSTEM.dsignrank(arg,n)
+		for i=1,#vec do
+			retCont[i]=func(vec(i), n)
+		end
+		
+		
+		return retCont
 
 	end
 
-	return nil
+
+	return func(vec, n)
 end
+
+
+
+
+
 
 
 local function dsignrank(...)
@@ -38,7 +59,7 @@ local function dsignrank(...)
 			if(k=="x") then xval=v
 			elseif(k=="n") then n=v
 			else 
-				error("Keys can be: x, n.", std.const.ERRORLEVEL) 
+				error("Keys: x, n.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -47,40 +68,19 @@ local function dsignrank(...)
 
 		assert(NTblArgs>0,"Keys: x, n.")
 
-		assert(xval~=nil and n~=nil , "A value must be assigned to all of the table keys (x, n ).")
-		
-		return DSIGNRANK(xval,n)
+
+		return SIGNRANK(SYSTEM.dsignrank, xval,n)
 		
 	end
 	
 	
-	return DSIGNRANK(args[1],args[2])
+	return SIGNRANK(SYSTEM.dsignrank, args[1],args[2])
 
 end
 
 
---****************************************
-
-local function PSIGNRANK( arg, n)
-
-	assert(type(arg)=="Vector" or type(arg)=="number","First arg: number or Vector!")
-	assert(math.type(n)=="integer" and n>0,"Second arg (n) must be an integer >0")
-
-	if(type(arg)=="Vector") then
-		local retVec=arg[{}] --clone
-		
-		std.for_each(retVec,SYSTEM.psignrank,n)
-
-		return retVec
 
 
-	elseif(type(arg)=="number") then
-		return SYSTEM.psignrank(arg,n)
-
-	end
-
-	return nil
-end
 
 
 local function psignrank(...)
@@ -106,42 +106,21 @@ local function psignrank(...)
 		end
 
 		assert(NTblArgs>0,"Keys: q, n.")
-
-		assert(qval~=nil and n~=nil , "A value must be assigned to all of the table keys (q, n ).")
 		
-		return PSIGNRANK(qval,n)
+		
+		return SIGNRANK(SYSTEM.psignrank, qval,n)
 		
 	end
 	
 	
-	return PSIGNRANK(args[1],args[2])
+	return SIGNRANK(SYSTEM.psignrank, args[1],args[2])
 
 end
 
 
 
---****************************************
-
-local function QSIGNRANK( arg, n)
-
-	assert(type(arg)=="Vector" or type(arg)=="number","First arg: number or Vector!")
-	assert(math.type(n)=="integer" and n>0,"Second arg (n) must be an integer >0")
-
-	if(type(arg)=="Vector") then
-		local retVec=arg[{}] --clone
-		
-		std.for_each(retVec,SYSTEM.qsignrank,n)
-
-		return retVec
 
 
-	elseif(type(arg)=="number") then
-		return SYSTEM.qsignrank(arg,n)
-
-	end
-
-	return nil
-end
 
 
 local function qsignrank(...)
@@ -159,7 +138,7 @@ local function qsignrank(...)
 			if(k=="p") then pval=v
 			elseif(k=="n") then n=v
 			else 
-				error("Kkeys can be: p, n.", std.const.ERRORLEVEL) 
+				error("Keys: p, n.", std.const.ERRORLEVEL) 
 			end
 
 			NTblArgs=NTblArgs+1
@@ -168,16 +147,19 @@ local function qsignrank(...)
 
 		assert(NTblArgs>0,"Keys: q, n.")
 
-		assert(pval~=nil and n~=nil , "A value must be assigned to all of the table keys (p, n ).")
+
 		
-		return QSIGNRANK(pval,n)
+		return SIGNRANK(SYSTEM.qsignrank, pval,n)
 		
 	end
 	
 	
-	return QSIGNRANK(args[1],args[2])
+	return SIGNRANK(SYSTEM.qsignrank, args[1],args[2])
 
 end
+
+
+
 
 
 
@@ -185,6 +167,9 @@ end
 std.dsignrank=dsignrank
 std.psignrank=psignrank
 std.qsignrank=qsignrank
+
+
+
 
 
 

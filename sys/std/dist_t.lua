@@ -1,27 +1,45 @@
 local std <const> =std
 
 
-local function DT(x, df)
-	
-	assert(type(x)=="Vector" or type(x)=="number","First arg (x): number or Vector")
-	
-	assert(math.type(df) == "integer","Degrees of freedom (key: df)  must be integer.")
-	assert(df>0,"Degrees of freedom (key: df)  must be >0")
-	
-	if(type(x)=="Vector") then
 
-		local vecSize=#x
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.dt(x(i),df)
+local function TDIST(func, vec, df)
+	
+	assert(type(func)=="function", "function expected")
+	
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector/Array")
+	
+	assert(math.type(df)=="integer" and df>0,"(df)  must be integer >0")
+
+	
+	if(type(vec)=="Vector" or type(vec)=="Array") then
+		local retCont=nil
+		
+		if(type(vec)=="Array") then
+			vec=vec:clone()
+			vec:keep_realnumbers()
+			
+			retCont=std.Array.new(#vec)
+		
+		else
+			retCont=std.Vector.new(#vec)
+		end
+	
+	
+		for i=1,#vec do
+			retCont[i]=func(vec(i), df)
 		end
 		
-		return retVec
+		
+		return retCont
+
 	end
 
-	return SYSTEM.dt(x,df)
 
+	return func(vec, df)
 end
+
+
+
 
 
 
@@ -47,38 +65,17 @@ local function dt(...)
 
 		assert(NArgsTbl>0,"Keys can be: x, and df.")
 		
-		return DT(xval, df)
+		return TDIST(SYSTEM.dt, xval, df)
 	end
 
-	return DT(args[1],args[2])
+	return TDIST(SYSTEM.dt, args[1],args[2])
 
 end
 
 
 
 
-local function PT(qval, df)
 
-	assert(type(qval)=="Vector" or type(qval)=="number","First arg (q): number or Vector.")
-	
-	assert(math.type(df) == "integer","Degrees of freedom (key: df) must be integer.")
-	assert(df>0,"Degrees of freedom (key: df)  must be >0")
-	
-	if(type(qval)=="Vector") then
-
-		local vecSize=#qval
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.pt(qval(i),df)
-		end
-
-		return retVec
-	end
-
-	
-	return SYSTEM.pt(qval,df)
-
-end
 
 
 local function pt(...)
@@ -102,40 +99,17 @@ local function pt(...)
 
 		assert(NTblArgs==2, "Keys can be: q and df.")
 		
-		return PT(qval,df)
+		return TDIST(SYSTEM.pt, qval,df)
 	end
 
 	
-	return PT(args[1], args[2])
+	return TDIST(SYSTEM.pt, args[1], args[2])
 end
 
 
 
--- *******************************************************************
 
-local function QT(prob, df)
 
-	assert(type(prob)=="number" or type(prob)=="Vector","First arg (p): number or Vector.")
-
-	assert(math.type(df)=="integer","Degrees of freedom (key: df) must be integer.")
-	
-	assert(df>0,"ERROR: Degrees of freedom (key: df)  must be >0")
-
-	if(type(prob)=="Vector") then
-
-		local vecSize=#prob
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.qt(prob(i),df)
-		end
-
-		return retVec
-
-	end
-
-	return SYSTEM.qt(prob,df)
-
-end
 
 
 local function qt(...)
@@ -160,24 +134,25 @@ local function qt(...)
 		assert(NTblArgs>0, "Keys: p and df.")
 		
 
-		return QT(pval,df)
+		return TDIST(SYSTEM.qt, pval,df)
 	end
 
 	
-	return QT(args[1], args[2])
+	return TDIST(SYSTEM.qt, args[1], args[2])
 end
 
 
 
---*************************Random number generation*************************
+
+
 
 local function RT(n, df)
 	
-	assert(math.type(n)=="integer","First arg (key: n) must be integer.")
-	assert(n>0,"First arg (key: n) must be >0")
+	assert(math.type(n)=="integer","First arg (n) must be integer.")
+	assert(n>0,"First arg (n) must be >0")
 	
-	assert(math.type(df)=="integer","Degrees of freedom (key: df)  must be integer.")
-	assert(df>0,"Degrees of freedom (key: df)  must be >0")
+	assert(math.type(df)=="integer","Degrees of freedom (df)  must be integer.")
+	assert(df>0,"Degrees of freedom (df)  must be >0")
 	
 	
 	return SYSTEM.rt(n,df)

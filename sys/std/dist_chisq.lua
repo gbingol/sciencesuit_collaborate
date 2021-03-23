@@ -1,29 +1,44 @@
 local std <const> =std
 
 
-local function DCHISQ(arg1, df)
+local function CHISQ(func, vec, df)
 	
-	assert(math.type(df)=="integer" and df>0,"(key: df)  must be integer >0")
+	assert(type(func)=="function", "function expected")
+	
+	assert(type(vec)=="Vector" or type(vec)=="Array" or type(vec)=="number","First arg, number/Vector/Array")
+	
+	assert(math.type(df)=="integer" and df>0,"(df)  must be integer >0")
 
-	if(type(arg1)=="Vector") then
-		local vecSize=#arg1
-		local retVec=std.Vector.new(vecSize)
-		for i=1,vecSize do
-			retVec[i]=SYSTEM.dchisq(arg1(i),df)
+	
+	if(type(vec)=="Vector" or type(vec)=="Array") then
+		local retCont=nil
+		
+		if(type(vec)=="Array") then
+			vec=vec:clone()
+			vec:keep_realnumbers()
+			
+			retCont=std.Array.new(#vec)
+			
+		else
+			retCont=std.Vector.new(#vec)
+		end
+	
+	
+		for i=1,#vec do
+			retCont[i]=func(vec(i), df)
 		end
 		
-		return retVec
+		
+		return retCont
 
-	elseif(type(arg1)=="number") then
-		return SYSTEM.dchisq(arg1,df)
-
-	else
-		error("First arg (key: x): number or Vector!", std.const.ERRORLEVEL)
-	
 	end
 
-	return nil
+
+	return func(vec, df)
 end
+
+
+
 
 
 
@@ -48,41 +63,21 @@ local function dchisq(...)
 
 		assert(NArgsTbl>0,"Keys: x, and df.")
 
-		assert(type(xval)=="number" or type(xval)=="Vector","A number or Vector value must be assigned to the key 'x'." )
 			
-		return DCHISQ(xval, df)
+		return CHISQ(SYSTEM.dchisq, xval, df)
 		
 
 	end
 
-	return DCHISQ(args[1],args[2])
+
+
+	return CHISQ(SYSTEM.dchisq, args[1],args[2])
 
 end
 
 
 
 
-local function PCHISQ(qval, df)
-
-	assert(math.type(df)=="integer" and df>0,"Degrees of freedom (key: df) must be integer >0")
-
-	if(type(qval)=="Vector") then
-		local retVec=std.Vector.new(#qval)
-		for i=1,#qval do
-			retVec[i]=SYSTEM.pchisq(qval(i),df)
-		end
-
-		return retVec
-
-	elseif(type(qval)=="number") then
-		return SYSTEM.pchisq(qval,df)
-
-	else
-		error("First argument (q): number or Vector.", std.const.ERRORLEVEL)
-	end
-
-	return nil
-end
 
 
 local function pchisq(...)
@@ -106,40 +101,18 @@ local function pchisq(...)
 
 		assert(NTblArgs==2, "Keys: q and df.")
 	
-		assert(type(qval)=="number" or type(qval)=="Vector","'q': number or Vector.")
 	
-		return PCHISQ(qval,df)
+		return CHISQ(SYSTEM.pchisq, qval,df)
 	end
 
 	
-	return PCHISQ(args[1], args[2])
+	return CHISQ(SYSTEM.pchisq, args[1], args[2])
 end
 
 
 
--- *******************************************************************
 
-local function QCHISQ(prob, df)
 
-	assert(math.type(df)=="integer" and df>0,"Degrees of freedom (key: df) must be integer >0")
-
-	if(type(prob)=="Vector") then
-		local retVec=std.Vector.new(#prob)
-		for i=1,#prob do
-			retVec[i]=SYSTEM.qchisq(prob(i),df)
-		end
-
-		return retVec
-
-	elseif(type(prob)=="number") then
-		return SYSTEM.qchisq(prob,df)
-
-	else
-		error("First argument (p): number or Vector.", std.const.ERRORLEVEL)
-	end
-
-	return nil
-end
 
 
 local function qchisq(...)
@@ -163,18 +136,19 @@ local function qchisq(...)
 
 		assert(NTblArgs>0,"Keys: p and df.")
 
-		assert(type(pval)=="number" or type(pval)=="Vector","'p': number or Vector.")
 		
-		return QCHISQ(pval,df)
+		return CHISQ(SYSTEM.qchisq, pval,df)
 	end
 
 	
-	return QCHISQ(args[1], args[2])
+	return CHISQ(SYSTEM.qchisq, args[1], args[2])
 end
 
 
 
---*************************Random number generation*************************
+
+
+
 
 local function RCHISQ(n, df)
 	
@@ -216,6 +190,10 @@ local function rchisq(...)
 	return RCHISQ(args[1],args[2])
 
 end
+
+
+
+
 
 
 std.dchisq=dchisq

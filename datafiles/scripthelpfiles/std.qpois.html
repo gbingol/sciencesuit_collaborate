@@ -8,7 +8,7 @@
 <p>
     Computes the lower tail quantile (inverse of ppois). <br>
     The function always rounds up the result. <br> <br>
-    Returns a Vector or a number.
+    Returns number/Vector/Array.
 </p>
 
 <p><b> Syntax:</b></p> 
@@ -21,7 +21,7 @@
 <table border="1" cellspacing="0">
     <tr>
         <td><i>p:</i></td>  
-        <td>Cumulative probability &larr; Vector / number</td>
+        <td>Cumulative probability &larr; number/Vector/Array</td>
     </tr>
 
     <tr>
@@ -30,13 +30,16 @@
     </tr>
     
 </table>
-    
-<p><b>Example:</b></p>
+   
+
+
+<h3>Example:</h3>
 <p>
     &gt;&gt;std.ppois{q=1, lambda=3} <br>
     0.199148 <br>
 
     <br>
+    
     &gt;&gt;std.qpois{p=0.20, lambda=3} -- slightly greater than 0.199 <br>
     2
 </p>

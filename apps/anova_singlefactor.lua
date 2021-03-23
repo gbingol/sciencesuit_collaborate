@@ -134,7 +134,7 @@ local function ANOVASingleFactor()
 			local tbl={}
 			
 			for i=1,rngResponses:ncols() do
-				tbl[i]=std.tovector(rngResponses:col(i))
+				tbl[i]=std.util.tovector(rngResponses:col(i))
 			end
 			
 			pvalue, AnovaTable= std.anova(table.unpack(tbl)) 
@@ -146,12 +146,12 @@ local function ANOVASingleFactor()
 			
 			ASSERT(rngFactors:ncols()==1 and rngResponses:ncols()==1, "The factors or the responses must be in a single column") 
 			
-			local responses, NonNum=std.tovector(rngResponses:col(1))
+			local responses, NonNum=std.util.tovector(rngResponses:col(1))
 			
 			ASSERT(responses~=nil and NonNum==0, "There is none-numeric data in the selected response range") 
 				
 			
-			local factors=std.tovector(rngFactors:col(1))
+			local factors=std.util.tovector(rngFactors:col(1))
 			local uniquefactors=factors[{}]
 			uniquefactors:unique()
 			

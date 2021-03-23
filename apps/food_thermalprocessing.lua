@@ -301,7 +301,7 @@ local function FoodThermalProcessing()
 				CurTemperatureRangeInfo=tostring(range_T:col(i))
 			end
 			
-			status, row=pcall(Compute,std.tovector(range_time), std.tovector(range_T:col(i)), row, col, CurTemperatureRangeInfo)
+			status, row=pcall(Compute,std.util.tovector(range_time), std.util.tovector(range_T:col(i)), row, col, CurTemperatureRangeInfo)
 			
 			if(not status) then
 				iup.Message("Error", err)

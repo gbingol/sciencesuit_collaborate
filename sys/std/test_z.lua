@@ -27,7 +27,7 @@ local function ztest1(xvec, sd, mu, alternative, conflevel)
 	if(type(xvec)=="Array") then
 		xvec=xvec:clone()
 		
-		xvec:keep_numbers()
+		xvec:keep_realnumbers()
 	end
 	
 	

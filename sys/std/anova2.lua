@@ -20,11 +20,11 @@ local function anova2(yobs, x1, x2)
 	--yobs: Observed variable
 	--x1,x2: factors
 
-	assert(type(yobs)=="Vector" or type(yobs)=="Array","First arg, response, must be Vector or Array")
-	assert(type(x1)=="Vector" or type(x1)=="Array","Second arg, factor #1, must be either type Vector or Array")
-	assert(type(x2)=="Vector" or type(x2)=="Array","Third arg, factor #2, must be either type Vector or Array") 
+	assert(type(yobs)=="Vector" or type(yobs)=="Array","First arg, response, must be Vector/Array")
+	assert(type(x1)=="Vector" or type(x1)=="Array","Second arg, factor #1, must be either type Vector/Array")
+	assert(type(x2)=="Vector" or type(x2)=="Array","Third arg, factor #2, must be either type Vector/Array") 
 	
-	v1, v2 =x1:clone(), x2:clone()
+	local v1, v2 =x1:clone(), x2:clone()
 	v1:unique()
 	v2:unique()
 	
@@ -32,12 +32,12 @@ local function anova2(yobs, x1, x2)
 	if(type(yobs)=="Array") then
 		yobs=yobs:clone()
 		
-		yobs:keep_numbers()
+		yobs:keep_realnumbers()
 	end
 	
 
 	--prepare a 3D table
-	tbl={}
+	local tbl={}
 	for i=1, #v2 do
 		tbl[i]={}
 		for j=1,#v1 do
@@ -67,7 +67,7 @@ local function anova2(yobs, x1, x2)
 	local MatAverage=std.Matrix.new(#v2, #v1)
 	
 	for i=1, #v2 do
-		local m=std.trans(std.tomatrix(tbl[i]))
+		local m=std.trans(std.util.tomatrix(tbl[i]))
 		local vec=std.trans(GetAveragePerCol(m))
 		
 		for j=1, #vec do 
@@ -77,14 +77,13 @@ local function anova2(yobs, x1, x2)
 	end
 
 
-
-	local RowPerEntryMatrix=std.Matrix.new(#v2, #v1) --to check whether balanced or not
+	--to check whether balanced or not
+	local RowPerEntryMatrix=std.Matrix.new(#v2, #v1) 
 	local GrandMean=std.mean(MatAverage)
 	local SSerror=0
 	
 	
-	for i=1, #v2 do
-		
+	for i=1, #v2 do		
 		for j=1,#v1 do
 			
 			local sz=#tbl[i][j]
@@ -97,12 +96,17 @@ local function anova2(yobs, x1, x2)
 		end
 	end
 
+
+
 	local cmpMat=RowPerEntryMatrix:equal(RowPerEntryMatrix(1,1))
+	
 	
 	local rcmp, ccmp=std.size(cmpMat)
 	if(std.sum(cmpMat)<rcmp*ccmp) then
-		error( "ERROR: This function correctly works for balanced data",std.const.ERRORLEVEL)
+		error( "Balanced data required.",std.const.ERRORLEVEL)
 	end
+
+
 
 	local Nreplicate=#tbl[1][1] -- assuming balanced
 	local DFerror=(Nreplicate-1)*(#v1)*(#v2)
@@ -114,49 +118,39 @@ local function anova2(yobs, x1, x2)
 	local FvalFact1, FvalFact2, Fvalinteract= 0 , 0 , 0
 	local pvalFact1, pvalFact2, pvalinteract= 0, 0, 0
 
-	SSFact1=std.sum( GetAveragePerCol(MatAverage)-GrandMean, 2) *Nreplicate*(#v2)
-	SSFact2=std.sum( GetAveragePerCol(std.trans(MatAverage))-GrandMean, 2) *Nreplicate*(#v1)
+	SSFact1 = std.sum( GetAveragePerCol(MatAverage)-GrandMean, 2) *Nreplicate*(#v2)
+	SSFact2 = std.sum( GetAveragePerCol(std.trans(MatAverage))-GrandMean, 2) *Nreplicate*(#v1)
 	
-	MSFact1=SSFact1/DFFact1
-	MSFact2=SSFact2/DFFact2
+	MSFact1 = SSFact1/DFFact1
+	MSFact2 = SSFact2/DFFact2
 		 
-	local meanj=GetAveragePerCol(MatAverage)
-	local meani=GetAveragePerCol(std.trans(MatAverage))    
+	local meanj = GetAveragePerCol(MatAverage)
+	local meani = GetAveragePerCol(std.trans(MatAverage))    
 	
-	for i=1, std.size(v2) do
-		for j=1, std.size(v1) do
-			SSinteract=SSinteract+(MatAverage(i,j)-meanj(j) -meani(i)+GrandMean)^2
+	for i=1, #v2 do
+		for j=1, #v1 do
+			SSinteract = SSinteract+(MatAverage(i,j)-meanj(j) -meani(i)+GrandMean)^2
 		end
 	end
 	
-	SSinteract=SSinteract*Nreplicate
-	DFinteract=DFFact1*DFFact2
-	MSinteract=SSinteract/DFinteract
-	FvalFact1=MSFact1/MSerror
-	FvalFact2=MSFact2/MSerror
-	Fvalinteract=MSinteract/MSerror 
+	SSinteract = SSinteract*Nreplicate
+	DFinteract = DFFact1*DFFact2
+	MSinteract = SSinteract/DFinteract
+	FvalFact1 = MSFact1/MSerror
+	FvalFact2 = MSFact2/MSerror
+	Fvalinteract = MSinteract/MSerror 
 
-	pvalFact1=1-std.pf(FvalFact1, DFFact1, DFerror)
-	pvalFact2=1-std.pf(FvalFact2, DFFact2, DFerror)
-	pvalinteract=1-std.pf(Fvalinteract, DFinteract, DFerror)
+	pvalFact1 = 1-std.pf(FvalFact1, DFFact1, DFerror)
+	pvalFact2 = 1-std.pf(FvalFact2, DFFact2, DFerror)
+	pvalinteract = 1-std.pf(Fvalinteract, DFinteract, DFerror)
 	
-	local AnovaTable={}
-	AnovaTable.name="anova2"
-	AnovaTable.SSFact1=SSFact1
-	AnovaTable.SSFact2=SSFact2
-	AnovaTable.SSinteract=SSinteract
-	AnovaTable.DFFact1=DFFact1
-	AnovaTable.DFFact2=DFFact2
-	AnovaTable.DFinteract=DFinteract
-	AnovaTable.MSFact1=MSFact1
-	AnovaTable.MSFact2=MSFact2
-	AnovaTable.MSinteract=MSinteract
-	AnovaTable.FvalFact1=FvalFact1
-	AnovaTable.FvalFact2=FvalFact2
-	AnovaTable.Fvalinteract=Fvalinteract
-	AnovaTable.SSError=SSerror
-	AnovaTable.DFError=DFerror
-	AnovaTable.MSError=MSerror
+	
+	local AnovaTable={name="anova2", SSFact1=SSFact1, SSFact2=SSFact2 , SSinteract=SSinteract,
+						DFFact1=DFFact1, DFFact2=DFFact2, DFinteract=DFinteract, 
+						MSFact1=MSFact1, MSFact2=MSFact2,  MSinteract=MSinteract,
+						FvalFact1=FvalFact1,  FvalFact2=FvalFact2, Fvalinteract=Fvalinteract,
+						SSError=SSerror,  DFError=DFerror,  MSError=MSerror}
+	
 	
 	local retVec=std.Vector.new(3)
 	retVec[1]=pvalFact1

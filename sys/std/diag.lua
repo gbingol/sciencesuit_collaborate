@@ -4,7 +4,7 @@ local function diag(m)
 	--Output: A vector containing diagonal elements of a matrix
 	--Input: m is a matrix, rectangular or square
 	
-	assert(type(m)=="Matrix","diag command is only applicable to matrices.")
+	assert(type(m)=="Matrix","Matrix expected.")
 	
 	local row,col=std.size(m)
 	local k=row
@@ -17,6 +17,7 @@ local function diag(m)
 	for i=1,k do
 		retVec[i]=m[i][i]
 	end
+
 
 	return retVec
 end

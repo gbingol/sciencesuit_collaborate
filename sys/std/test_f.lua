@@ -32,14 +32,14 @@ local function FTEST(xvec,yvec, alternative, ratio, conflevel )
 	if(type(xvec)=="Array") then
 		xvec=xvec:clone()
 		
-		xvec:keep_numbers()
+		xvec:keep_realnumbers()
 	end
 
 
 	if(type(yvec)=="Array") then
 		yvec=yvec:clone()
 		
-		yvec:keep_numbers()
+		yvec:keep_realnumbers()
 	end
 	
 	

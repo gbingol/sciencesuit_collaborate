@@ -16,12 +16,12 @@ local function cov(cont1, cont2, str)
 	
 	if(type(cont1)=="Array") then
 		cont1=cont1:clone()
-		cont1:keep_numbers()
+		cont1:keep_realnumbers()
 	end
 
 	if(type(cont2)=="Array") then
 		cont2=cont2:clone()
-		cont2:keep_numbers()
+		cont2:keep_realnumbers()
 	end
 
 
@@ -58,15 +58,18 @@ local function cov(cont1, cont2, str)
 	local total=0
 	
 	local k2,v2=next(cont2,nil)
+	
 	for k1, v1 in pairs(cont1) do
-		total=total+(v1-avg1)*(v2-avg2)
+		total = total + (v1-avg1)*(v2-avg2)
 		
-		k2,v2=next(cont2,k2)
+		k2,v2 = next(cont2,k2)
 	end
 	
 
 	return total/df
 end
+
+
 
 
 std.cov=cov
