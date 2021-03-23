@@ -21,7 +21,7 @@ local function GetRange(fluid, key, IsSuperHeated)
 	if(IsSuperHeated==nil or  IsSuperHeated==true) then
 		FluidTable=fluid.m_SuperHeatedTable
 	else
-		FluidTable=fluid.m_SaturationTable
+		FluidTable=fluid.m_SINGLEPARAM
 	end
 	
 	local strQuery="SELECT max("..key..") FROM "..FluidTable
@@ -42,14 +42,14 @@ end
 
 
 --str is the name of the fluid, say Water or R134A
---Search for str in the MainTable for both ASHRAE and IUPAC names
+--Search for str in the MainTable for both ALTERNATIVE and NAME names
 
 local function Initialize(str, ConnectionInfo) 
 	
 	if(ConnectionInfo~=nil) then
 		
 		if(ConnectionInfo.m_Database~=nil and ConnectionInfo.m_FluidName~=nil 
-			and ConnectionInfo.FluidState~=nil and ConnectionInfo.m_SaturationTable~=nil
+			and ConnectionInfo.FluidState~=nil and ConnectionInfo.m_SINGLEPARAM~=nil
 			and ConnectionInfo.m_SuperHeatedTable~=nil) then
 			
 			
@@ -61,20 +61,20 @@ local function Initialize(str, ConnectionInfo)
 	
 	
 	
-	local THERMOFLUID={}
+	local REFRIGERANT={}
 
 	
-	local testDBName = std.const.exedir.."/datafiles/ThermoFluids.db"
+	local testDBName = std.const.exedir.."/datafiles/Fluids.db"
 	local m_database = std.Database.new()
 	m_database:open(testDBName)
 	
 	
-	local QueryString="SELECT  SATURATIONTABLE, SUPERHEATEDTABLE FROM MainTable where IUPAC=".."\""..str.."\"".."  collate nocase"
+	local QueryString="SELECT  SINGLEPARAM, SUPERHEATEDTABLE FROM MAINTABLE where NAME=".."\""..str.."\"".."  collate nocase"
 	local set,row,col
 	set,row,col=m_database:sql(QueryString)
 	
 	if(row==0 or row==nil) then
-		QueryString="SELECT  SATURATIONTABLE, SUPERHEATEDTABLE FROM MainTable where ASHRAE=".."\""..str.."\"".." collate nocase"
+		QueryString="SELECT  SINGLEPARAM, SUPERHEATEDTABLE FROM MAINTABLE where ALTERNATIVE=".."\""..str.."\"".." collate nocase"
 		set,row,col=m_database:sql(QueryString)
 		
 		if(row==0 or row==nil) then 
@@ -82,14 +82,14 @@ local function Initialize(str, ConnectionInfo)
 		end
 	end
 
-	THERMOFLUID.m_Database=m_database
-	THERMOFLUID.m_FluidName=str
-	THERMOFLUID.FluidState=nil -- -1 compressed, 0 saturated, 1 superheated
-	THERMOFLUID.m_SaturationTable=set[1][1]
-	THERMOFLUID.m_SuperHeatedTable=set[1][2]
+	REFRIGERANT.m_Database=m_database
+	REFRIGERANT.m_FluidName=str
+	REFRIGERANT.FluidState=nil -- -1 compressed, 0 saturated, 1 superheated
+	REFRIGERANT.m_SINGLEPARAM=set[1][1]
+	REFRIGERANT.m_SuperHeatedTable=set[1][2]
 	
 
-	return THERMOFLUID
+	return REFRIGERANT
 end
 
 
@@ -105,7 +105,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	
 	param1=string.lower(param1)
 	
-	local AvailableCols=db:columns(fluid.m_SaturationTable)
+	local AvailableCols=db:columns(fluid.m_SINGLEPARAM)
 	
 	local ColumnNames=""
 	
@@ -130,7 +130,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	
 	
 	--Check if the numbers are increasing or decreasing for the given property
-	strQuery="SELECT "..param1.." FROM "..fluid.m_SaturationTable 
+	strQuery="SELECT "..param1.." FROM "..fluid.m_SINGLEPARAM 
 	set,row, col=db:sql(strQuery)
 
 	assert(row>6, "Not enough data for the particular fluid")
@@ -146,7 +146,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	local RowLoc;
 
 	
-	strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SaturationTable.." WHERE "..param1..">="..tostring(val) 
+	strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1..">="..tostring(val) 
 	set,row, col=db:sql(strQuery)
 	
 	if(IsIncreasing) then RowLoc=1 else RowLoc=row end
@@ -157,7 +157,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	local SfH, SgH=set[RowLoc][7] , set[RowLoc][8]
 
 
-	strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SaturationTable.." WHERE "..param1.."<="..tostring(val) 
+	strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1.."<="..tostring(val) 
 	set,row, col=db:sql(strQuery)
 	
 	if(IsIncreasing) then RowLoc=row else RowLoc=1 end
@@ -173,7 +173,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	
 	local x1, x2=0, 0
 	
-	strQuery="SELECT "..param1.." FROM "..fluid.m_SaturationTable.." WHERE "..param1.."<="..tostring(val) 
+	strQuery="SELECT "..param1.." FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1.."<="..tostring(val) 
 	set,row, col=db:sql(strQuery)
 	
 	if(IsIncreasing) then RowLoc=row else RowLoc=1 end	
@@ -181,7 +181,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	
 		
 	
-	strQuery="SELECT "..param1.." FROM "..fluid.m_SaturationTable.." WHERE "..param1..">="..tostring(val)
+	strQuery="SELECT "..param1.." FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1..">="..tostring(val)
 	set,row, col=db:sql(strQuery)
 	
 	if(IsIncreasing) then RowLoc=1 else RowLoc=row end
@@ -509,7 +509,7 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 end
 
 
-std.thermofluid=ComputeProperties
+std.refrigerant = ComputeProperties
 
 
 
