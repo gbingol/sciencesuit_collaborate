@@ -23,34 +23,34 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 		
 		
 	local chkT= iup.toggle{title="Temperature (\xB0 C)"} 
-	local txtT=iup.text{readonly="yes"}
+	local txtT=iup.text{}
 	
 	local chkP= iup.toggle{title="P (kPa)"} 
-	local txtP=iup.text{readonly="yes"}
+	local txtP=iup.text{}
 	
 	local chkVf= iup.toggle{title="vf (m\xB3/kg)"} 
-	local txtVf=iup.text{readonly="yes"}
+	local txtVf=iup.text{}
 	
 	local chkVg = iup.toggle{title="vg (m\xB3/kg)"} 
-	local txtVg=iup.text{readonly="yes"}
+	local txtVg=iup.text{}
 	
 	local chkUf =iup.toggle{title="Uf (kJ/kg)"} 
-	local txtUf=iup.text{readonly="yes"}
+	local txtUf=iup.text{}
 	
 	local chkUg=iup.toggle{title="Ug (kJ/kg)"}
-	local txtUg=iup.text{readonly="yes"}
+	local txtUg=iup.text{}
 	
 	local chkHf = iup.toggle{title="hf (kJ/kg)"}
-	local txtHf=iup.text{readonly="yes"}
+	local txtHf=iup.text{}
 	
 	local chkHg = iup.toggle{title="hg (kJ/kg)"}
-	local txtHg=iup.text{readonly="yes"}
+	local txtHg=iup.text{}
 	
 	local chkSf = iup.toggle{title="Sf (kJ/kg\xB7K)"}
-	local txtSf=iup.text{readonly="yes"}
+	local txtSf=iup.text{}
 	
 	local chkSg = iup.toggle{title="Sg (kJ/kg\xB7K)"}
-	local txtSg=iup.text{readonly="yes"}
+	local txtSg=iup.text{}
 	
 	
 	
@@ -71,61 +71,81 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	
 	
 	
-	local ChkBoxes={chkT, chkP, chkVf, chkVg, chkUf, chkUg, chkHf, chkHg,chkSf, chkSg}
+	--keys are equivalent to keys returned by std.refrigerant func
+	local Properties={ T={chkT, txtT}, P={chkP, txtP}, 
+						Vf={chkVf, txtVf}, Vg={chkVg, txtVg}, 
+						Uf={chkUf, txtUf}, Ug={chkUg, txtUg}, 
+						Hf={chkHf, txtHf}, Hg={chkHg, txtHg}, 
+						Sf={chkSf, txtSf}, Sg={chkSg, txtSg}}
 	
-	local ActiveProperty={"T", "P", "Vf", "Vg", "Uf", "Ug", "Hf", "Hg", "Sf", "Sg"}
 	
-	local CurFluidName=""
+	--selected fluid's name
+	local CurFluidName
+	
+	--selected property name
+	local ActiveProperty = "" , ""
+	
+	--selected property's value
+	local CurValue=nil
+	
+	
 	
 	
 	local function OnSaturatedCalculate()
 	
-		assert(CurFluidName~="", "The fluid type must be selected.")
-			
-		assert(GetCheckBoxes("ON") < 1, "At least one selection must be made")
-			
+		assert(CurFluidName ~= "", "The fluid type must be selected.")
 		
-		local props={}
+		--To check if anything checked
+		local NChecked=0
 		
-		if(m_IsP==1 and m_IsT==0) then 
-			props=std.thermofluid(m_CurFluidName, {P=P}) 
+		for k, v in pairs(Properties) do
+			local chk=v[1]
+			local txt=v[2]
 			
-			NofSel=NofSel+1
-			
-			txtT.value=string.format("%.2f",tostring(props.T))
-			
-		elseif(m_IsP==0 and m_IsT==1) then 
-			props=std.thermofluid(m_CurFluidName, {T=T}) 
-			
-			NofSel=NofSel+1 
-			
-			txtP.value=string.format("%.2f",tostring(props.P))
-		end
-		
-		if(NofSel==1) then
-			local txts={txtVf,txtVg, txtUf, txtUg, txtHf, txtHg, txtSf, txtSg}
-			
-			local keys={"vf", "vg", "uf", "ug", "hf", "hg", "sf", "sg"}
-			
-			local format={"%.4f","%.3f","%.2f","%.2f","%.2f","%.2f","%.3f","%.3f"}
-			
-			for i=1, #txts do
-				txts[i].value=string.format(format[i],tostring(props[keys[i]]))
+			if(chk.value=="ON") then
+				NChecked = NChecked + 1
+				
+				ActiveProperty = k
+				
+				CurValue=tonumber(txt.value)
 			end
 		end
-		
-		
-		if(m_IsP==1 and m_IsT==1) then 
-			props=std.thermofluid(m_CurFluidName,{P=P, T=T})
-			local status=tonumber(props.state)
+
 			
-			txtV.value=string.format("%.4f", tostring(props.v))
-			txtH.value=string.format("%.2f",tostring(props.h))
-			txtS.value=string.format("%.3f",tostring(props.s))
+		assert(NChecked >= 1, "At least one selection must be made")
+			
+		
+		local props=std.refrigerant(CurFluidName, {[ActiveProperty]=CurValue}) 
+		
+		
+		for key, value in pairs (Properties) do
+			local txtBox=value[2]
+			key=string.lower(key)
+			
+			for k, computedValue in pairs (props) do
+				k=string.lower(k)
+				
+				if(key == k) then
+					txtBox.value = computedValue
+				end
+
+			end
 		end
-	end
+			
+	end --local function OnSaturatedCalculate()
 	
 	
+	function btnSaturatedCalc:action()
+		local status, err=pcall(OnSaturatedCalculate)
+		
+		if(not status)  then 
+			iup.Message("ERROR",err) 
+		end
+		
+	end 
+
+
+
 	
 	
 	function SaturatedFluidType:action(text, item, state)
@@ -138,32 +158,15 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	
 	
 	
-	function btnSaturatedCalc:action()
-		local status, err=pcall(OnSaturatedCalculate)
-		if(not status)  then 
-			iup.Message("ERROR",err) 
-		end
-		
-	end 
-
-
 	
-	local function GetCheckBoxes(state)
-		local N=0
-		for i=1, #ChkBoxes do
-			if(ChkBoxes[i].value==state) then
-				N=N+1
-			end
-		end
-
-		return N
-	end
 	
-
 	local function UncheckChecked(chk)
-		for i=1, #ChkBoxes do
-			if(ChkBoxes[i]~=chk and ChkBoxes[i].value=="ON") then
-				ChkBoxes[i].value="OFF"
+		for k, v in pairs(Properties) do
+			
+			local chkBox=v[1]
+			
+			if(chkBox ~= chk and chkBox.value=="ON") then
+				chkBox.value="OFF"
 			end
 		end
 	end
