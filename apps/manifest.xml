@@ -15,8 +15,8 @@
 			<IMAGE>apps/images/thermalprocessing.jpg</IMAGE>
 		</BUTTON>
 		
-		<BUTTON NAME="fluidthermoproperties" TITLE="Thermodynamic Properties of Fluids">
-			<FUNCTION>std.app.ThermodynamicPropFluid</FUNCTION>
+		<BUTTON NAME="fluidproperties" TITLE="Properties of Fluids">
+			<FUNCTION>std.app.FluidProperties</FUNCTION>
 			<IMAGE>apps/images/fluid.bmp</IMAGE>
 		</BUTTON>
 		
@@ -25,7 +25,7 @@
 			<ADD>fooddatabase</ADD>
 			<ADD>foodthermalproc</ADD>
 			<ADD>psychrometry</ADD>
-			<ADD>fluidthermoproperties</ADD>
+			<ADD>fluidproperties</ADD>
 		</PANEL>
 		
 		

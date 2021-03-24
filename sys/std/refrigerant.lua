@@ -46,10 +46,11 @@ end
 
 local function Initialize(str, ConnectionInfo) 
 	
+	
 	if(ConnectionInfo~=nil) then
 		
 		if(ConnectionInfo.m_Database~=nil and ConnectionInfo.m_FluidName~=nil 
-			and ConnectionInfo.FluidState~=nil and ConnectionInfo.m_SINGLEPARAM~=nil
+			and ConnectionInfo.m_SINGLEPARAM~=nil
 			and ConnectionInfo.m_SuperHeatedTable~=nil) then
 			
 			
@@ -69,13 +70,13 @@ local function Initialize(str, ConnectionInfo)
 	m_database:open(testDBName)
 	
 	
-	local QueryString="SELECT  SINGLEPARAM, SUPERHEATEDTABLE FROM MAINTABLE where NAME=".."\""..str.."\"".."  collate nocase"
+	local QueryString="SELECT  SINGLEPARAM, SUPERHEATEDTABLE FROM MAINTABLE where NAME=".."\""..str.."\"".."  collate nocase and TYPE=\"R\""
 	local set,row,col
 	set,row,col=m_database:sql(QueryString)
 	
 	if(row==0 or row==nil) then
-		QueryString="SELECT  SINGLEPARAM, SUPERHEATEDTABLE FROM MAINTABLE where ALTERNATIVE=".."\""..str.."\"".." collate nocase"
-		set,row,col=m_database:sql(QueryString)
+		QueryString="SELECT  SINGLEPARAM, SUPERHEATEDTABLE FROM MAINTABLE where ALTERNATIVE=".."\""..str.."\"".." collate nocase and TYPE=\"R\""
+		set, row, col = m_database:sql(QueryString)
 		
 		if(row==0 or row==nil) then 
 			return nil 
@@ -84,7 +85,6 @@ local function Initialize(str, ConnectionInfo)
 
 	REFRIGERANT.m_Database=m_database
 	REFRIGERANT.m_FluidName=str
-	REFRIGERANT.FluidState=nil -- -1 compressed, 0 saturated, 1 superheated
 	REFRIGERANT.m_SINGLEPARAM=set[1][1]
 	REFRIGERANT.m_SuperHeatedTable=set[1][2]
 	
@@ -98,7 +98,7 @@ end
 
 
 
-local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
+local function SINGLEPARAMSEARCH(fluid, val, param1) --P: kPa, T: C
 	local strQuery="";
 	local set,row, col=nil, 0, 0
 	local db=fluid.m_Database
@@ -117,7 +117,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 			break
 		end
 
-		ColumnNames=ColumnNames.."  "..value
+		ColumnNames = ColumnNames.."  "..value
 	end
 
 	assert(ColumnExists==true, "Available options:"..ColumnNames)
@@ -125,6 +125,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	
 	--false for marking it as NOT superheated
 	local MinValue, MaxValue=GetRange(fluid, param1, false) 
+	
 	assert(val>=MinValue and val<=MaxValue,"Valid range: ["..tostring(MinValue)..", "..tostring(MaxValue).."]")
 	
 	
@@ -135,13 +136,11 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 
 	assert(row>6, "Not enough data for the particular fluid")
 	
-	local Diff=set[math.floor(row/2)]-set[1]
 	
-	--this would probably never gonna happen
-	assert(Diff~=0, "Parameter is not linear in the first half")
+	--We select a value from the middle point of the properties and subtract the value at the very beginning
+	-- if Diff>0, then the numbers are increasing otherwise decreasing
+	local Diff = set[math.floor(row/2)] - set[1]
 	
-	local IsIncreasing=false
-	if(Diff>0) then IsIncreasing=true end
 	
 	local RowLoc;
 
@@ -149,7 +148,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1..">="..tostring(val) 
 	set,row, col=db:sql(strQuery)
 	
-	if(IsIncreasing) then RowLoc=1 else RowLoc=row end
+	if(Diff > 0) then RowLoc=1 else RowLoc=row end
 	
 	local PH, TH=set[RowLoc][1] , set[RowLoc][2]
 	local VfH, VgH=set[RowLoc][3] , set[RowLoc][4]
@@ -160,7 +159,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1.."<="..tostring(val) 
 	set,row, col=db:sql(strQuery)
 	
-	if(IsIncreasing) then RowLoc=row else RowLoc=1 end
+	if(Diff > 0) then RowLoc=row else RowLoc=1 end
 
 	local PL, TL=set[RowLoc][1] , set[RowLoc][2]
 	local VfL, VgL=set[RowLoc][3] , set[RowLoc][4]
@@ -176,7 +175,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	strQuery="SELECT "..param1.." FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1.."<="..tostring(val) 
 	set,row, col=db:sql(strQuery)
 	
-	if(IsIncreasing) then RowLoc=row else RowLoc=1 end	
+	if(Diff > 0) then RowLoc=row else RowLoc=1 end	
 	x1=set[RowLoc]
 	
 		
@@ -184,7 +183,7 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 	strQuery="SELECT "..param1.." FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1..">="..tostring(val)
 	set,row, col=db:sql(strQuery)
 	
-	if(IsIncreasing) then RowLoc=1 else RowLoc=row end
+	if(Diff > 0) then RowLoc=1 else RowLoc=row end
 	x2=set[RowLoc]
 	
 	
@@ -221,19 +220,6 @@ local function SaturatedProp(fluid,val, param1, qValue, Quality) --P: kPa, T: C
 		retTable[param1]=val
 	end
 	
-
-	if(Quality~=nil) then 
-		Quality=string.lower(Quality) 
-	end
-	
-
-	if(Quality=="s")  then 
-		retTable.x=(qValue-Sf)/(Sg-Sf) 
-	elseif(Quality=="h") then 
-		retTable.x=(qValue-Hf)/(Hg-Hf) 	
-	elseif(Quality=="v") then 
-		retTable.x=(qValue-Vf)/(Vg-Vf) 
-	end
 		
 
 	return retTable
@@ -406,33 +392,28 @@ end
 local function ComputeProperties(fluidName, t, ConnInfo)
 	--Saturated 
 
-	local ThermFluid=nil
+	local Refrigerant=nil
 	local KeepAlive=false --keep database conn alive
 
 	if(type(ConnInfo)=="boolean" and ConnInfo==true) then
-		ThermFluid=Initialize(fluidName)
+		Refrigerant=Initialize(fluidName)
 		
 		KeepAlive=true
 	
 	elseif(type(ConnInfo)=="table") then
 	
-		ThermFluid=Initialize(fluidName, ConnInfo)
+		Refrigerant=Initialize(fluidName, ConnInfo)
 		
 		KeepAlive=true
 		
 	else
-		ThermFluid=Initialize(fluidName)
+		Refrigerant=Initialize(fluidName)
 		
 		KeepAlive=false
 	end
 		
 	
-	
-	
-	local retTable={}
-	
-	
-	ThermFluid.FluidState=0
+
 	
 	local nargs=0
 	
@@ -441,10 +422,13 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 	end
 	
 	
+	local retTable={}
+	
 	--nargs==1 then saturated
-	if(nargs==1) then 
+	if(nargs == 1) then 
 		local key, val=next(t)
-		retTable= SaturatedProp(ThermFluid, val, key)
+		
+		retTable= SINGLEPARAMSEARCH(Refrigerant, val, key)
 	end
 
 
@@ -452,16 +436,13 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 		--Superheated
 		if(t.T~=nil and t.P~=nil and t.s==nil) then --P,T
 			
-			local saturated= SaturatedProp(ThermFluid, t.P, "P")
+			local saturated= SINGLEPARAMSEARCH(Refrigerant, t.P, "P")
 			
 			if(tonumber(saturated.T)<tonumber(t.T)) then 
-				ThermFluid.FluidState=1
-				
-				retTable= SuperHeatedProp_PT(ThermFluid, t.T, t.P)
+								
+				retTable= SuperHeatedProp_PT(Refrigerant, t.T, t.P)
 				
 			else -- Compressed
-				ThermFluid.FluidState=-1
-				
 				retTable={}
 				retTable.s=saturated.sf
 				retTable.v=saturated.vf 
@@ -473,15 +454,12 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 
 		if(t.T==nil and t.P~=nil and t.s~=nil) then --P,s
 			
-			local saturated= SaturatedProp(ThermFluid, t.P, "P")
+			local saturated= SINGLEPARAMSEARCH(Refrigerant, t.P, "P")
 			
 			if(saturated.sg<tonumber(t.s)) then 
-				ThermFluid.FluidState=1
-				
-				retTable= SuperHeatedProp_PS(ThermFluid, t.s, t.P)
+				retTable= SuperHeatedProp_PS(Refrigerant, t.s, t.P)
 				
 			else -- Compressed
-				ThermFluid.FluidState=-1
 				
 				retTable={}
 				retTable.s=saturated.sf 
@@ -494,12 +472,10 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 	end
 
 	
-	retTable.state=ThermFluid.FluidState
-	
 	if(KeepAlive) then
-		retTable.conninfo= ThermFluid
+		retTable.conninfo= Refrigerant
 	else
-		ThermFluid.m_Database:close()
+		Refrigerant.m_Database:close()
 	end
 
 
