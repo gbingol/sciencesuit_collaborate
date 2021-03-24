@@ -34,10 +34,10 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	local chkVg = iup.toggle{title="vg (m\xB3/kg)"} 
 	local txtVg=iup.text{}
 	
-	local chkUf =iup.toggle{title="Uf (kJ/kg)"} 
+	local chkUf =iup.toggle{title="Uf (kJ/kg)", active="NO"} 
 	local txtUf=iup.text{}
 	
-	local chkUg=iup.toggle{title="Ug (kJ/kg)"}
+	local chkUg=iup.toggle{title="Ug (kJ/kg)", active="NO"}
 	local txtUg=iup.text{}
 	
 	local chkHf = iup.toggle{title="hf (kJ/kg)"}
@@ -80,7 +80,7 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	
 	
 	--selected fluid's name
-	local CurFluidName
+	local CurFluidName = ""
 	
 	--selected property name
 	local ActiveProperty = "" , ""
@@ -93,7 +93,9 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	
 	local function OnSaturatedCalculate()
 	
-		assert(CurFluidName ~= "", "The fluid type must be selected.")
+		if(CurFluidName == "") then
+			error("The fluid type must be selected.", std.const.ERRORLEVEL)
+		end
 		
 		--To check if anything checked
 		local NChecked=0
@@ -112,7 +114,9 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 		end
 
 			
-		assert(NChecked >= 1, "At least one selection must be made")
+		if(NChecked ==0) then 
+			error("At least one selection must be made", std.const.ERRORLEVEL)
+		end
 			
 		
 		local props=std.refrigerant(CurFluidName, {[ActiveProperty]=CurValue}) 
@@ -223,33 +227,12 @@ end
 
 
 
-local function FluidProperties()
 
-	--Database which holds the properties of fluids
-	local m_DB=nil 
-	
-	m_DB=std.Database.new()
-	m_DB:open(std.const.exedir.."/datafiles/Fluids.db")
-	
-	
-	
-		
-	local row, col=0, 0
-	m_RefrigerantNames, row, col=m_DB:sql("SELECT NAME, ALTERNATIVE FROM MainTable WHERE TYPE=\"R\"")
-	
-	local AvailableRefrigerants={}
-		
-	for i=1,row do
-		AvailableRefrigerants[i]=m_RefrigerantNames[i][1].."     ".. m_RefrigerantNames[i][2]
-	end	
-	
-	
-	
-	local page1=Page_SaturatedProps(AvailableRefrigerants)
-	
-	
-	--PAGE 2 (Superheated or Compressed)
-	
+
+
+
+
+local function Page_SuperHeatedProps(AvailableRefrigerants)
 	local SuperHeatedFluidType= iup.list {value=0, dropdown="YES", expand="HORIZONTAL", table.unpack(AvailableRefrigerants)}
 	
 	local chkT = iup.toggle{title= "Temperature (\xB0 C)"}
@@ -283,38 +266,16 @@ local function FluidProperties()
 							iup.space{size="x10"}, SuperHeated, btnSuperHeatedCalc; alignment="ACENTER"}
 	
 	page2.tabtitle="Superheated"
-			
-		
-	
-	-- MAIN DIALOG
-	
-	local tabs=iup.tabs{page1, page2}
-							
-							
-	local icon=std.gui.makeicon(std.const.exedir.."apps/images/fluid.bmp")
-	
-	local dlgRefProps=iup.dialog{tabs;margin="10x10", title="Properties of Fluids", resize="YES", icon=icon}
-	
-	local dlgInitSize=dlgRefProps.size
-	
-	dlgRefProps:show()
 	
 	
 	
+	local CurFluidName = ""
 	
-	
-
-
-
-	
-
-
-
-
-
 	local function OnSuperHeatedCalculate()
 	
-		assert(m_CurFluidName~="", "The fluid type must be selected.")
+		if(CurFluidName == "") then
+			error("The fluid type must be selected.", std.const.ERRORLEVEL)
+		end
 			
 		assert(m_IsP~=0 or m_IsT~=0, "At least one selection must be made")
 			
@@ -365,7 +326,7 @@ local function FluidProperties()
 		
 		
 		if(m_IsP==1 and m_IsT==1) then 
-			props=std.thermofluid(m_CurFluidName,{P=P, T=T})
+			props=std.refrigerant(m_CurFluidName,{P=P, T=T})
 			local status=tonumber(props.state)
 			
 			txtV.value=string.format("%.4f", tostring(props.v))
@@ -376,19 +337,83 @@ local function FluidProperties()
 	
 	
 	
-	
-	
-	
 
-
-
+	
 	function btnSuperHeatedCalc:action()
 		local status, err=pcall(OnSuperHeatedCalculate)
 		if(not status)  then 
 			iup.Message("ERROR",err) 
 		end
 		
-	end 
+	end
+	
+	
+	
+	
+	return page2end
+
+
+
+
+
+
+
+local function FluidProperties()
+
+	--Database which holds the properties of fluids
+	local m_DB=nil 
+	
+	m_DB=std.Database.new()
+	m_DB:open(std.const.exedir.."/datafiles/Fluids.db")
+	
+	
+	
+		
+	local row, col=0, 0
+	m_RefrigerantNames, row, col=m_DB:sql("SELECT NAME, ALTERNATIVE FROM MainTable WHERE TYPE=\"R\"")
+	
+	local AvailableRefrigerants={}
+		
+	for i=1,row do
+		AvailableRefrigerants[i]=m_RefrigerantNames[i][1].."     ".. m_RefrigerantNames[i][2]
+	end	
+	
+	
+	
+	local page1=Page_SaturatedProps(AvailableRefrigerants)
+	
+	local page2=Page_SuperHeatedProps(AvailableRefrigerants)
+	
+	
+	-- MAIN DIALOG
+	
+	local tabs=iup.tabs{page1, page2}
+							
+							
+	local icon=std.gui.makeicon(std.const.exedir.."apps/images/fluid.bmp")
+	
+	local dlgRefProps=iup.dialog{tabs;margin="10x10", title="Properties of Fluids", resize="YES", icon=icon}
+	
+	local dlgInitSize=dlgRefProps.size
+	
+	dlgRefProps:show()
+	
+	
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+
+
+
+	
 	
 	
 end

@@ -126,7 +126,9 @@ local function SINGLEPARAMSEARCH(fluid, val, param1) --P: kPa, T: C
 	--false for marking it as NOT superheated
 	local MinValue, MaxValue=GetRange(fluid, param1, false) 
 	
-	assert(val>=MinValue and val<=MaxValue,"Valid range: ["..tostring(MinValue)..", "..tostring(MaxValue).."]")
+	if(val < MinValue or val> MaxValue) then 
+		error("Valid range: ["..tostring(MinValue)..", "..tostring(MaxValue).."]", std.const.ERRORLEVEL)
+	end
 	
 	
 	
@@ -134,7 +136,7 @@ local function SINGLEPARAMSEARCH(fluid, val, param1) --P: kPa, T: C
 	strQuery="SELECT "..param1.." FROM "..fluid.m_SINGLEPARAM 
 	set,row, col=db:sql(strQuery)
 
-	assert(row>6, "Not enough data for the particular fluid")
+	if(row<6) then error("Not enough data for the particular fluid", std.const.ERRORLEVEL) end
 	
 	
 	--We select a value from the middle point of the properties and subtract the value at the very beginning
@@ -242,7 +244,7 @@ local function GetVHSProperties(fluid, P, T, msg) --Only use for superheated
 	local errMsg = msg.."\n"
 	errMsg=errMsg.."Properties could not be found at P="..tostring(P).." and T="..tostring(T)
 	
-	assert(set ~= nil, errMsg)
+	if(set == nil) then error(errMsg, std.const.ERRORLEVEL) end
 		
 
 	return set, row, col
@@ -254,24 +256,33 @@ local function SuperHeatedProp_PT(fluid, T, P) -- T: C, P: kPa
 	local db=fluid.m_Database
 	local set,row, col
 
-	local Pmin, Pmax=GetRange(fluid, "P")
-	local Tmin, Tmax=GetRange(fluid, "T")
+	local Pmin, Pmax = GetRange(fluid, "P")
+	local Tmin, Tmax = GetRange(fluid, "T")
 
-	assert(P<Pmax,"For superheated properties, the pressure value is out of range, max is "..tostring(Pmax) )
-	assert(T<Tmax, "For superheated properties, the temperature value is out of range, max is"..tostring(Tmax))
+	if(P>Pmax) then
+		error("For superheated properties, the pressure value is out of range, max is "..tostring(Pmax), std.const.ERRORLEVEL )
+	end
+
+	if(T>Tmax) then
+		error("For superheated properties, the temperature value is out of range, max is"..tostring(Tmax), std.const.ERRORLEVEL)
+	end
 	
 
 	local PL, PH, TL, TH=nil, nil, nil, nil
 	local strQuery="SELECT DISTINCT P FROM "..fluid.m_SuperHeatedTable.. " WHERE P<="..tostring(P).." ORDER BY P DESC LIMIT 1"
 	set,row, col=db:sql(strQuery)
 	
-	assert(set~=nil,"ERROR: For superheated properties, the minimum pressure value is:"..tostring(Pmin).." kPa" )
+	if(set==nil) then
+		error("For superheated properties, the minimum pressure value is:"..tostring(Pmin).." kPa" , std.const.ERRORLEVEL)
+	end
 	
 	PL=set[1]
 	strQuery="SELECT DISTINCT P FROM "..fluid.m_SuperHeatedTable.. " WHERE P>"..tostring(P).." LIMIT 1"
 	set,row,col=db:sql(strQuery)
 	
-	assert(set~=nil,"ERROR: For superheated properties, the maximum pressure value is:"..tostring(Pmax).." kPa" )
+	if(set == nil) then
+		error("For superheated properties, the maximum pressure value is:"..tostring(Pmax).." kPa" , std.const.ERRORLEVEL)
+	end
 
 	PH=set[1]
 	strQuery="SELECT DISTINCT T FROM "..fluid.m_SuperHeatedTable.. " WHERE P<="..tostring(P).." and T<="..tostring(T).." ORDER BY T DESC LIMIT 1"
@@ -333,8 +344,13 @@ local function SuperHeatedProp_PS(fluid, S, P) -- T: C, P: kPa
 	local Pmin, Pmax=GetRange(fluid, "P")
 	local Smin, Smax=GetRange(fluid, "S")
 	
-	assert(P<Pmax,"For superheated properties, the pressure value is out of range, max is "..tostring(Pmax))
-	assert(S<Smax,"For superheated properties, the entropy value is out of range, max is"..tostring(Smax))
+	if(P>Pmax) then
+		error("For superheated properties, the pressure value is out of range, max is "..tostring(Pmax), std.const.ERRORLEVEL)
+	end
+
+	if(S>Smax) then
+		error("For superheated properties, the entropy value is out of range, max is"..tostring(Smax), std.const.ERRORLEVEL)
+	end
 	
 	local PL, PH, SL, SH
 	local strQuery="SELECT DISTINCT P FROM "..fluid.m_SuperHeatedTable.. " WHERE P<="..tostring(P).." ORDER BY P DESC LIMIT 1"

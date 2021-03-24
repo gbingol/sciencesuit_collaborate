@@ -2,7 +2,7 @@
 
 
 --Just return error message. If more diagnostic is required, such as at which line the error occured, then set it to 1.
-std.const.ERRORLEVEL=0  
+std.const.ERRORLEVEL=0
 
 std.const.tolerance=1E-5 
 
