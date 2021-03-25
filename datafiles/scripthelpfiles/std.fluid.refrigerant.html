@@ -2,16 +2,16 @@
 <html>
 <body>
 
-<h1>thermofluid</h1>
-<p>Computes <em>thermodynamic</em> properties of fluids.</p>
+<h1>refrigerant</h1>
+<p>Computes <em>thermodynamic</em> properties of refrigerants.</p>
 
 <p>
     
-    thermofluid(fluid=, Properties=, KeepAlive=<span class="LuaKeyword">false</span>) &rarr; Lua Table  <br>
+    refrigerant(fluid=, Properties=, KeepAlive=<span class="LuaKeyword">false</span>) &rarr; Lua Table  <br>
     
     <br>
     
-    thermofluid(fluid=, Properties=, ConnInfo=)  &rarr; Lua Table
+    refrigerant(fluid=, Properties=, ConnInfo=)  &rarr; Lua Table
 </p>
 
 <p>&nbsp;</p>
@@ -189,7 +189,7 @@
 
 
 <p class="CodeCommand">
-    &gt;&gt;std.thermofluid("water", {<mark>T</mark>=100}) <br>
+    &gt;&gt;std.fluid.refrigerant("water", {<mark>T</mark>=100}) <br>
     T=100 &nbsp;&nbsp;&nbsp; hg=2676.1 &nbsp;&nbsp;&nbsp; <red>state=0</red> &nbsp;&nbsp;&nbsp; sg=7.3549 &nbsp;&nbsp;&nbsp;
     sf=1.3069 &nbsp;&nbsp;&nbsp; ug=2506.55 &nbsp;&nbsp;&nbsp; uf=418.934 &nbsp;&nbsp;&nbsp; P=101.35 &nbsp;&nbsp;&nbsp;
     vg=1.6729 &nbsp;&nbsp;&nbsp; vf=0.001044 &nbsp;&nbsp;&nbsp; hf=419.04
@@ -200,7 +200,7 @@
 <p>&nbsp;</p>
 
 <p class="CodeCommand">
-    &gt;&gt;std.thermofluid("water", {<mark>P</mark>=10}) <br>
+    &gt;&gt;std.fluid.refrigerant("water", {<mark>P</mark>=10}) <br>
     P=10 &nbsp;&nbsp;&nbsp; ug=2436.68 &nbsp;&nbsp;&nbsp; vg=14.783 &nbsp;&nbsp;&nbsp; hg=2584.51 &nbsp;&nbsp;&nbsp;
     T=45.7384 &nbsp;&nbsp;&nbsp; hf=191.534 &nbsp;&nbsp;&nbsp; <red>state=0</red> &nbsp;&nbsp;&nbsp; sf=0.648314 &nbsp;&nbsp;&nbsp; 
     vf=0.0010103 &nbsp;&nbsp;&nbsp; uf=191.523 &nbsp;&nbsp;&nbsp; sg=8.15173
@@ -210,7 +210,7 @@
 <p>&nbsp;</p>
 
 <p class="CodeCommand">
-    &gt;&gt;std.thermofluid("water", {<mark>hf</mark>=191}) <br>
+    &gt;&gt;std.fluid.refrigerant("water", {<mark>hf</mark>=191}) <br>
     hf=191 &nbsp;&nbsp;&nbsp; ug=2436.68 &nbsp;&nbsp;&nbsp; vg=14.8655 &nbsp;&nbsp;&nbsp; hg=2584.29 &nbsp;&nbsp;&nbsp;
     T=45.6106 &nbsp;&nbsp;&nbsp; P=9.92958 &nbsp;&nbsp;&nbsp; <red>state=0</red> &nbsp;&nbsp;&nbsp; sf=0.64665 &nbsp;&nbsp;&nbsp;
     vf=0.00101024 &nbsp;&nbsp;&nbsp; uf=190.99 &nbsp;&nbsp;&nbsp; sg=8.15399
@@ -219,7 +219,7 @@
 <p>&nbsp;</p>
 
 <p class="CodeCommand">
-    &gt;&gt;std.thermofluid("water", {<mark>sg</mark>=8.15}) <br>
+    &gt;&gt;std.fluid.refrigerant("water", {<mark>sg</mark>=8.15}) <br>
     sg=8.15 &nbsp;&nbsp;&nbsp; vf=0.00101033 &nbsp;&nbsp;&nbsp; P=10.0539 &nbsp;&nbsp;&nbsp; hf=191.942 &nbsp;&nbsp;&nbsp;
     vg=14.7198 &nbsp;&nbsp;&nbsp; <red>state=0</red> &nbsp;&nbsp;&nbsp;hg=2584.69 &nbsp;&nbsp;&nbsp; sf=0.649587 &nbsp;&nbsp;&nbsp;
     ug=2436.7 &nbsp;&nbsp;&nbsp; T=45.8362 &nbsp;&nbsp;&nbsp;uf=191.932
@@ -237,7 +237,7 @@
 
 <h3>Superheated vapors </h3>
 <p class="CodeCommand">
-    &gt;&gt;std.thermofluid("water", {T=150, P=220}) <br>
+    &gt;&gt;std.fluid.refrigerant("water", {T=150, P=220}) <br>
     <red>state=1</red> &nbsp;&nbsp;&nbsp; h=2767.24 &nbsp;&nbsp;&nbsp; s=7.23916 &nbsp;&nbsp;&nbsp; v=0.89446
 </p>
 
@@ -252,7 +252,7 @@
 
 <h3>Compressed liquids</h3>
 <p class="CodeCommand">
-    &gt;&gt;std.thermofluid("water", {T=150, P=500}) <br>
+    &gt;&gt;std.fluid.refrigerant("water", {T=150, P=500}) <br>
     <red>state=-1</red> &nbsp;&nbsp;&nbsp; h=639.981 &nbsp;&nbsp;&nbsp; s=1.86003 &nbsp;&nbsp;&nbsp; v=0.0010928
 </p>
 
@@ -268,14 +268,14 @@
 <p class="CodeCommand">
     
     <span class="LuaComment">--The last parameter signals that <em>KeepAlive=true</em></span><br>
-    &gt;&gt;tbl=std.thermofluid("water", {P=10}, <span class="LuaKeyword">true</span>) <br>
+    &gt;&gt;tbl=std.fluid.refrigerant("water", {P=10}, <span class="LuaKeyword">true</span>) <br>
     &gt;&gt;tbl<br>
     <red>conninfo=table</red> &nbsp;&nbsp;&nbsp; P=10 &nbsp;&nbsp;&nbsp; ...
     <br>
     <br>
     
     <span class="LuaComment">--Using the "alive" connection</span><br>
-    &gt;&gt;tbl=std.thermofluid("water", {T=150, P=500}, <mark>tbl.conninfo</mark>) <br>
+    &gt;&gt;tbl=std.fluid.refrigerant("water", {T=150, P=500}, <mark>tbl.conninfo</mark>) <br>
     &gt;&gt;tbl <br>
     <red>conninfo=table</red> &nbsp;&nbsp;&nbsp; state=-1&nbsp;&nbsp;&nbsp; h=639.981 &nbsp;&nbsp;&nbsp; ...<br>
     

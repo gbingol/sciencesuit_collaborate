@@ -119,7 +119,7 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 		end
 			
 		
-		local props=std.refrigerant(CurFluidName, {[ActiveProperty]=CurValue}) 
+		local props=std.fluid.refrigerant(CurFluidName, {[ActiveProperty]=CurValue}) 
 		
 		
 		for key, value in pairs (Properties) do
@@ -142,10 +142,7 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	function btnSaturatedCalc:action()
 		local status, err=pcall(OnSaturatedCalculate)
 		
-		if(not status)  then 
-			iup.Message("ERROR",err) 
-		end
-		
+		if(not status)  then iup.Message("ERROR",err) end
 	end 
 
 
@@ -153,9 +150,8 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	
 	
 	function SaturatedFluidType:action(text, item, state)
-		if(state==0) then 
-			return 
-		end --we are not interested in notifications of deselections
+		--we are not interested in notifications of deselections
+		if(state==0) then return end 
 		
 		CurFluidName=m_RefrigerantNames[item][1]
 	end 
@@ -165,6 +161,7 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	
 	
 	local function UncheckChecked(chk)
+
 		for k, v in pairs(Properties) do
 			
 			local chkBox=v[1]
@@ -233,12 +230,12 @@ end
 
 
 local function Page_SuperHeatedProps(AvailableRefrigerants)
-	local SuperHeatedFluidType= iup.list {value=0, dropdown="YES", expand="HORIZONTAL", table.unpack(AvailableRefrigerants)}
+	local ComboFluidType= iup.list {value=0, dropdown="YES", expand="HORIZONTAL", table.unpack(AvailableRefrigerants)}
 	
-	local chkT = iup.toggle{title= "Temperature (\xB0 C)"}
-	local txtT=std.gui.numtext{min=-200} --Todo: Check the lowest temp
+	local lblT = iup.label{title= "Temperature (\xB0 C)"}
+	local txtT=std.gui.numtext{min=-200} 
 	
-	local chkP = iup.toggle{title= "Pressure (kPa)"}
+	local lblP = iup.label{title= "Pressure (kPa)"}
 	local txtP=std.gui.numtext{min=0}
 	
 	local lblV = iup.label{title="v (m\xB3/kg)"}
@@ -250,20 +247,17 @@ local function Page_SuperHeatedProps(AvailableRefrigerants)
 	local lblS=iup.label{title="s (kJ/kg\xB7K)"}
 	local txtS=iup.text{readonly="yes", expand="horizontal"}
 	
-	local GridboxInit=iup.gridbox{chkT, txtT,
-										chkP, txtP,
-								numdiv=2, HOMOGENEOUSCOL="yes",CGAPLIN=10, CGAPCOL=5, orientation="HORIZONTAL"}
+	local GridboxInit=iup.gridbox{lblT, txtT, lblP, txtP,
+						numdiv=2, HOMOGENEOUSCOL="yes",CGAPLIN=10, CGAPCOL=5, orientation="HORIZONTAL"}
 								
-	local SuperHeated=iup.gridbox{lblV, txtV,
-									lblH, txtH,
-									lblS, txtS,
-								numdiv=2, HOMOGENEOUSCOL="yes",CGAPLIN=10, CGAPCOL=1, orientation="HORIZONTAL"}
+	local SuperHeated=iup.gridbox{lblV, txtV, lblH, txtH, lblS, txtS,
+						numdiv=2, HOMOGENEOUSCOL="yes",CGAPLIN=10, CGAPCOL=1, orientation="HORIZONTAL"}
 								
 								
-	local btnSuperHeatedCalc=iup.button{title="Calculate SuperHeated"}
+	local btn=iup.button{title="Calculate"}
 								
-	local page2=iup.vbox{SuperHeatedFluidType,  iup.space{size="x10"},GridboxInit, 
-							iup.space{size="x10"}, SuperHeated, btnSuperHeatedCalc; alignment="ACENTER"}
+	local page2=iup.vbox{ComboFluidType,  iup.space{size="x10"},GridboxInit, 
+							iup.space{size="x10"}, SuperHeated, btn; alignment="ACENTER"}
 	
 	page2.tabtitle="Superheated"
 	
@@ -271,86 +265,56 @@ local function Page_SuperHeatedProps(AvailableRefrigerants)
 	
 	local CurFluidName = ""
 	
+	
+	
 	local function OnSuperHeatedCalculate()
 	
 		if(CurFluidName == "") then
 			error("The fluid type must be selected.", std.const.ERRORLEVEL)
 		end
 			
-		assert(m_IsP~=0 or m_IsT~=0, "At least one selection must be made")
-			
-		
-		if(m_IsP==1 and txtP.value=="") then
-			iup.Message("ERROR","Pressure field cannot be empty, since it is checked.")
-			
-			return
-			
-		elseif(m_IsT==1 and txtT.value=="") then
-			iup.Message("ERROR","Temperature field cannot be empty, since it is checked.")
-			
-			return 
-		end
-		
+				
 		local P=tonumber(txtP.value)
 		local T=tonumber(txtT.value)
 		
-		local NofSel=0
-		local props={}
-		
-		if(m_IsP==1 and m_IsT==0) then 
-			props=std.thermofluid(m_CurFluidName, {P=P}) 
+		if(P == nil) then error("A valid number must be entered for pressure", std.const.ERRORLEVEL) end
 			
-			NofSel=NofSel+1
-			
-			txtT.value=string.format("%.2f",tostring(props.T))
-			
-		elseif(m_IsP==0 and m_IsT==1) then 
-			props=std.thermofluid(m_CurFluidName, {T=T}) 
-			
-			NofSel=NofSel+1 
-			
-			txtP.value=string.format("%.2f",tostring(props.P))
-		end
-		
-		if(NofSel==1) then
-			local txts={txtVf,txtVg, txtUf, txtUg, txtHf, txtHg, txtSf, txtSg}
-			
-			local keys={"vf", "vg", "uf", "ug", "hf", "hg", "sf", "sg"}
-			
-			local format={"%.4f","%.3f","%.2f","%.2f","%.2f","%.2f","%.3f","%.3f"}
-			
-			for i=1, #txts do
-				txts[i].value=string.format(format[i],tostring(props[keys[i]]))
-			end
-		end
+		if(T == nil) then error("A valid number must be entered for temperature", std.const.ERRORLEVEL) end
 		
 		
-		if(m_IsP==1 and m_IsT==1) then 
-			props=std.refrigerant(m_CurFluidName,{P=P, T=T})
-			local status=tonumber(props.state)
+		local props=std.fluid.refrigerant(CurFluidName, {P=P, T=T})
+		
+		txtV.value = props.v
+		txtH.value = props.h
+		txtS.value = props.s
 			
-			txtV.value=string.format("%.4f", tostring(props.v))
-			txtH.value=string.format("%.2f",tostring(props.h))
-			txtS.value=string.format("%.3f",tostring(props.s))
-		end
 	end
 	
 	
 	
 
 	
-	function btnSuperHeatedCalc:action()
+	function btn:action()
 		local status, err=pcall(OnSuperHeatedCalculate)
 		if(not status)  then 
 			iup.Message("ERROR",err) 
 		end
 		
 	end
+
+
+	function ComboFluidType:action(text, item, state)
+		--we are not interested in notifications of deselections
+		if(state==0) then return end 
+		
+		CurFluidName=m_RefrigerantNames[item][1]
+	end 
 	
 	
 	
 	
-	return page2end
+	return page2
+end
 
 
 
@@ -398,26 +362,9 @@ local function FluidProperties()
 	
 	dlgRefProps:show()
 	
-	
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-
-
-
-	
-	
-	
 end
-            
-      
+
+
+
+
 std.app.FluidProperties = FluidProperties
-	

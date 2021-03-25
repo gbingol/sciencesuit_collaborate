@@ -1,21 +1,25 @@
+-- IT IS RECOMMENDED NOT TO EDIT THIS FILE (MAKE SURE YOU REALLY KNOW WHAT YOU ARE DOING AND READ HOW SYSTEM INITIALIZES)
+
 
 package.cpath = package.cpath..";./?.dll;"
 
-TOLERANCE=1E-5 -- planned to be removed in following versions
+TOLERANCE = 1E-5 -- planned to be removed in following versions
 
 
-std.app={}
-std.app.AllowPreSelection=true
+std.app = {}
+std.app.AllowPreSelection = true
 
 
-std.gui={}
+std.gui = {}
 
-std.const={}
+std.const = {}
 
-std.misc={}
-
-
+std.misc = {}
 
 
--- PROGRAMMED BY GOKHAN BINGOL (gbingol@sciencesuit.org)
--- NOTE:THIS FILE WILL BE THE FIRST ONE (AFTER INTERNAL LUA LIBRARIES ARE LOADED) TO BE EXECUTED WHEN SCIENCESUIT LOADS
+--std.util, std.fluid, std.plot created internally via C++
+
+
+
+
+

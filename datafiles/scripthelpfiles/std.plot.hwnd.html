@@ -3,7 +3,7 @@
     
 <body>
     
-<h1>plothwnd</h1>
+<h1>phwnd</h1>
 <p>
       Obtains a handle to the selected plot window. 
       Argument <em>WindowID</em> is the ID of the plot window.
@@ -11,14 +11,14 @@
 
 
 <h3>Syntax:</h3>
-<p>plothwnd(WindowID) &rarr; window handle (light userdata)</p>
+<p>hwnd(WindowID) &rarr; window handle (light userdata)</p>
 
 
 <h3>Example:</h3> 
 
 <p>Assuming that there is already a plot window with ID:1,</p>
 <p>
-      &gt;&gt;hwnd=std.plothwnd(1) <br />
+      &gt;&gt;hwnd=std.plot.hwnd(1) <br />
       &gt;&gt;std.scatter{x=x, y=std.cos(x), hwnd=hwnd} <br />
       Light userdata: 0000028B9A6348F0
 </p>

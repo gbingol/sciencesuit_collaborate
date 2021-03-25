@@ -260,7 +260,7 @@ local function Psychrometry()
 
 		local stat=nil
 
-		stat, PsyOutputValues=pcall(std.psychrometry,PsyInputValues)
+		stat, PsyOutputValues=pcall(std.fluid.psychrometry,PsyInputValues)
 
 		if(stat==false) then
 			iup.Message("ERROR", PsyOutputValues)

@@ -120,7 +120,7 @@ local function SINGLEPARAMSEARCH(fluid, val, param1) --P: kPa, T: C
 		ColumnNames = ColumnNames.."  "..value
 	end
 
-	assert(ColumnExists==true, "Available options:"..ColumnNames)
+	assert(ColumnExists == true, "Available options:"..ColumnNames)
 	
 	
 	--false for marking it as NOT superheated
@@ -235,26 +235,12 @@ end
 
 
 
-local function GetVHSProperties(fluid, P, T, msg) --Only use for superheated
-	local db=fluid.m_Database
-	local strQuery="SELECT V,H,S FROM "..fluid.m_SuperHeatedTable.." WHERE P="..tostring(P).." AND T="..tostring(T)
-	
-	local set, row, col = db:sql(strQuery)
-	
-	local errMsg = msg.."\n"
-	errMsg=errMsg.."Properties could not be found at P="..tostring(P).." and T="..tostring(T)
-	
-	if(set == nil) then error(errMsg, std.const.ERRORLEVEL) end
-		
 
-	return set, row, col
-end
 
 
 
 local function SuperHeatedProp_PT(fluid, T, P) -- T: C, P: kPa
 	local db=fluid.m_Database
-	local set,row, col
 
 	local Pmin, Pmax = GetRange(fluid, "P")
 	local Tmin, Tmax = GetRange(fluid, "T")
@@ -269,52 +255,79 @@ local function SuperHeatedProp_PT(fluid, T, P) -- T: C, P: kPa
 	
 
 	local PL, PH, TL, TH=nil, nil, nil, nil
+	
 	local strQuery="SELECT DISTINCT P FROM "..fluid.m_SuperHeatedTable.. " WHERE P<="..tostring(P).." ORDER BY P DESC LIMIT 1"
-	set,row, col=db:sql(strQuery)
+	local setPL=db:sql(strQuery)
 	
-	if(set==nil) then
-		error("For superheated properties, the minimum pressure value is:"..tostring(Pmin).." kPa" , std.const.ERRORLEVEL)
-	end
 	
-	PL=set[1]
 	strQuery="SELECT DISTINCT P FROM "..fluid.m_SuperHeatedTable.. " WHERE P>"..tostring(P).." LIMIT 1"
-	set,row,col=db:sql(strQuery)
+	local setPH = db:sql(strQuery)
 	
-	if(set == nil) then
-		error("For superheated properties, the maximum pressure value is:"..tostring(Pmax).." kPa" , std.const.ERRORLEVEL)
+	if(setPL == nil or setPH == nil) then
+		error("Bounds are:"..tostring(Pmin)..", "..tostring(Pmax).." kPa" , std.const.ERRORLEVEL)
 	end
 
-	PH=set[1]
+	PL=setPL[1]
+	PH=setPH[1]
+	
+	
 	strQuery="SELECT DISTINCT T FROM "..fluid.m_SuperHeatedTable.. " WHERE P<="..tostring(P).." and T<="..tostring(T).." ORDER BY T DESC LIMIT 1"
-	set,row,col=db:sql(strQuery)
-	TL=set[1]
+	local setTL = db:sql(strQuery)
+	
 	
 	strQuery="SELECT DISTINCT T FROM "..fluid.m_SuperHeatedTable.. " WHERE P<="..tostring(P).." and T>"..tostring(T).." LIMIT 1"
-	set,row,col=db:sql(strQuery)
-	TH=set[1]
+	local setTH = db:sql(strQuery)
+	
+	
+	if(setTL == nil or setTH == nil) then
+		error("Could not locate the properties" , std.const.ERRORLEVEL)
+	end
+	
+	TL=setTL[1]
+	TH=setTH[1]
+	
+	
 	
 	local v, h, s={}, {} , {}
 	
 	local msg="The search for pressure is between "..tostring(PL).." and "..tostring(PH).."\n"
 	msg=msg.."For temperature is between "..tostring(TL).." and "..tostring(TH).."\n"
 	
+	
+	local function GetVHS(fluid, P, T, msg) --Only use for superheated
+		local db=fluid.m_Database
+		local strQuery="SELECT V,H,S FROM "..fluid.m_SuperHeatedTable.." WHERE P="..tostring(P).." AND T="..tostring(T)
+		
+		local set, row, col = db:sql(strQuery)
+		
+		local errMsg = msg.."\n"
+		errMsg=errMsg.."Properties could not be found at P="..tostring(P).." and T="..tostring(T)
+		
+		if(set == nil) then error(errMsg, std.const.ERRORLEVEL) end
+			
+
+		return set, row, col
+	end
+	
 	--P low and T low
-	set,row,col=GetVHSProperties(fluid, PL, TL, msg)
+	local set=nil
+	set=GetVHS(fluid, PL, TL, msg)
 	v[1]=set[1][1]; h[1]=set[1][2] ; s[1]=set[1][3]
 	
 	--P low and T high
-	set,row,col=GetVHSProperties(fluid, PL, TH, msg)
+	set,row,col=GetVHS(fluid, PL, TH, msg)
 	v[2]=set[1][1]; h[2]=set[1][2] ; s[2]=set[1][3]
 	
 	--P high and T low
-	set,row,col=GetVHSProperties(fluid, PH, TL, msg)
+	set,row,col=GetVHS(fluid, PH, TL, msg)
 	v[3]=set[1][1]; h[3]=set[1][2] ; s[3]=set[1][3]
 	
 	--P high and T high
-	set,row,col=GetVHSProperties(fluid, PH, TH, msg)
+	set,row,col=GetVHS(fluid, PH, TH, msg)
 	v[4]=set[1][1]; h[4]=set[1][2] ; s[4]=set[1][3]
      
 	local temp1, temp2=0, 0
+	
 	temp1=Interpolation(PL,v[1],PH,v[3],P)
 	temp2=Interpolation(PL,v[2],PH,v[4],P)
 	local retV=Interpolation(TL,temp1,TH,temp2,T)
@@ -327,12 +340,9 @@ local function SuperHeatedProp_PT(fluid, T, P) -- T: C, P: kPa
 	temp2=Interpolation(PL,s[2],PH,s[4],P)
 	local retS=Interpolation(TL,temp1,TH,temp2,T)
 
-	local retTable={}
-	retTable.v=retV
-	retTable.h=retH
-	retTable.s=retS
+	
 
-	return retTable
+	return {v=retV, h=retH, s=retS}
 end
 
 
@@ -454,16 +464,8 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 			
 			local saturated= SINGLEPARAMSEARCH(Refrigerant, t.P, "P")
 			
-			if(tonumber(saturated.T)<tonumber(t.T)) then 
-								
-				retTable= SuperHeatedProp_PT(Refrigerant, t.T, t.P)
-				
-			else -- Compressed
-				retTable={}
-				retTable.s=saturated.sf
-				retTable.v=saturated.vf 
-				retTable.h=saturated.hf
-				
+			if(tonumber(saturated.T) < tonumber(t.T)) then 
+				retTable = SuperHeatedProp_PT(Refrigerant, t.T, t.P)
 			end
 		end
 
@@ -472,16 +474,8 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 			
 			local saturated= SINGLEPARAMSEARCH(Refrigerant, t.P, "P")
 			
-			if(saturated.sg<tonumber(t.s)) then 
-				retTable= SuperHeatedProp_PS(Refrigerant, t.s, t.P)
-				
-			else -- Compressed
-				
-				retTable={}
-				retTable.s=saturated.sf 
-				retTable.v=saturated.vf 
-				retTable.h=saturated.hf
-				
+			if(saturated.sg < tonumber(t.s)) then 
+				retTable = SuperHeatedProp_PS(Refrigerant, t.s, t.P)
 			end
 		end
 
@@ -501,7 +495,10 @@ local function ComputeProperties(fluidName, t, ConnInfo)
 end
 
 
-std.refrigerant = ComputeProperties
+
+
+
+std.fluid.refrigerant = ComputeProperties
 
 
 
