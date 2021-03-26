@@ -49,8 +49,7 @@ local function BracketProperty(fluid, Pressure, PropertyName, PropertyValue)
 	
 	
 	if(PropertyValue < Min or PropertyValue > Max) then
-		local ErrMsg="Computation yielded the following bound for pressure: ["..tostring(PL)..", "..tostring(PH).."] \n"
-		ErrMsg=ErrMsg.."However at P="..tostring(Pressure).." bounds for "..PropertyName..": ["..tostring(Min)..", "..tostring(Max).."]"
+		local ErrMsg="At P="..tostring(Pressure).." bounds for "..PropertyName..": ["..tostring(Min)..", "..tostring(Max).."]"
 		
 		error(ErrMsg, std.const.ERRORLEVEL)
 	end 
@@ -75,7 +74,7 @@ end
 	
 	
 	
-local function ComputeVHS(fluid, Pressure, PropertyName, PropertyValue) 
+local function ComputeOtherProperties(fluid, Pressure, PropertyName, PropertyValue, QueriedProps) 
 	
 	local db=fluid.Database
 	
@@ -84,7 +83,7 @@ local function ComputeVHS(fluid, Pressure, PropertyName, PropertyValue)
 	local PropL, PropH = BracketProperty(fluid, Pressure, PropertyName, PropertyValue)
 	
 	
-	strQuery="SELECT V,H,S FROM "..fluid.SuperHeatedTable.." WHERE P="..tostring(Pressure).." AND "..PropertyName.."="..tostring(PropL)
+	strQuery="SELECT " ..QueriedProps.." FROM "..fluid.SuperHeatedTable.." WHERE P="..tostring(Pressure).." AND "..PropertyName.."="..tostring(PropL)
 	
 	local set = db:sql(strQuery)
 
@@ -92,7 +91,7 @@ local function ComputeVHS(fluid, Pressure, PropertyName, PropertyValue)
 	
 	
 	
-	strQuery="SELECT V,H,S FROM "..fluid.SuperHeatedTable.." WHERE P="..tostring(Pressure).." AND "..PropertyName.."="..tostring(PropH)
+	strQuery="SELECT " ..QueriedProps.." FROM "..fluid.SuperHeatedTable.." WHERE P="..tostring(Pressure).." AND "..PropertyName.."="..tostring(PropH)
 	
 	local set = db:sql(strQuery)
 	
@@ -131,8 +130,8 @@ local function SuperHeatedProp_PT(fluid, P, T) -- T: C, P: kPa
 	local v, h, s={}, {} , {}
 	
 	
-	v[1], h[1], s[1] = ComputeVHS(fluid, PL, "T", T) 
-	v[2], h[2], s[2] = ComputeVHS(fluid, PH, "T", T) 
+	v[1], h[1], s[1] = ComputeOtherProperties(fluid, PL, "T", T, "V, H, S") 
+	v[2], h[2], s[2] = ComputeOtherProperties(fluid, PH, "T", T, "V, H, S") 
 	
 	
 	
@@ -149,72 +148,40 @@ end
 
 
 
-
-
-
-local function SuperHeatedProp_PS(fluid, S, P) -- T: C, P: kPa
+local function SuperHeatedProp_PS(fluid, P, S) 
 	local db=fluid.Database
-	local set,row, col
 	
-	local Pmin, Pmax=std.fluid.range(fluid, fluid.SuperHeatedTable, "P")
-	local Smin, Smax=std.fluid.range(fluid, fluid.SuperHeatedTable, "S")
+	local Smin, Smax = std.fluid.range(fluid, fluid.SuperHeatedTable, "s")
 	
-	if(P>Pmax) then
-		error("the pressure value is out of range, max is "..tostring(Pmax), std.const.ERRORLEVEL)
+	if(S<Smin or S>Smax) then
+		error("Entropy is expected to be in ["..tostring(Smin)..", "..tostring(Smax).."]", std.const.ERRORLEVEL)
 	end
 
-	if(S>Smax) then
-		error("the entropy value is out of range, max is"..tostring(Smax), std.const.ERRORLEVEL)
-	end
-	
-	local PL, PH, SL, SH
-	local strQuery="SELECT DISTINCT P FROM "..fluid.SuperHeatedTable.. " WHERE P<="..tostring(P).." ORDER BY P DESC LIMIT 1"
-	set,row, col=db:sql(strQuery)
-	PL=set[1]
-	
-	strQuery="SELECT DISTINCT P FROM "..fluid.SuperHeatedTable.. " WHERE P>"..tostring(P).." LIMIT 1"
-	set,row,col=db:sql(strQuery)
-	PH=set[1]
 
-	local VL,VH, TL, TH, HL, HH
-	local V, T, H={} , {} ,{}
-	--Lower pressure table
-	strQuery="SELECT S,V,T,H FROM "..fluid.SuperHeatedTable.. " WHERE P="..tostring(PL).." and S<="..tostring(S).." ORDER BY S DESC LIMIT 1"
-	set,row,col=db:sql(strQuery)
-	SL=set[1][1]; VL=set[1][2] ; TL=set[1][3] ; HL=set[1][4]
-	
-	strQuery="SELECT S,V,T,H FROM "..fluid.SuperHeatedTable.. " WHERE P="..tostring(PL).." and S>"..tostring(S).." LIMIT 1"
-	set,row,col=db:sql(strQuery)
-	SH=set[1][1] ; VH=set[1][2] ; TH=set[1][3] ; HH=set[1][4]
-	V.LowP=std.fluid.interpolate(SL,VL,SH,VH,S)
-	T.LowP=std.fluid.interpolate(SL,TL,SH,TH,S)
-	H.LowP=std.fluid.interpolate(SL,HL,SH,HH,S)
 
-	--Higher pressure table
-	strQuery="SELECT S,V,T,H FROM "..fluid.SuperHeatedTable.. " WHERE P="..tostring(PH).." and S<="..tostring(S).." ORDER BY S DESC LIMIT 1"
-	set,row,col=db:sql(strQuery)
-	SL=set[1][1] ; VL=set[1][2] ; TL=set[1][3] ; HL=set[1][4]
+	local PL, PH= BracketPressure(fluid, P)
 	
-	strQuery="SELECT S,V,T,H FROM "..fluid.SuperHeatedTable.. " WHERE P="..tostring(PH).." and S>"..tostring(S).." LIMIT 1"
-	set,row,col=db:sql(strQuery)
-	SH=set[1][1] ; VH=set[1][2] ; TH=set[1][3] ; HH=set[1][4]
 	
-	V.HighP=std.fluid.interpolate(SL,VL,SH,VH,S)
-	T.HighP=std.fluid.interpolate(SL,TL,SH,TH,S)
-	H.HighP=std.fluid.ininterpolate(SL,HL,SH,HH,S)
+	local T, v, h={}, {} , {}
+	
+	
+	T[1], v[1], h[1] = ComputeOtherProperties(fluid, PL, "s", S, "T, V, h") 
+	T[2], v[2], h[2] = ComputeOtherProperties(fluid, PH, "s", S, "T, V, h") 
+	
+	
+	
+	
+	local retT = std.fluid.interpolate(PL,T[1],PH,T[2], P)
+	local retV = std.fluid.interpolate(PL,v[1],PH,v[2], P)
+	local retH = std.fluid.interpolate(PL,h[1],PH,h[2], P)
 
-	V.actual=std.fluid.interpolate(PL,V.LowP, PH, V.HighP, P)
-	T.actual=std.fluid.interpolate(PL,T.LowP, PH, T.HighP, P)
-	H.actual=std.fluid.interpolate(PL,H.LowP, PH, H.HighP, P)
 	
-	local retTable={}
-	retTable.v=V.actual
-	retTable.T=T.actual
-	retTable.h=H.actual
 
-	return retTable
+	return {T=retT, h=retH, v=retV}
 end
-     
+
+
+
 
 
 
@@ -278,25 +245,29 @@ local function ComputeProperties(Arg, ParamTable)
 
 	
 	--Superheated
+	
+	local PValue=ParamTable.P or ParamTable.p
+	local TValue=ParamTable.T or ParamTable.t
+	local SValue= ParamTable.S or ParamTable.s
 
 	local saturated= std.fluid.findprops(Refrigerant, "P", ParamTable.P)
 	
-	if(ParamTable.P == nil) then
+	if(PValue == nil) then
 		error("Pressure must be defined", std.const.ERRORLEVEL)
 	end
 	
 	
 	
-	if(ParamTable.T~=nil) then --P,T
-		if(tonumber(saturated.T) < tonumber(ParamTable.T)) then 
-			retTable = SuperHeatedProp_PT(Refrigerant, ParamTable.P, ParamTable.T)
+	if(TValue ~=nil) then --P,T
+		if(tonumber(saturated.T) < tonumber(TValue)) then 
+			retTable = SuperHeatedProp_PT(Refrigerant, PValue, TValue)
 		end
 
 
-	elseif(ParamTable.s~=nil) then --P,s
+	elseif(SValue ~= nil) then --P,s
 		
-		if(saturated.sg < tonumber(ParamTable.s)) then 
-			retTable = SuperHeatedProp_PS(Refrigerant,ParamTable.s,ParamTable.P)
+		if(saturated.sg < tonumber(SValue)) then 
+			retTable = SuperHeatedProp_PS(Refrigerant, PValue, SValue)
 		end
 
 	end
