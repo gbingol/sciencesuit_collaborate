@@ -254,6 +254,11 @@ local function Page_SuperHeatedProps(AvailableRefrigerants)
 	
 	local function OnSuperHeatedCalculate()
 	
+		txtV.value = ""
+		txtH.value = ""
+		txtS.value = ""
+		
+	
 		if(CurFluidName == "") then
 			error("The fluid type must be selected.", std.const.ERRORLEVEL)
 		end
@@ -269,10 +274,10 @@ local function Page_SuperHeatedProps(AvailableRefrigerants)
 		
 		local props=std.fluid.refrigerant(CurFluidName, {P=P, T=T})
 		
+		
 		txtV.value = props.v
 		txtH.value = props.h
 		txtS.value = props.s
-			
 	end
 	
 	
