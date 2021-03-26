@@ -110,15 +110,18 @@ local function SINGLEPARAMSEARCH(fluid, val, param1) --P: kPa, T: C
 	local ColumnNames=""
 	
 	local ColumnExists=false
-	for key, value in pairs(AvailableCols) do
-		if(param1==string.lower(value)) then
+	
+	for i=1, #AvailableCols do
+		if(param1==string.lower(AvailableCols[i])) then
 			ColumnExists=true
-			
-			break
 		end
-
-		ColumnNames = ColumnNames.."  "..value
+		
+		if(i<#AvailableCols) then
+			ColumnNames = ColumnNames..AvailableCols[i]..","
+		end
 	end
+
+	ColumnNames=ColumnNames..AvailableCols[#AvailableCols]
 
 	assert(ColumnExists == true, "Available options:"..ColumnNames)
 	
@@ -147,29 +150,29 @@ local function SINGLEPARAMSEARCH(fluid, val, param1) --P: kPa, T: C
 	local RowLoc;
 
 	
-	strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1..">="..tostring(val) 
+	strQuery="SELECT "..ColumnNames.. " FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1..">="..tostring(val) 
 	set,row, col=db:sql(strQuery)
 	
 	if(Diff > 0) then RowLoc=1 else RowLoc=row end
 	
-	local PH, TH=set[RowLoc][1] , set[RowLoc][2]
-	local VfH, VgH=set[RowLoc][3] , set[RowLoc][4]
-	local HfH, HgH=set[RowLoc][5] , set[RowLoc][6]
-	local SfH, SgH=set[RowLoc][7] , set[RowLoc][8]
-
-
-	strQuery="SELECT P, T, Vf, Vg, Hf, Hg, Sf, Sg FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1.."<="..tostring(val) 
+	
+	local tblH={}
+	
+	for i=1, #AvailableCols do
+		tblH[AvailableCols[i]]=set[RowLoc][i]
+	end
+	
+	
+	strQuery="SELECT "..ColumnNames.. " FROM "..fluid.m_SINGLEPARAM.." WHERE "..param1.."<="..tostring(val) 
 	set,row, col=db:sql(strQuery)
 	
 	if(Diff > 0) then RowLoc=row else RowLoc=1 end
 
-	local PL, TL=set[RowLoc][1] , set[RowLoc][2]
-	local VfL, VgL=set[RowLoc][3] , set[RowLoc][4]
-	local HfL, HgL=set[RowLoc][5] , set[RowLoc][6]
-	local SfL, SgL=set[RowLoc][7] , set[RowLoc][8]	
+	local tblL={}
 	
-	
-	
+	for i=1, #AvailableCols do
+		tblL[AvailableCols[i]]=set[RowLoc][i]
+	end
 	
 	
 	local x1, x2=0, 0
@@ -191,38 +194,16 @@ local function SINGLEPARAMSEARCH(fluid, val, param1) --P: kPa, T: C
 	
 	local retTable={}
 	
+	for i=1, #AvailableCols do
+		local index=AvailableCols[i]
+		retTable[index]=Interpolation(x1, tblL[index], x2, tblH[index], val)
+	end
 	
-	local T = Interpolation(x1, TL, x2, TH, val)
-	local P = Interpolation(x1,PL,x2,PH,val)
-	local Vf = Interpolation(x1,VfL,x2,VfH,val)
-	local Vg = Interpolation(x1,VgL,x2,VgH,val)
-	local Hf = Interpolation(x1,HfL,x2,HfH,val)
-	local Hg = Interpolation(x1,HgL,x2,HgH,val)
-	local Sf = Interpolation(x1,SfL,x2,SfH,val)
-	local Sg = Interpolation(x1,SgL,x2,SgH,val)
-	
-	local Uf=Hf-P*Vf;
-	local Ug=Hg-P*Vg; 
-
-	retTable.T=T
-	retTable.P=P
-	retTable.vf=Vf;
-	retTable.vg=Vg
-	retTable.uf=Uf;
-	retTable.ug=Ug
-	retTable.hf=Hf;
-	retTable.hg=Hg
-	retTable.sf=Sf;
-	retTable.sg=Sg
-	
-
 	if(param1=="t" or param1=="p") then
 		retTable[string.upper(param1)]=val
 	else
 		retTable[param1]=val
 	end
-	
-		
 
 	return retTable
 	
@@ -246,11 +227,11 @@ local function SuperHeatedProp_PT(fluid, T, P) -- T: C, P: kPa
 	local Tmin, Tmax = GetRange(fluid, "T")
 
 	if(P>Pmax) then
-		error("For superheated properties, the pressure value is out of range, max is "..tostring(Pmax), std.const.ERRORLEVEL )
+		error("the pressure value is out of range, max is "..tostring(Pmax), std.const.ERRORLEVEL )
 	end
 
 	if(T>Tmax) then
-		error("For superheated properties, the temperature value is out of range, max is"..tostring(Tmax), std.const.ERRORLEVEL)
+		error("the temperature value is out of range, max is "..tostring(Tmax), std.const.ERRORLEVEL)
 	end
 	
 
@@ -355,11 +336,11 @@ local function SuperHeatedProp_PS(fluid, S, P) -- T: C, P: kPa
 	local Smin, Smax=GetRange(fluid, "S")
 	
 	if(P>Pmax) then
-		error("For superheated properties, the pressure value is out of range, max is "..tostring(Pmax), std.const.ERRORLEVEL)
+		error("the pressure value is out of range, max is "..tostring(Pmax), std.const.ERRORLEVEL)
 	end
 
 	if(S>Smax) then
-		error("For superheated properties, the entropy value is out of range, max is"..tostring(Smax), std.const.ERRORLEVEL)
+		error("the entropy value is out of range, max is"..tostring(Smax), std.const.ERRORLEVEL)
 	end
 	
 	local PL, PH, SL, SH

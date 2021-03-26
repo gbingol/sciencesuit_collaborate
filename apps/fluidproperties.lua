@@ -34,12 +34,6 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	local chkVg = iup.toggle{title="vg (m\xB3/kg)"} 
 	local txtVg=iup.text{}
 	
-	local chkUf =iup.toggle{title="Uf (kJ/kg)", active="NO"} 
-	local txtUf=iup.text{}
-	
-	local chkUg=iup.toggle{title="Ug (kJ/kg)", active="NO"}
-	local txtUg=iup.text{}
-	
 	local chkHf = iup.toggle{title="hf (kJ/kg)"}
 	local txtHf=iup.text{}
 	
@@ -56,7 +50,6 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	
 	local Saturated=iup.gridbox{    chkT, txtT, chkP, txtP,
 									chkVf, txtVf, chkVg, txtVg,
-									chkUf, txtUf, chkUg, txtUg,
 									chkHf, txtHf, chkHg, txtHg,
 									chkSf, txtSf, chkSg, txtSg,
 								numdiv=4, HOMOGENEOUSCOL="yes",CGAPLIN=10, CGAPCOL=5, orientation="HORIZONTAL"}
@@ -74,7 +67,6 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	--keys are equivalent to keys returned by std.refrigerant func
 	local Properties={ T={chkT, txtT}, P={chkP, txtP}, 
 						Vf={chkVf, txtVf}, Vg={chkVg, txtVg}, 
-						Uf={chkUf, txtUf}, Ug={chkUg, txtUg}, 
 						Hf={chkHf, txtHf}, Hg={chkHg, txtHg}, 
 						Sf={chkSf, txtSf}, Sg={chkSg, txtSg}}
 	
@@ -191,13 +183,6 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 		UncheckChecked(chkVg)
 	end  
 
-	function chkUf:action(v)
-		UncheckChecked(chkUf)
-	end  
-
-	function chkUg:action(v)
-		UncheckChecked(chkUg)
-	end  
 
 	function chkHf:action(v)
 		UncheckChecked(chkHf)
