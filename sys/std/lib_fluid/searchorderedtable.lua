@@ -29,6 +29,7 @@ local function SEARCHORDEREDTABLE(fluid, field, QueryVal)
 		error("Parameter fluid must have Database member", std.const.ERRORLEVEL)
 	end
 	
+	
 	field=string.lower(field)
 	
 	local AvailableCols=db:columns(fluid.OrderedTable)
