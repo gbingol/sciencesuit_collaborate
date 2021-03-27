@@ -36,12 +36,12 @@ local function CreateFluid(fluidName, FluidType)
 	
 	local set,row = nil, 0
 	
-	local QueryString="SELECT  REGTABLE, SUPERHEATEDTABLE FROM MAINTABLE where NAME=".."\""..fluidName.."\"".."  collate nocase and TYPE=".."\""..FluidType.."\""
+	local QueryString="SELECT  ORDEREDTABLE, SUPERHEATEDTABLE FROM MAINTABLE where NAME=".."\""..fluidName.."\"".."  collate nocase and TYPE=".."\""..FluidType.."\""
 	
 	set,row = database:sql(QueryString)
 	
 	if(row==0 or row==nil) then
-		QueryString="SELECT  REGTABLE, SUPERHEATEDTABLE FROM MAINTABLE where ALTERNATIVE=".."\""..fluidName.."\"".." collate nocase and TYPE=".."\""..FluidType.."\""
+		QueryString="SELECT  ORDEREDTABLE, SUPERHEATEDTABLE FROM MAINTABLE where ALTERNATIVE=".."\""..fluidName.."\"".." collate nocase and TYPE=".."\""..FluidType.."\""
 		set, row = database:sql(QueryString)
 		
 		if(row==0 or row==nil) then 
@@ -51,7 +51,7 @@ local function CreateFluid(fluidName, FluidType)
 
 	FLUID.Database=database
 	FLUID.FluidName=fluidName
-	FLUID.RegTable=set[1][1]
+	FLUID.OrderedTable=set[1][1]
 	FLUID.SuperHeatedTable=set[1][2]
 	
 	FLUID.Type="Fluid"

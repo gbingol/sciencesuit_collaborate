@@ -4,7 +4,7 @@
 
 
 
-local function SEARCHREGULARTABLE(fluid, field, QueryVal) 
+local function SEARCHORDEREDTABLE(fluid, field, QueryVal) 
 	
 	--Table must be in the form of, for example
 	--	 P	T	s	vf
@@ -31,7 +31,7 @@ local function SEARCHREGULARTABLE(fluid, field, QueryVal)
 	
 	field=string.lower(field)
 	
-	local AvailableCols=db:columns(fluid.RegTable)
+	local AvailableCols=db:columns(fluid.OrderedTable)
 	
 	local ColumnNames=""
 	
@@ -53,7 +53,7 @@ local function SEARCHREGULARTABLE(fluid, field, QueryVal)
 	
 	
 	--false for marking it as NOT superheated
-	local MinValue, MaxValue = std.fluid.range(fluid, fluid.RegTable, field) 
+	local MinValue, MaxValue = std.fluid.range(fluid, fluid.OrderedTable, field) 
 	
 	if(QueryVal < MinValue or QueryVal> MaxValue) then 
 		error("Valid range: ["..tostring(MinValue)..", "..tostring(MaxValue).."]", std.const.ERRORLEVEL)
@@ -62,7 +62,7 @@ local function SEARCHREGULARTABLE(fluid, field, QueryVal)
 	
 	
 	--Check if the numbers are increasing or decreasing for the given property
-	strQuery="SELECT "..field.." FROM "..fluid.RegTable 
+	strQuery="SELECT "..field.." FROM "..fluid.OrderedTable 
 	local set,row, col=db:sql(strQuery)
 
 	if(row <= 3) then error("Not enough data for the particular fluid", std.const.ERRORLEVEL) end
@@ -73,10 +73,10 @@ local function SEARCHREGULARTABLE(fluid, field, QueryVal)
 	local Diff = set[math.floor(row/2)] - set[1]
 	
 	
-	local QueryLarger="SELECT "..ColumnNames.. " FROM "..fluid.RegTable.." WHERE "..field..">="..tostring(QueryVal) 
+	local QueryLarger="SELECT "..ColumnNames.. " FROM "..fluid.OrderedTable.." WHERE "..field..">="..tostring(QueryVal) 
 	local setLarger,rowLarger = db:sql(QueryLarger)
 	
-	local QuerySmaller="SELECT "..ColumnNames.. " FROM "..fluid.RegTable.." WHERE "..field.."<="..tostring(QueryVal) 
+	local QuerySmaller="SELECT "..ColumnNames.. " FROM "..fluid.OrderedTable.." WHERE "..field.."<="..tostring(QueryVal) 
 	local setSmaller,rowSmaller = db:sql(QuerySmaller)
 	
 	if(Diff < 0) then rowSmaller=1 end
@@ -99,7 +99,7 @@ local function SEARCHREGULARTABLE(fluid, field, QueryVal)
 	local x1, x2=0, 0
 	
 	
-	strQuery="SELECT "..field.." FROM "..fluid.RegTable.." WHERE "..field.."<="..tostring(QueryVal) 
+	strQuery="SELECT "..field.." FROM "..fluid.OrderedTable.." WHERE "..field.."<="..tostring(QueryVal) 
 	set, row = db:sql(strQuery)
 	
 	if(Diff > 0) then RowLoc=row else RowLoc=1 end	
@@ -107,7 +107,7 @@ local function SEARCHREGULARTABLE(fluid, field, QueryVal)
 	
 		
 	
-	strQuery="SELECT "..field.." FROM "..fluid.RegTable.." WHERE "..field..">="..tostring(QueryVal)
+	strQuery="SELECT "..field.." FROM "..fluid.OrderedTable.." WHERE "..field..">="..tostring(QueryVal)
 	set, row = db:sql(strQuery)
 	
 	if(Diff > 0) then RowLoc=1 else RowLoc=row end
@@ -137,4 +137,4 @@ end
 
 
 
-std.fluid.findprops = SEARCHREGULARTABLE
+std.fluid.searchorderedtable = SEARCHORDEREDTABLE
