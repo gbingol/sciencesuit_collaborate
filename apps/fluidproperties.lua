@@ -15,38 +15,46 @@ local iup <const> =iup
 local m_Refrigerants=nil
 local m_HeatFluids=nil
 
+--"As Is" for all tabs
+local m_Digits = {-1, -1, -1}
+
+--Which tab (page) active?
+local m_ActivePage=1
 
 
 local function Page_SaturatedProps(AvailableRefrigerants)
 	
+	local lblFluid = iup.label{title="Fluid type:"}
 	local FluidType= iup.list {value=0, dropdown="YES", expand="HORIZONTAL", table.unpack(AvailableRefrigerants)}
 		
 		
 	local chkT= iup.toggle{title="Temperature (\xB0 C)"} 
-	local txtT=iup.text{}
+	local txtT=std.gui.numtext{}
 	
 	local chkP= iup.toggle{title="P (kPa)"} 
-	local txtP=iup.text{}
+	local txtP=std.gui.numtext{min=0}
 	
 	local chkVf= iup.toggle{title="vf (m\xB3/kg)"} 
-	local txtVf=iup.text{}
+	local txtVf=std.gui.numtext{min=0}
 	
 	local chkVg = iup.toggle{title="vg (m\xB3/kg)"} 
-	local txtVg=iup.text{}
+	local txtVg=std.gui.numtext{min=0}
 	
 	local chkHf = iup.toggle{title="hf (kJ/kg)"}
-	local txtHf=iup.text{}
+	local txtHf = std.gui.numtext{}
 	
 	local chkHg = iup.toggle{title="hg (kJ/kg)"}
-	local txtHg=iup.text{}
+	local txtHg=std.gui.numtext{}
 	
 	local chkSf = iup.toggle{title="Sf (kJ/kg\xB7K)"}
-	local txtSf=iup.text{}
+	local txtSf=std.gui.numtext{min=0}
 	
 	local chkSg = iup.toggle{title="Sg (kJ/kg\xB7K)"}
-	local txtSg=iup.text{}
+	local txtSg=std.gui.numtext{min=0}
 	
 	
+	
+	local FluidBox = iup.hbox{lblFluid, iup.space{size="5x0"}, FluidType}
 	
 	local Saturated=iup.gridbox{    chkT, txtT, chkP, txtP,
 									chkVf, txtVf, chkVg, txtVg,
@@ -57,7 +65,7 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 	
 	local btnCalc=iup.button{title="Calculate"}
 	
-	local page=iup.vbox{FluidType,  iup.space{size="x10"}, Saturated, iup.space{size="x10"}, btnCalc; alignment="ACENTER"}
+	local page=iup.vbox{FluidBox,  iup.space{size="x10"}, Saturated, iup.space{size="x10"}, btnCalc; alignment="ACENTER"}
 							
 	page.tabtitle="Saturated"
 	
@@ -126,7 +134,7 @@ local function Page_SaturatedProps(AvailableRefrigerants)
 				k=string.lower(k)
 				
 				if(key == k) then
-					txtBox.value = computedValue
+					txtBox.value = std.round(computedValue, m_Digits[m_ActivePage])
 				end
 
 			end
@@ -200,6 +208,7 @@ end
 
 
 local function Page_SuperHeatedProps(AvailableRefrigerants)
+	local lblFluid = iup.label{title="Fluid type:"}
 	local ComboFluidType= iup.list {value=0, dropdown="YES", expand="HORIZONTAL", table.unpack(AvailableRefrigerants)}
 	
 	local chkT = iup.toggle{title= "Temperature (\xB0 C)"}
@@ -218,6 +227,8 @@ local function Page_SuperHeatedProps(AvailableRefrigerants)
 	local txtS = std.gui.numtext{min=0}
 	
 	
+	
+	local FluidBox = iup.hbox{lblFluid, iup.space{size="5x0"}, ComboFluidType}
 								
 	local SuperHeated=iup.gridbox{chkT, txtT, 
 									chkP, txtP, 
@@ -229,7 +240,7 @@ local function Page_SuperHeatedProps(AvailableRefrigerants)
 								
 	local btn=iup.button{title="Calculate", active="NO"}
 								
-	local page=iup.vbox{ComboFluidType,  iup.space{size="x10"}, SuperHeated, iup.space{size="x10"}, btn; alignment="ACENTER"}
+	local page=iup.vbox{FluidBox,  iup.space{size="x10"}, SuperHeated, iup.space{size="x10"}, btn; alignment="ACENTER"}
 	
 	page.tabtitle="Superheated"
 	
@@ -296,7 +307,7 @@ local function Page_SuperHeatedProps(AvailableRefrigerants)
 				k=string.lower(k)
 				
 				if(key == k) then
-					txtBox.value = computedValue
+					txtBox.value = std.round(computedValue, m_Digits[m_ActivePage])
 				end
 
 			end
@@ -399,29 +410,30 @@ end
 
 local function Page_HeatTransfer(HeatFluids)
 	
-	local FluidType= iup.list {value=0, dropdown="YES", expand="HORIZONTAL", table.unpack(HeatFluids)}
+	local lblFluid = iup.label{title="Fluid type:"}
+	local ComboFluidType= iup.list {value=0, dropdown="YES", expand="HORIZONTAL", table.unpack(HeatFluids)}
 		
 		
 	local chkT= iup.toggle{title="Temperature (\xB0 C)"} 
-	local txtT=iup.text{}
+	local txtT=std.gui.numtext{}
 	
 	local chkRho= iup.toggle{title="Density (kg/m\xB3)"} 
-	local txtRho=iup.text{}
+	local txtRho=std.gui.numtext{min=0}
 	
 	local chkCp = iup.toggle{title="Cp (kJ/ (kg \xB0 C)"} 
-	local txtCp=iup.text{}
+	local txtCp=std.gui.numtext{min=0}
 	
 	local chkK = iup.toggle{title="k (W/mK)"}
-	local txtK=iup.text{}
+	local txtK=std.gui.numtext{min=0}
 	
 	local chkMu = iup.toggle{title="Viscosity (Pa s)"}
-	local txtMu=iup.text{}
+	local txtMu=std.gui.numtext{min=0}
 	
 	local chkPr = iup.toggle{title="Pr"}
-	local txtPr=iup.text{}
+	local txtPr=std.gui.numtext{min=0}
 	
 	
-	
+	local FluidBox = iup.hbox{lblFluid, iup.space{size="5x0"}, ComboFluidType}
 	
 	local Saturated=iup.gridbox{    chkT, txtT, 
 									chkRho, txtRho, 
@@ -434,7 +446,7 @@ local function Page_HeatTransfer(HeatFluids)
 	
 	local btnCalc=iup.button{title="Calculate"}
 	
-	local page=iup.vbox{FluidType,  iup.space{size="x10"}, Saturated, iup.space{size="x10"}, btnCalc; alignment="ACENTER"}
+	local page=iup.vbox{FluidBox,  iup.space{size="x10"}, Saturated, iup.space{size="x10"}, btnCalc; alignment="ACENTER"}
 							
 	page.tabtitle="Heat Transfer"
 	
@@ -506,7 +518,7 @@ local function Page_HeatTransfer(HeatFluids)
 				k=string.lower(k)
 				
 				if(key == k) then
-					txtBox.value = computedValue
+					txtBox.value = std.round(computedValue, m_Digits[m_ActivePage])
 				end
 
 			end
@@ -525,7 +537,7 @@ local function Page_HeatTransfer(HeatFluids)
 
 	
 	
-	function FluidType:action(text, item, state)
+	function ComboFluidType:action(text, item, state)
 		--we are not interested in notifications of deselections
 		if(state==0) then return end 
 		
@@ -622,16 +634,101 @@ local function FluidProperties()
 	
 	-- MAIN DIALOG
 	
+	--menu
+	
+	
+	local item_digit1 = iup.item {title = "1 digit"}
+	local item_digit2 = iup.item {title = "2 digits"}
+	local item_digit3 = iup.item {title = "3 digits"}
+	local item_digit4= iup.item {title = "4 digits"}
+	local item_digit5= iup.item {title = "5 digits"}
+	local item_digitAsIs= iup.item {title = "As Is", value="ON"}
+	local menu_Digits = iup.menu {item_digit1, item_digit2, item_digit3,item_digit4, item_digit5, iup.separator{}, item_digitAsIs}
+	
+	
+	local submenu_Digits = iup.submenu {menu_Digits; title = "Digits"}
+	local menu = iup.menu {submenu_Digits}
+	
+	
 	local tabs=iup.tabs{page1, page2, page3}
-							
 							
 	local icon=std.gui.makeicon(std.const.exedir.."apps/images/fluid.bmp")
 	
-	local dlgRefProps=iup.dialog{tabs;margin="10x10", title="Properties of Fluids", resize="YES", icon=icon}
+	local dlgRefProps=iup.dialog{tabs;margin="10x10", title="Properties of Fluids", resize="YES", menu=menu, icon=icon}
 	
 	local dlgInitSize=dlgRefProps.size
 	
 	dlgRefProps:show()
+	
+	
+	
+	local MenuItems={item_digit1, item_digit2, item_digit3, item_digit4, item_digit5, ASIS=item_digitAsIs}
+	
+	
+	local function UncheckOtherMenus(CurMenu)
+		for key, MenuItem in pairs(MenuItems) do
+				if(MenuItem ~= CurMenu) then
+					MenuItem.value="OFF"
+				end
+			end
+	end
+
+	
+	
+	--CurItem: menu which performs the action
+	for k, CurItem in pairs(MenuItems) do
+		
+		function CurItem:action()
+			
+			if(type(k)~="number") then 
+				m_Digits[m_ActivePage] = -1 
+			else
+				m_Digits[m_ActivePage] = k
+			end
+
+			
+			if(CurItem.value=="ON") then
+				CurItem.value="OFF"
+			else
+				CurItem.value="ON"
+			end
+			
+			UncheckOtherMenus(CurItem)
+
+		end--function
+
+	end--for k, CurItem
+
+
+
+
+
+	
+	function tabs:tabchange_cb(new_tab, old_tab)
+		if(new_tab==page1) then
+			m_ActivePage=1
+		elseif(new_tab==page2) then
+			m_ActivePage=2
+		else
+			m_ActivePage=3
+		end
+		
+		
+		local Digits=m_Digits[m_ActivePage]
+		
+		
+		local ActiveMenu=nil
+		if(Digits==-1) then
+			ActiveMenu=MenuItems["ASIS"]
+		else
+			ActiveMenu=MenuItems[Digits]
+		end
+
+		ActiveMenu.value="ON"
+		
+		UncheckOtherMenus(ActiveMenu)
+	end
+	
 	
 end
 
