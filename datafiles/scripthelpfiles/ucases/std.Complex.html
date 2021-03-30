@@ -1,0 +1,94 @@
+
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+
+
+<h1>Complex</h1>
+    
+<p>
+    Constructs complex number in the form of rectangular of polar forms.
+</p>
+
+
+<p>&nbsp;</p>
+
+
+<h2>Construction</h2>
+
+<h3>Rectangular form</h3>
+
+<p>
+    std.Complex.new(real=, imag=)
+</p>
+
+<p>
+    where <em>real</em> is the real part and 
+    <em>imag</em> is the imaginary part of the complex number. 
+    Both params must be real numbers.
+</p>
+
+<p>
+    &gt;&gt;comp=std.Complex.new(2, 3)<br>
+
+    &gt;&gt;comp <br>
+    2 + 3i
+</p>
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+<h3>Polar form</h3>
+<p>
+    std.Complex.new(mag=, theta=)
+</p>
+
+<p>
+    where parameter <em>mag</em> is the magnitude and 
+    <em>theta</em> is the angle in radians. 
+    Both params must be real numbers.
+</p>
+
+<p>
+    &gt;&gt;comp=std.Complex.polar(1, math.pi/4) <br>
+    
+    
+    &gt;&gt;comp <br>
+    0.707107 + 0.707107i <br>
+</p>
+
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<h3>From string</h3>
+<p>
+    Complex numbers can also be constructed from a string. 
+</p>
+
+<p class="funcsignature">
+    std.Complex.new(str)
+</p>
+
+
+<p class="CodeCommand">
+    &gt;&gt;c1=std.Complex.new("2+3i")<br>
+    &gt;&gt;c1 <br>
+    2 + 3i <br>
+    
+    <br>
+    
+    &gt;&gt;c2=std.Complex.new("3i+2")<br>
+    &gt;&gt;c2 <br>
+    2 + 3i
+</p>
+
+
+</body>
+</html>

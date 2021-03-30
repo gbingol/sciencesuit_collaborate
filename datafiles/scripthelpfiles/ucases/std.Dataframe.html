@@ -1,0 +1,150 @@
+
+<!DOCTYPE HTML>
+<html>
+
+
+<body>
+
+
+
+<h1>DataFrame</h1>
+<p>
+    DataFrame (DF) is a 2D data structure comprised of a data section and rows and columns labels. 
+    The data section is composed of columns of arrays and therefore, when accessed, 
+    each column shows all properties of an array. 
+</p>
+
+
+<p>&nbsp;</p>
+    
+
+<h3>Terminology</h3>
+
+<p>
+    <b>Label:</b> A string or an integer number used as a header of an individual column or a row. 
+    <em>Note</em> that the words header and label are interchangeably used and has the 
+    same meaning unless otherwise stated.
+</p>
+
+   
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+
+<!-- ******************************************************************************* -->
+
+
+
+
+    
+<h2>Creating a DataFrame</h2>
+
+
+<p class="funcsignature">
+    DataFrame.new(tbl)
+</p>
+
+<p>
+    where parameter <em>tbl</em> is a Lua table. The parameter <em>tbl</em> can have keys 
+    <em>rows</em> and <em>cols</em> to specify the headers of rows and columns, respectively. 
+    The provided userdata must be of type array. If an array is provided 
+    with an explicit key, then the key will be used as a header for the respective column.
+</p>
+
+<p>&nbsp;</p>
+
+<div>
+    &gt;&gt;df = std.DataFrame.new{std.util.toarray{"a", 2, 3}, 
+    std.util.toarray{"abc", 12, "b", 4}, std.util.toarray{10, 20, 30} } <br>
+    
+    &gt;&gt;df
+    
+    <table border="1">
+        <tr>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>"a"</td>
+            <td>"abc"</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2</td>
+            <td>12</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>"b"</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>nil</td>
+            <td>4</td>
+            <td>nil</td>
+        </tr>
+    </table>
+  
+</div>
+
+
+
+<p>&nbsp;</p>
+
+<div>
+    &gt;&gt;df = std.DataFrame.new{std.util.toarray{"a", 2, 3}, 
+    A=std.util.toarray{"abc", 12, "b", 4}, std.util.toarray{10, 20, 30} }
+    
+    <br>
+    
+    &gt;&gt;df
+    
+    <table border="1">
+        <tr>
+            <td>&nbsp;</td>
+            <td>1</td>
+            <td>2</td>
+            <td>A</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>"a"</td>
+            <td>10</td>
+            <td>"abc"</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2</td>
+            <td>20</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>30</td>
+            <td>"b"</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>nil</td>
+            <td>nil</td>
+            <td>4</td>
+        </tr>
+    </table>    
+</div>
+
+
+
+
+    
+</body>
+</html>
