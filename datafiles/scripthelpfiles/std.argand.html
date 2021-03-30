@@ -7,45 +7,34 @@
 
 <p>Plots argand diagram.</p>
 
-<p class="funcsignature">
+
+<h3>Syntax</h3>
+<p>
       
-            argand{ <br />
+      argand{ Array, <br />
 
-            <br>
+      <br />
 
-            Array, <br />
 
-            <br />
-            
+      [name=DefaultName], [title=""], <br />
 
-            [<key>name</key>=DefaultName], <br />
+      <br />
 
-            <br />
-            
+      [xlab=""], [ylab=""], <br />
 
-            [<key>title</key>=""], <br />
+      <br />
 
-            <br />
 
-            [<key>xlab</key>=""], <br />
+      [marker={type="c", size=4,  fill=DefaultColor, linewidth=1, linecolor=DefaultColor}], <br />
+      <br />
 
-            <br />
+      [line={ color=DefaultColor, [width=1], style="solid"}], <br />
+      <br />
 
-            [<key>ylab</key>=""], <br />
+      [hwnd=<span class="LuaKeyword">nil</span>], <br />
+      <br />
 
-            <br />
-            
-
-            [<key>marker</key>={type="c", size=4,  fill=DefaultColor, linewidth=1, linecolor=DefaultColor}], <br />
-            <br />
-
-            [<key>line</key>={ color=DefaultColor, [width=1], style="solid"}], <br />
-            <br />
-            
-            [<key>hwnd</key>=<span class="LuaKeyword">nil</span>], <br />
-            <br />
-            
-            } &rarr; window handle (light userdata)
+      } &rarr; window handle (light userdata)
 </p>
 
 <p>
@@ -58,15 +47,6 @@
 
 
 
-
-<p> 
-      <span style="text-decoration: underline;"> <em>Note on Terminology:</em></span> 
-      The word Default in the arguments is used to denote that the so-called value is 
-      assigned/computed by the system until a new value is assigned.
-</p>
-
-
-
 <p>&nbsp;</p>
 
 
@@ -74,7 +54,7 @@
 
 <h3>Arguments:</h3>
 
-<table class="funcarguments">
+<table>
       <tr>
             <td>Array:</td>
             <td>An array containing at least 1 real or complex number &larr; <em>Array</em></td>
@@ -184,7 +164,7 @@
 
 
 
-<h2 id="examples">EXAMPLES</h2>
+<h2>EXAMPLES</h2>
 <p>
       Let's start from simple to advanced use of the argand command. The data array will be 
       roots of the polynomial <em>x<sup>4</sup> + 1 </em>
@@ -211,67 +191,6 @@
 </p>
 
 
-<img src="../images/argand_markerdefaultproperties.png" alt="">
-
-
-
-
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-
-<h3 id="data_marker_name_label_title">Customized marker with title, name and labels</h3>
-<p>
-      In the following command, we will customize the marker, give a name to the series, 
-      add axes labels and add a chart title. The command is slightly long but easier to 
-      understand.
-</p>
-
-
-<p class="CodeCommand">
-      &gt;&gt;std.argand{roots, <em>marker</em> = {fill = std.const.color.salmon_dark, size = 6, linecolor = std.const.color.blue}, 
-      <em>name</em>="roots", <em>title</em>="roots of x^4+1", <em>xlab</em> = "real", <em>ylab</em> = "imaginary"}
-</p>
-
-<img src="../images/argand_marker_name_labels.png" alt="">
-
-
-
-
-
-
-
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-
-
-
-<h3 id="modulusline">Modulus line</h3>
-<p>
-      In order to show the modulus line, we have to define the line property.
-</p>
-
-
-<p class="CodeCommand">
-      &gt;&gt;std.argand{roots, <em>line</em>={width=1, color=std.const.color.chocolate}, 
-      xlab="real", ylab="imaginary", title="roots of x^4+1"}
-</p>
-
-<img src="../images/argand_modulusline.png" alt="">
-
-
-<p>&nbsp;</p>
-
-<p>
-      If all of the line properties should be computed by system, the following command is a 
-      valid command to show modulus line.
-</p>
-
-<p class="CodeCommand">
-      &gt;&gt;std.argand{roots, line={} }
-</p>
 
 </body>
 
