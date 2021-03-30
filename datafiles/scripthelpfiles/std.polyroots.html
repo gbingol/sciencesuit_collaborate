@@ -1,0 +1,81 @@
+
+<!DOCTYPE HTML>
+<html>
+<body>
+
+ 
+
+<h1>polyroots</h1>
+    
+<p>
+    Finds all the roots (real, complex) of a polynomial in the form of a<sub>n</sub>x<sup>n</sup> + ... + a<sub>0</sub>.
+</p>
+
+
+<h3>Syntax</h3>
+<p>
+    polyroots(vec=) &rarr; real number(s) / Array
+</p>
+
+<p>
+    where parameter <em>vec</em> must be a vector containing the coefficients of the polynom and the function returns either 
+    real number(s) or an Array of real/complex numbers.
+</p>
+
+
+
+<p>&nbsp;</p>
+
+
+
+<h3>n=2</h3>
+<p class="CodeCommand">
+    &gt;&gt;v=std.util.tovector{1, 0, 1} <br>
+    &gt;&gt;std.polyroots(v) <br>
+    i &emsp;  -i   
+</p>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+<h3>n=3</h3>
+<p>
+    Polynom with real and complex roots: 2x<sup>3</sup> - 5x<sup>2</sup> + 2x - 5 = 0
+</p>
+
+<p class="CodeCommand">
+    &gt;&gt;v=std.util.tovector{2, -5, 2, -5} <br>
+    &gt;&gt;std.polyroots(v) <br>
+    2.5 &emsp; i &emsp; -i
+</p>
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<h3>n=4</h3>
+
+<p>
+    Polynom with only complex roots: x<sup>4</sup> + 1 = 0
+</p>
+
+<p>
+    &gt;&gt;v=std.util.tovector{1, 0, 0, 0, 1} <br>
+    &gt;&gt;std.polyroots(v) <br>
+    -0.707 + 0.707i &emsp; -0.707 - 0.707i &emsp;  0.707 + 0.707i &emsp;  0.707 - 0.707i
+</p>
+
+
+
+</body>
+</html>
