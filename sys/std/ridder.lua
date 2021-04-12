@@ -50,10 +50,10 @@ local function ridder(...)
 		if(type(tol)~="number" or tol <= 0) then error("Key tol must be >0", std.const.ERRORLEVEL) end
 		
 		
-		local status, root, err, numiter=pcall(SYSTEM.ridder, func, a, b, tol, maxiter)
+		local status, root, numiter=pcall(SYSTEM.ridder, func, a, b, tol, maxiter)
 		
 		if(status) then	
-			return root, err, numiter
+			return root, numiter
 		else
 			return root
 		end
@@ -64,10 +64,10 @@ local function ridder(...)
 		assert(type(arg[2])=="number" and type(arg[3])=="number", "Second and third args must be number.")
 		
 		
-		local status, root, err, numiter=pcall(SYSTEM.ridder, arg[1], arg[2], arg[3])
+		local status, root, numiter=pcall(SYSTEM.ridder, arg[1], arg[2], arg[3])
 		
 		if(status) then	
-			return root, err, numiter
+			return root, numiter
 		else
 			return root
 		end
