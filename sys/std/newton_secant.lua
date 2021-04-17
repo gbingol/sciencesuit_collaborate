@@ -15,7 +15,14 @@ local function NewtonRaphson(f,X0, fprime, tolerance, MaxIterations)
 	tolerance=tolerance or 1E-5
 	MaxIterations=MaxIterations or 100
 	
-      return SYSTEM.newtonraphson(f, X0, fprime, tolerance, MaxIterations)
+	local suc, root, err, n=pcall(SYSTEM.newtonraphson, f, X0, fprime, tolerance, MaxIterations)
+
+	if(suc) then
+		return root, err, n		
+	else
+		error(root, std.const.ERRORLEVEL) --error msg
+	end
+	
 end
 
 
@@ -33,7 +40,14 @@ local function Secant(f,X0, X1, tolerance, MaxIterations)
 	tolerance=tolerance or 1E-5
 	MaxIterations=MaxIterations or 100
 	
-      return SYSTEM.secant(f, X0, X1, tolerance, MaxIterations)
+	local suc, root, err, n=pcall(SYSTEM.secant, f, X0, X1, tolerance, MaxIterations)
+
+	if(suc) then
+		return root, err, n
+	else
+		error(root, std.const.ERRORLEVEL) --error msg
+	end
+	
 end
 
 
