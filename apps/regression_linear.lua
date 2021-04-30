@@ -114,13 +114,14 @@ local function LinearRegression()
 			factors=std.util.tovector(rngFactors)
 		end
 		
-		local yobs <close>, NString=std.util.tovector(rngResponse)
+		local yobs , NString=std.util.tovector(rngResponse)
 		
 		assert(NString==0, "There are non-numeric entries in the response")
 		
 		
 		local Alpha = 1 - tonumber(txtConfidence.value)/100
 		assert(Alpha>0 and Alpha<1,  "Confidence Level must be in the range of (0, 100)")
+		
 		
 		local RegresResult=std.lm( yobs, factors, IsThereIntercept, Alpha)
 		
@@ -206,7 +207,8 @@ local function LinearRegression()
 		Row=Row+1
 		
 		local CoefStats=ResTbl.CoefStats
-		
+	
+				
 		for i=1, #CoefStats do
 			
 			if(IsThereIntercept) then 

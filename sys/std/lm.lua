@@ -49,8 +49,11 @@ local function SLM(yobs, factor, IsIntercept, Alpha)
 	-- simple linear model
 	local coeffs=nil
 	
+	local Polynom=nil
+	
 	if(IsIntercept) then
-		coeffs=std.polyfit(factor, yobs,1)  -- an*x^n+...+a0
+		Polynom=std.polyfit(factor, yobs,1)  -- an*x^n+...+a0
+		coeffs=Polynom:coeffs()
 	else
 		coeffs=std.Vector.new(2,0)
 		coeffs[1]=FitZeroIntercept(yobs, factor)
@@ -91,6 +94,8 @@ end
 
 
 local function SLM_Summary(retTable)
+	
+	
 	
 	assert(type(retTable)=="table" ,"Arg must be of type Lua table")
 	
@@ -136,8 +141,11 @@ local function SLM_Summary(retTable)
 	end
 
 	--Forming the ANOVA table for regression
+	
+	local Polynom=std.Polynomial.new(coeffs)
 
-	local fit_y=std.polyval(coeffs, factor)
+	local fit_y=Polynom(factor)
+	
 	local residual=yobs-fit_y
 	
 	local residual_2=residual^2  --vector of squares of residuals
