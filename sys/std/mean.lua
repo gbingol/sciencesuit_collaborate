@@ -84,7 +84,7 @@ local function mean(...)
 	local n=args[2] or 1
 	
 	--generalized
-	local sum, nelem=std.accumulate(Container, 0, function(x) return x^n end)
+	local sum, nelem=std.algo.accumulate(Container, 0, function(x) return x^n end)
 
 	return sum/nelem
 	

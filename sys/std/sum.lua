@@ -67,7 +67,7 @@ local function sum(...)
 	
 	local n=args[2] or 1
 		
-	local total, NElem=std.accumulate( Container,0, function(x) return x^n end )
+	local total, NElem=std.algo.accumulate( Container,0, function(x) return x^n end )
 
 
 	return total

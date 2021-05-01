@@ -49,7 +49,7 @@ end
 
 
 
-std.find_minmax=find_minmax
+std.algo.find_minmax=find_minmax
 
 
 -- Author:	Gokhan Bingol (gbingol@sciencesuit.org)

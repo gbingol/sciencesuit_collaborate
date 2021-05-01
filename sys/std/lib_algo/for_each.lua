@@ -7,9 +7,9 @@ local function foreach(Container, func,...)
 	-- ... : Possible second, third, fourth etc... arguments of the func
 	--Container: Lua Table or an iteratable container
 
-      assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
+      std.util.assert(type(Container)~="number" and type(Container)~="string", "An iteratable container is required")
       
-      assert(type(func)=="function", "Second arg must be a unary function ")
+      std.util.assert(type(func)=="function", "Second arg must be a unary function ")
       
       local func_args=table.pack(...)
       
@@ -36,7 +36,7 @@ end
 
 
 
-std.for_each=foreach
+std.algo.for_each=foreach
 
 
 

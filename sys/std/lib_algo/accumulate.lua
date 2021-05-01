@@ -47,7 +47,7 @@ local function accumulate(Container, initial_val, func)
 end
 
 
-std.accumulate=accumulate
+std.algo.accumulate=accumulate
 
 
 

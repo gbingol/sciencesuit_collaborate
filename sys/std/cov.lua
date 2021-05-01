@@ -33,7 +33,7 @@ local function cov(cont1, cont2, str)
 		len1=#cont1
 	
 	else
-		sum1, len1=std.accumulate(cont1,0)
+		sum1, len1=std.algo.accumulate(cont1,0)
 	end
 
 
@@ -42,7 +42,7 @@ local function cov(cont1, cont2, str)
 		len2=#cont2
 	
 	else
-		sum2, len2=std.accumulate(cont2,0)
+		sum2, len2=std.algo.accumulate(cont2,0)
 	end
 	
 

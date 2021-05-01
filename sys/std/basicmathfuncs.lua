@@ -28,7 +28,7 @@ local function ApplytoTypes(Entry,func,... )
 	end
 	  
 	
-	std.for_each(retEntry,func, table.unpack(func_args))
+	std.algo.for_each(retEntry,func, table.unpack(func_args))
 
 
 
@@ -171,7 +171,8 @@ std.cos=function(entry)
 		return math.cos(entry)
 	end
 	
-	return  ApplytoTypes(entry, std.cos) end
+	return  ApplytoTypes(entry, std.cos) 
+end
 
 
 

@@ -564,18 +564,21 @@ local function Subtraction (foodA, foodB)
 	end 	
 
 	local tbl={}
+
 	--Recalculate the percentages
-	local sum=std.accumulate(diff_tbl,0) 
+	local sum=std.algo.accumulate(diff_tbl,0) 
 	
+
 	for k,v in pairs(diff_tbl) do
 		tbl[k]=v/sum*100
 	end
 	
+
 	local retFood=std.Food.new(tbl)
 	retFood:SetWeight(ma-mb)
 
-	return retFood
 
+	return retFood
 end
 
 
