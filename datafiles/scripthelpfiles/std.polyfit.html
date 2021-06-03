@@ -12,14 +12,12 @@
 
 <h3>Syntax:</h3>
 <p>
-      polyfit(x=,y=,n=, [intercept=]) &rarr; Vector <br>
-      polyfit{x=,y=,n=, [intercept=]} &rarr; Vector
+      polyfit(x=,y=,n=, [intercept=]) &rarr; Polynomial <br>
+      polyfit{x=,y=,n=, [intercept=]} &rarr; Polynomial
 </p>
 
 <p>
-      where <em>x</em> and <em>y</em> are Vectors and <em>n</em> is the degree of the polynomial. <br>
-      If intercept is provided, then the other coefficients will be calculated based on the given intercept.<br>
-      The function returns a vector containing the coefficients of the fitting.
+      where <em>x</em> and <em>y</em> are Vectors and <em>n</em> is the degree of the polynomial.
 </p>
 
 <p>&nbsp;</p>
@@ -55,11 +53,10 @@
       
       
 <p>
-      &gt;&gt;coef=std.polyfit(x, y, 3) <br>
+      &gt;&gt;poly=std.polyfit(x, y, 3) <br>
       &gt;&gt;coef <br>
-      1&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp; COL
+      x<sup>3</sup> + 2x<sup>2</sup> + 3x + 4
 </p>
-<p> corresponding to the polynomial: y=x<sup>3</sup>+2x<sup>2</sup>+3x+4</p>
 
 </body>
 
